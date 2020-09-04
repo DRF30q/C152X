@@ -22,6 +22,7 @@ Some of the current improvements (not exhaustive):
 - Ammeter - gauge calibration and behaviour.
 - Low voltage light now comes on below ~ 1000 RPM as in real life.
 - OAT thermometer now operates regardless of the position of the master switch.
+- The overhead (Dome) light can now be dimmed by the dimmer knob below the pilot control yoke.
 
 ### Notes:  
  - The default aircraft panel has a Tachometer with a 2700RPM redline.  As a result I have taken the decision to model the C152 with the corresponding and slightly uprated 115HP engine.  (It is essentially the same engine as the 'standard' C152 Lycoming engine with 110HP/2550RPM redline, with a few extra horsepower from the additional RPM.  The standard cruise performance chart power settigns etc will still be valid. The extra horsepower means slightly better takeoff and goaround performance and a slightly higher service ceiling.  The current version tested in the sim has a service ceiling around 15,500ft.)
