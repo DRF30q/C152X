@@ -1,7 +1,6 @@
 # MSFS C152X Realism Mod
 V0.11
- 
- 
+  
 
 ## Installation
 Place the "C152X" folder in your community package folder.
@@ -10,7 +9,7 @@ The installation does not create a new aircraft selection in the simulator.  The
 
 Note that none of the base files for the default aircraft are directly modified in any way.  Removing the "C152X" folder from the community package folder should remove and deactivate the C152X Realism Mod.
 
-### 0.10
+### 0.11
 Some of the current improvements (not exhaustive):
 - Modified stall speeds flap up/flap down in accordance with published information.  Aircraft will now stall at a significantly higher speed.
 - Numerous changes to engine performance, now in accordance with Lycoming O-235L2C (115HP, 2700RPM) See note below.
