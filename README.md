@@ -8,14 +8,14 @@ Place the "C152X" folder in your community package folder.
 ### 0.1
 Some of the current improvements:
 - Modified stall speeds flap up/flap down in accordance with published information.  Aircraft will now stall at a significantly higher speed.
-- Numerous changes to engine performance, now in accordance with Lycoming O-235L2C (115HP, 2700RPM).
+- Numerous changes to engine performance, now in accordance with Lycoming O-235L2C (115HP, 2700RPM) See note below.
 - Fuel consumption adjusted.
-- Long Range Fuel Tanks 37.5USG total useable.
+- Long Range Fuel Tanks 37.5USG total useable. See note below.
 - Fuel Gauges correctly calibrated.
 - Fuel Gauge indications will vary realistically in out of balance flight (depending on quantity of fuel in tank) and also on the ground when the aircraft is not wings level.
 - Flight tested to verify climb, cruise, service ceiling, fuel consumption etc in accordance with published information.
 - Oil Temperature Gauge - gauge calibration and oil temperature modelling adjusted.
-- Oil Pressure Gauge - gauge calibration and pressure modelling adjusted.
+- Oil Pressure Gauge - gauge calibration and oil pressure modelling adjusted.
 - Electrical system - completely remodelled, using documented electrical loads etc.
 - Now models realistic battery discharge/charge and subsequent electrical system behaviour. 
 - If battery goes flat, various systems will fail at various voltage levels as the battery discharges.
