@@ -1,5 +1,5 @@
 # MSFS C152X Realism Mod
-V0.10
+V0.11
 
 
 ## Installation
