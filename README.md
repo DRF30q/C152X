@@ -5,6 +5,10 @@ V0.10
 ## Installation
 Place the "C152X" folder in your community package folder.
 
+The installation does not create a new aircraft selection in the simulator.  The modifications are applied to the Textron Aviation Cessna 152.  Once the package is installed in the community, selected this aircraft should load the C152X Mod aircraft.   
+
+Note that none of the base files for the default aircraft are directly modified in any way.  Removing the "C152X" folder from the community package folder should remove and deactivate the C152X Realism Mod.
+
 ### 0.10
 Some of the current improvements (not exhaustive):
 - Modified stall speeds flap up/flap down in accordance with published information.  Aircraft will now stall at a significantly higher speed.
