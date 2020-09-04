@@ -6,7 +6,7 @@ V0.10
 Place the "C152X" folder in your community package folder.
 
 ### 0.10
-Some of the current improvements:
+Some of the current improvements (not exhaustive):
 - Modified stall speeds flap up/flap down in accordance with published information.  Aircraft will now stall at a significantly higher speed.
 - Numerous changes to engine performance, now in accordance with Lycoming O-235L2C (115HP, 2700RPM) See note below.
 - Fuel consumption adjusted.
