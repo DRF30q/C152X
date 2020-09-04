@@ -1,0 +1,523 @@
+<!-- Placeholder, copied from C172 -->
+<?xml version="1.0" encoding="utf-8"?>
+<ModelInfo>
+	<LODS>
+		<!-- Highest LOD -->
+		<!-- minimum display size in % (should be bounding sphere vertical screen size, sphere will often be slightly larger than you expect) -->
+		<!-- default minSize is 0 -->
+		<LOD minSize="100" ModelFile="C152_cockpit_LOD00.gltf"/>
+		<LOD minSize="30" ModelFile="C152_cockpit_LOD01.gltf"/>
+		<LOD minSize="15" ModelFile="C152_cockpit_LOD02.gltf"/>
+		<LOD minSize="5" ModelFile="C152_cockpit_LOD03.gltf"/>
+		<LOD minSize="1" ModelFile="C152_cockpit_LOD04.gltf"/>
+	</LODS>
+</ModelInfo>
+
+<ModelBehaviors>
+
+	<Include Path="Asobo\Common.xml"/>
+	<Include Path="Asobo\Transponder\\Transponder.xml"/>
+	<Include Path="Asobo\NAVCOM\NavComSystem.xml"/>
+	<Include Path="Asobo\NAVCOM\ADF.xml"/>  
+
+	<!-- DEICE ########################### -->
+	<Component ID="DEICE">
+		<UseTemplate Name="ASOBO_DEICE_Lever_Engine_Template">
+			<DRAG_AXIS_SCALE>400</DRAG_AXIS_SCALE>
+			<USE_TRAJECTORY_DRAG_MODE>True</USE_TRAJECTORY_DRAG_MODE>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_DEICE_Switch_Pitot_Template">
+		</UseTemplate>
+	</Component>	
+	
+	<!-- ELECTRICAL ########################### -->
+	<Component ID="ELECTRICAL">
+		<UseTemplate Name="ASOBO_ELECTRICAL_Switch_Magneto_Template">
+			<ANIM_NAME>ELECTRICAL_Switch_Magneto</ANIM_NAME>
+			<NODE_ID>ELECTRICAL_Switch_Magneto</NODE_ID>
+			<SWITCH_DIRECTION>Horizontal</SWITCH_DIRECTION>
+			<NORMALIZED_TIME>0.75</NORMALIZED_TIME>
+			<DIRECTION>Forward</DIRECTION>
+			<INDEX_OFF>0</INDEX_OFF>
+			<INDEX_RIGHT>1</INDEX_RIGHT>
+			<INDEX_LEFT>2</INDEX_LEFT>
+			<INDEX_BOTH>3</INDEX_BOTH>
+			<ARROW_TYPE>Curved</ARROW_TYPE>
+			<USE_STARTER/>
+			<ANIMREF_ID>0</ANIMREF_ID>
+			<ANIMCURSOR_DIR>1</ANIMCURSOR_DIR>
+			<ANIMTIP_0>TT:COCKPIT.TOOLTIPS.MAGNETO_START_SWITCH_OFF</ANIMTIP_0>
+			<ANIMTIP_1>TT:COCKPIT.TOOLTIPS.MAGNETO_START_SWITCH_R</ANIMTIP_1>
+			<ANIMTIP_2>TT:COCKPIT.TOOLTIPS.MAGNETO_START_SWITCH_L</ANIMTIP_2>
+			<ANIMTIP_3>TT:COCKPIT.TOOLTIPS.MAGNETO_START_SWITCH_BOTH</ANIMTIP_3>
+			<ANIMTIP_4>TT:COCKPIT.TOOLTIPS.MAGNETO_START_SWITCH_START</ANIMTIP_4>			
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_ELECTRICAL_Switch_Alternator_Template">
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_ELECTRICAL_Switch_Battery_Master_Template">
+			<!-- This battery switch also controls avionics -->
+			<ON_TOGGLE_MASTER_BATTERY>
+				(A:ELECTRICAL MASTER BATTERY:1, Bool) (A:AVIONICS MASTER SWITCH, Bool) != if{
+					(&gt;K:TOGGLE_AVIONICS_MASTER)
+				}
+			</ON_TOGGLE_MASTER_BATTERY>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Update">
+			<FREQUENCY>5</FREQUENCY>
+			<UPDATE_CODE>
+				(A:ELECTRICAL MASTER BATTERY:1, Bool) (A:AVIONICS MASTER SWITCH, Bool) != if{
+					(&gt;K:TOGGLE_AVIONICS_MASTER)
+				}
+			</UPDATE_CODE>
+		</UseTemplate>
+	</Component>
+		
+	<!-- ENGINE ########################### -->
+	<Component ID="ENGINE_CONTROLS">
+		<UseTemplate Name="ASOBO_ENGINE_Lever_Throttle_Template">
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_FUEL_Lever_Mixture_Template">
+			<DRAG_AXIS_SCALE>-400</DRAG_AXIS_SCALE> 
+			<BUTTON_NODE_ID>FUEL_Lever_Mixture_1_Push</BUTTON_NODE_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_ENGINE_Lever_Primer_Template">
+			<NODE_ID>ENGINE_LEVER_PRIMER</NODE_ID>
+			<ANIM_NAME>ENGINE_LEVER_PRIMER</ANIM_NAME>
+		</UseTemplate>
+	</Component>
+	
+	<!-- FUEL ########################### -->
+	<Component ID="FUEL">
+		<UseTemplate Name="ASOBO_FUEL_Switch_Cutoff_Template">
+		</UseTemplate>
+		<CameraTitle>Checklist_FuelValve</CameraTitle>
+	</Component>
+	
+	<!-- HANDLING ########################### -->
+	<Component ID="YOKES">
+		<UseTemplate Name="ASOBO_HANDLING_Yoke_Hideable_Template">
+			<TOOLTIPID>TT:COCKPIT.TOOLTIPS.YOKE_VISIBILITY</TOOLTIPID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_HANDLING_Yoke_Hider_Template">
+			<ID>1</ID>
+			<NODE_ID>HANDLING_Yoke_Hider_1_Add</NODE_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_HANDLING_Yoke_Hideable_Template">
+			<ID>2</ID>
+			<ONLY_HIDEABLE/>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_HANDLING_Yoke_Hider_Template">
+			<ID>2</ID>
+			<NODE_ID>HANDLING_Yoke_Hider_2_Add</NODE_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_HANDLING_Yoke_Hideable_Template">
+			<NODE_ID>HANDLING_Yoke_1_Cable</NODE_ID>
+			<ID>1</ID>
+			<ONLY_DECORATIVE/>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_HANDLING_Yoke_Hideable_Template">
+			<NODE_ID>HANDLING_Yoke_2_Cable</NODE_ID>
+			<ID>2</ID>
+			<ONLY_DECORATIVE/>
+		</UseTemplate>
+	</Component>
+	
+	<Component ID="HANDLING">
+		<UseTemplate Name="ASOBO_HANDLING_RudderPedals_Template">
+			<RUDDERPEDALS_TYPE>SPLITTED</RUDDERPEDALS_TYPE>
+			<DIFFERENTIATE_BRAKE_ANIM_L_R>True</DIFFERENTIATE_BRAKE_ANIM_L_R>
+			<NODE_ID>HANDLING_RudderPedals_1_1</NODE_ID>
+			<PREFIX_LEFT_PEDALS>HANDLING_RudderPedals_</PREFIX_LEFT_PEDALS>
+			<SUFFIX_LEFT_PEDALS>_1_Brake</SUFFIX_LEFT_PEDALS>
+			<PREFIX_RIGHT_PEDALS>HANDLING_RudderPedals_</PREFIX_RIGHT_PEDALS>
+			<SUFFIX_RIGHT_PEDALS>_2_Brake</SUFFIX_RIGHT_PEDALS>
+			<NO_PART_ID_ON_ANIM_NODE>True</NO_PART_ID_ON_ANIM_NODE>
+			<USE_BRAKE>True</USE_BRAKE>
+		</UseTemplate>
+		
+		<UseTemplate Name="ASOBO_HANDLING_Lever_Flaps_Continuous_Template">
+			<USE_TRAJECTORY_DRAG_MODE>True</USE_TRAJECTORY_DRAG_MODE>
+			<INVERT_INTERACTION>True</INVERT_INTERACTION>
+		</UseTemplate>
+		
+		<UseTemplate Name="ASOBO_HANDLING_Indicator_Flaps_Template">
+		</UseTemplate>
+		
+		<UseTemplate Name="ASOBO_HANDLING_Wheel_ElevatorTrim_Template">
+		</UseTemplate>
+		
+		<UseTemplate Name="ASOBO_HANDLING_Indicator_ElevatorTrim_Template">
+		</UseTemplate>
+		
+		<UseTemplate Name="ASOBO_LANDING_GEAR_Switch_ParkingBrake_Template">
+			<ANIM_DELAY>0.2</ANIM_DELAY>
+		</UseTemplate>
+	</Component>
+
+	<!-- INSTRUMENTS ########################### -->
+	<Component ID="INSTRUMENTS">
+		<UseTemplate Name="ASOBO_INSTRUMENT_Needle_ADF_Template">
+			<ADF_KNOB/>
+		</UseTemplate>
+		
+		<UseTemplate Name="ASOBO_PRESSURIZATION_Needle_Suction_Template">
+			<MIN_VALUE>0</MIN_VALUE>
+			<DONT_APPEND_ID>True</DONT_APPEND_ID>
+		</UseTemplate>
+		
+		<UseTemplate Name="ASOBO_INSTRUMENT_Needle_Airspeed_Template">
+			<MIN_VALUE>0</MIN_VALUE>
+			<MAX_VALUE>170</MAX_VALUE>
+			<HIGHLIGHT_NODE_ID>INSTRUMENT_AirspeedIndicator_Highlight</HIGHLIGHT_NODE_ID>
+			<DONT_APPEND_ID>True</DONT_APPEND_ID>
+		</UseTemplate>
+		
+		<UseTemplate Name="ASOBO_INSTRUMENT_AttitudeIndicator_Template">
+			<USE_FLAG/>
+			<HIGHLIGHT_NODE_ID>INSTRUMENT_AttitudeIndicator_Highlight_1</HIGHLIGHT_NODE_ID>			
+			<USE_LINEAR_VALUES>True</USE_LINEAR_VALUES>
+			<NO_CAGE/>
+		</UseTemplate>
+		
+		<UseTemplate Name="ASOBO_INSTRUMENT_Needle_Current_Time_Clock_Template">
+		</UseTemplate>
+		
+		<UseTemplate Name="ASOBO_INSTRUMENT_Altimeter_Template">
+			<MIN_VALUE_STRIP>27.9</MIN_VALUE_STRIP>
+			<MAX_VALUE_STRIP>31.6</MAX_VALUE_STRIP>
+			<MIN_VALUE_KNOB>28.2</MIN_VALUE_KNOB>
+			<MAX_VALUE_KNOB>31.3</MAX_VALUE_KNOB>
+			<HIGHLIGHT_NODE_ID>INSTRUMENT_Altimeter_Highlight_1</HIGHLIGHT_NODE_ID>
+		</UseTemplate>
+			
+		<UseTemplate Name="ASOBO_INSTRUMENT_Needle_Turn_Template">
+		</UseTemplate>
+		
+		<UseTemplate Name="ASOBO_INSTRUMENT_Needle_Heading_Template">
+			<USE_FLAG/>	
+			<HIGHLIGHT_NODE_ID>INSTRUMENT_Heading_Highlight_1</HIGHLIGHT_NODE_ID>
+		</UseTemplate>
+		
+		<UseTemplate Name="ASOBO_INSTRUMENT_Needle_VerticalSpeed_Template">
+		</UseTemplate>
+		
+		<UseTemplate Name="ASOBO_INSTRUMENT_Needle_Engine_RPM_Template">
+			<MIN_VALUE>0</MIN_VALUE>
+			<MAX_VALUE>3500</MAX_VALUE>
+			<CREATE_HIGHLIGHT_NODE/>
+		</UseTemplate>
+		
+		<UseTemplate Name="ASOBO_INSTRUMENT_CDI_Template">
+		</UseTemplate>
+		
+		<UseTemplate Name="ASOBO_INSTRUMENT_CDI_Template">
+			<ID>2</ID>
+		</UseTemplate>
+		
+		<UseTemplate Name="ASOBO_INSTRUMENT_Dial_Compass_Template">
+		</UseTemplate>
+	
+		<Component ID="INSTRUMENTS_Electrical">
+			<DefaultTemplateParameters>
+				<FAILURE>(A:ELECTRICAL MAIN BUS VOLTAGE, Volts) 14 &gt;</FAILURE>
+				<ANIM_LAG>100</ANIM_LAG>
+			</DefaultTemplateParameters>
+			<UseTemplate Name="ASOBO_INSTRUMENT_Needle_Fuel_Quantity_Template">
+				<TANK_ID>LEFT MAIN</TANK_ID>
+				<FAILURE_CODE>0</FAILURE_CODE>
+				<USE_CUSTOM_POINTS>True</USE_CUSTOM_POINTS><!-- Using custom points since the animation non linear -->
+				<SIMVAR_UNIT>liter</SIMVAR_UNIT>				
+				<!-- The calculations generate a fuel tank level indication variation based on current yaw acceleration and the current tank level.  It will generate a greater variation for an empty tank vs a full tank and the 20 in the formula is a scaling factor for the amount of yaw induced variation in the tank indication. The first value is the current tank quantity in liters. 	The fuel tank sensors are on the inboard side of each tank so the effect will be opposite on the left and right tanks-->
+				<REF_VALUE_0>0</REF_VALUE_0>	<!--0USG EMPTY-->
+				<REF_VALUE_1>11.5 1 (A:FUEL LEFT QUANTITY, gallon) (A:FUEL TANK LEFT MAIN CAPACITY, gallon) / - 20 * (A:TURN COORDINATOR BALL, scaler) * -</REF_VALUE_11> <!--3USG 22.7L-->
+				<REF_VALUE_2>22.7 1 (A:FUEL LEFT QUANTITY, gallon) (A:FUEL TANK LEFT MAIN CAPACITY, gallon) / - 20 * (A:TURN COORDINATOR BALL, scaler) * -</REF_VALUE_21>  <!--6USG 22.7L-->
+				<REF_VALUE_3>30.3 1 (A:FUEL LEFT QUANTITY, gallon) (A:FUEL TANK LEFT MAIN CAPACITY, gallon) / - 20 * (A:TURN COORDINATOR BALL, scaler) * -</REF_VALUE_31> <!--8USG 22.7L-->
+				<REF_VALUE_4>37.9 1 (A:FUEL LEFT QUANTITY, gallon) (A:FUEL TANK LEFT MAIN CAPACITY, gallon) / - 20 * (A:TURN COORDINATOR BALL, scaler) * -</REF_VALUE_41> <!--10USG 22.7L-->
+				<REF_VALUE_5>45.4 1 (A:FUEL LEFT QUANTITY, gallon) (A:FUEL TANK LEFT MAIN CAPACITY, gallon) / - 20 * (A:TURN COORDINATOR BALL, scaler) * -</REF_VALUE_51> <!--12USG 22.7L-->
+				<REF_VALUE_6>52.9 1 (A:FUEL LEFT QUANTITY, gallon) (A:FUEL TANK LEFT MAIN CAPACITY, gallon) / - 20 * (A:TURN COORDINATOR BALL, scaler) * -</REF_VALUE_61> <!--14USG 22.7L-->
+				<REF_VALUE_7>60.6 1 (A:FUEL LEFT QUANTITY, gallon) (A:FUEL TANK LEFT MAIN CAPACITY, gallon) / - 20 * (A:TURN COORDINATOR BALL, scaler) * -</REF_VALUE_71> <!--16USG 22.7L-->
+				<REF_VALUE_8>68.1 1 (A:FUEL LEFT QUANTITY, gallon) (A:FUEL TANK LEFT MAIN CAPACITY, gallon) / - 20 * (A:TURN COORDINATOR BALL, scaler) * -</REF_VALUE_81> <!--18USG 68.1L-->
+				<REF_VALUE_9>73.8 1 (A:FUEL LEFT QUANTITY, gallon) (A:FUEL TANK LEFT MAIN CAPACITY, gallon) / - 20 * (A:TURN COORDINATOR BALL, scaler) * -</REF_VALUE_91> <!--19.5USG FULL-->
+				<ANIM_VALUE_0>0</ANIM_VALUE_0>
+				<ANIM_VALUE_1>15</ANIM_VALUE_1>
+				<ANIM_VALUE_2>35</ANIM_VALUE_2>
+				<ANIM_VALUE_3>47</ANIM_VALUE_3>
+				<ANIM_VALUE_4>57</ANIM_VALUE_4>
+				<ANIM_VALUE_5>68</ANIM_VALUE_5>
+				<ANIM_VALUE_6>80</ANIM_VALUE_6>
+				<ANIM_VALUE_7>92</ANIM_VALUE_7>
+				<ANIM_VALUE_8>99</ANIM_VALUE_8>
+				<ANIM_VALUE_9>100</ANIM_VALUE_9>
+				<MAX_POINT_INDEX>9</MAX_POINT_INDEX>
+				<ANIM_LENGTH>100</ANIM_LENGTH>
+				<MAX_DISPLAYABLE>100</MAX_DISPLAYABLE>
+				<MIN_DISPLAYABLE>0</MIN_DISPLAYABLE>
+			</UseTemplate>
+			<UseTemplate Name="ASOBO_INSTRUMENT_Needle_Fuel_Quantity_Template">
+				<TANK_ID>RIGHT MAIN</TANK_ID>
+				<FAILURE_CODE>0</FAILURE_CODE>
+				<ID>2</ID>
+				<USE_CUSTOM_POINTS>True</USE_CUSTOM_POINTS>
+				<!-- Using custom points since the animation non linear. For realism, Left/Right gauges have slightly different calibration. Data for Left gauge was aligned with graphic...-->
+				<SIMVAR_UNIT>liter</SIMVAR_UNIT>
+				<!-- The calculations generate a fuel tank level indication variation based on current yaw acceleration and the current tank level.  It will generate a greater variation for an empty tank vs a full tank and the 20 in the formula is a scaling factor for the amount of yaw induced variation in the tank indication. The first value is the current tank quantity in liters. 	The fuel tank sensors are on the inboard side of each tank so the effect will be opposite on the left and right tanks-->
+				<REF_VALUE_0>0</REF_VALUE_0>	<!--0USG EMPTY-->
+				<REF_VALUE_1>11.5 1 (A:FUEL RIGHT QUANTITY, gallon) (A:FUEL TANK RIGHT MAIN CAPACITY, gallon) / - 20 * (A:TURN COORDINATOR BALL, scaler) * +</REF_VALUE_11> <!--3USG 22.7L-->
+				<REF_VALUE_2>22.7 1 (A:FUEL RIGHT QUANTITY, gallon) (A:FUEL TANK RIGHT MAIN CAPACITY, gallon) / - 20 * (A:TURN COORDINATOR BALL, scaler) * +</REF_VALUE_21>  <!--6USG 22.7L-->
+				<REF_VALUE_3>30.3 1 (A:FUEL RIGHT QUANTITY, gallon) (A:FUEL TANK RIGHT MAIN CAPACITY, gallon) / - 20 * (A:TURN COORDINATOR BALL, scaler) * +</REF_VALUE_31> <!--8USG 22.7L-->
+				<REF_VALUE_4>37.9 1 (A:FUEL RIGHT QUANTITY, gallon) (A:FUEL TANK RIGHT MAIN CAPACITY, gallon) / - 20 * (A:TURN COORDINATOR BALL, scaler) * +</REF_VALUE_41> <!--10USG 22.7L-->
+				<REF_VALUE_5>45.4 1 (A:FUEL RIGHT QUANTITY, gallon) (A:FUEL TANK RIGHT MAIN CAPACITY, gallon) / - 20 * (A:TURN COORDINATOR BALL, scaler) * +</REF_VALUE_51> <!--12USG 22.7L-->
+				<REF_VALUE_6>52.9 1 (A:FUEL RIGHT QUANTITY, gallon) (A:FUEL TANK RIGHT MAIN CAPACITY, gallon) / - 20 * (A:TURN COORDINATOR BALL, scaler) * +</REF_VALUE_61> <!--14USG 22.7L-->
+				<REF_VALUE_7>60.6 1 (A:FUEL RIGHT QUANTITY, gallon) (A:FUEL TANK RIGHT MAIN CAPACITY, gallon) / - 20 * (A:TURN COORDINATOR BALL, scaler) * +</REF_VALUE_71> <!--16USG 22.7L-->
+				<REF_VALUE_8>68.1 1 (A:FUEL RIGHT QUANTITY, gallon) (A:FUEL TANK RIGHT MAIN CAPACITY, gallon) / - 20 * (A:TURN COORDINATOR BALL, scaler) * +</REF_VALUE_81> <!--18USG 68.1L-->
+				<REF_VALUE_9>73.8 1 (A:FUEL RIGHT QUANTITY, gallon) (A:FUEL TANK RIGHT MAIN CAPACITY, gallon) / - 20 * (A:TURN COORDINATOR BALL, scaler) * +</REF_VALUE_91> <!--19.5USG FULL-->
+				<ANIM_VALUE_0>0</ANIM_VALUE_0>
+				<ANIM_VALUE_1>13</ANIM_VALUE_1>
+				<ANIM_VALUE_2>37</ANIM_VALUE_2>
+				<ANIM_VALUE_3>45</ANIM_VALUE_3>
+				<ANIM_VALUE_4>59</ANIM_VALUE_4>
+				<ANIM_VALUE_5>67</ANIM_VALUE_5>
+				<ANIM_VALUE_6>82</ANIM_VALUE_6>
+				<ANIM_VALUE_7>91</ANIM_VALUE_7>
+				<ANIM_VALUE_8>97</ANIM_VALUE_8>
+				<ANIM_VALUE_9>100</ANIM_VALUE_9>
+				<MAX_POINT_INDEX>9</MAX_POINT_INDEX>
+				<ANIM_LENGTH>100</ANIM_LENGTH>
+				<MAX_DISPLAYABLE>100</MAX_DISPLAYABLE>
+				<MIN_DISPLAYABLE>0</MIN_DISPLAYABLE>
+			</UseTemplate>
+			<UseTemplate Name="ASOBO_INSTRUMENT_Needle_Ammeter_Template">
+				<!--adjusted, min/max reversed....-->
+				<MIN_VALUE>75</MIN_VALUE>
+				<MAX_VALUE>-75</MAX_VALUE>
+				<FAILURE_CODE>50</FAILURE_CODE>
+				<DONT_APPEND_ID>True</DONT_APPEND_ID>
+			</UseTemplate>
+			<UseTemplate Name="ASOBO_SAFETY_Indicator_LowVolt_Template">
+				<THRESHOLD>26</THRESHOLD>
+			</UseTemplate>
+			<UseTemplate Name="ASOBO_INSTRUMENT_Needle_Oil_Temperature_Template">
+				<UNITS>fahrenheit</UNITS>
+				<MIN_VALUE>70</MIN_VALUE>
+				<MAX_VALUE>270</MAX_VALUE>
+				<FAILURE_CODE>0</FAILURE_CODE>
+				<DONT_APPEND_ID>True</DONT_APPEND_ID>
+			</UseTemplate>
+			<UseTemplate Name="ASOBO_INSTRUMENT_Needle_Oil_Pressure_Template">
+				<UNITS>psi</UNITS>
+				<MIN_VALUE>-20</MIN_VALUE>
+				<MAX_VALUE>120</MAX_VALUE>
+				<FAILURE_CODE>0</FAILURE_CODE>
+				<DONT_APPEND_ID>True</DONT_APPEND_ID>
+			</UseTemplate>
+			<UseTemplate Name="ASOBO_INSTRUMENT_Needle_OAT_Template">
+				<MIN_VALUE>-60</MIN_VALUE>
+				<MAX_VALUE>80</MAX_VALUE>
+				<!--previously dependent on master switch....-->
+				<ANIM_NEVER_FAILS/>
+			</UseTemplate>
+		</Component>
+	</Component>
+	
+	<!-- LIGHTING ########################### -->
+	<Component ID="LIGHTING">
+		<UseTemplate Name="ASOBO_LIGHTING_Switch_Light_Strobe_Template">
+		</UseTemplate>
+		
+		<UseTemplate Name="ASOBO_LIGHTING_Switch_Light_Navigation_Template">		
+		</UseTemplate>
+			
+		<UseTemplate Name="ASOBO_LIGHTING_Switch_Light_Taxi_Template">
+		</UseTemplate>
+			
+		<UseTemplate Name="ASOBO_LIGHTING_Switch_Light_Landing_Template">
+		</UseTemplate>
+			
+		<UseTemplate Name="ASOBO_LIGHTING_Switch_Light_Beacon_Template">
+		</UseTemplate>
+		
+		<UseTemplate Name="ASOBO_LIGHTING_Knob_Glareshield_Template">
+			<NODE_ID>LIGHTING_Knob_Panel</NODE_ID>
+			<ANIM_NAME>LIGHTING_Knob_Panel</ANIM_NAME>
+			<KNOB_TURN_SPEED>1.5</KNOB_TURN_SPEED>						
+		</UseTemplate>
+		
+		<UseTemplate Name="ASOBO_LIGHTING_Switch_Light_Cabin_Template">		
+		</UseTemplate>		
+		
+		<UseTemplate Name="ASOBO_LIGHTING_Cabin_Emissive_Template">		
+			<!-- This dims the red roof light, no change to panel-->
+			<POTENTIOMETER>5</POTENTIOMETER>					
+		</UseTemplate>			
+		
+		<UseTemplate Name="ASOBO_LIGHTING_Glareshield_Emissive_Template">
+			<NODE_ID>LIGHTING_Panel_Emisive</NODE_ID>				
+		</UseTemplate>		
+	</Component>
+	
+	<!-- PASSENGERS ########################### -->
+	<Component ID="PASSENGERS">
+		<UseTemplate Name="ASOBO_PASSENGER_Switch_Cabin_Air_Template">
+			<ANIMREF_ID>0</ANIMREF_ID>
+			<ANIMTIP_0>TT:COCKPIT.TOOLTIPS.CABIN_AIR_2STATES_PUSHED</ANIMTIP_0>
+			<ANIMTIP_1>TT:COCKPIT.TOOLTIPS.CABIN_AIR_2STATES_PULLED</ANIMTIP_1>
+		</UseTemplate>
+		
+		<UseTemplate Name="ASOBO_PASSENGER_Switch_Cabin_Heat_Template">
+			<TOOLTIPID>DOD</TOOLTIPID>
+			<ANIMTIP_0>TT:COCKPIT.TOOLTIPS.CABIN_HEAT_2STATES_PUSHED</ANIMTIP_0>
+			<ANIMTIP_1>TT:COCKPIT.TOOLTIPS.CABIN_HEAT_2STATES_PULLED</ANIMTIP_1>
+		</UseTemplate>
+	</Component>
+	
+	<!-- RADIO STACK ################################## -->
+	<Component ID="NAVCOM_Radios">
+		<DefaultTemplateParameters>
+			<ANIM_LAG_SWITCH>500</ANIM_LAG_SWITCH>
+			<BUTTON_POTENTIOMETER/>
+			<POTENTIOMETER>4</POTENTIOMETER>
+			<ANIM_NEVER_FAILS>True</ANIM_NEVER_FAILS>
+		</DefaultTemplateParameters>
+		<UseTemplate Name="ASOBO_NAVCOM_Simple_Radio_Template">
+			<ID>1</ID>
+			<BUTTON_EMISSIVE_FACTOR>0.2</BUTTON_EMISSIVE_FACTOR>
+			<DONT_APPEND_ID>True</DONT_APPEND_ID>
+			<FAILURE>(A:COM VOLUME:1,Percent) 0 &gt; (A:CIRCUIT GENERAL PANEL ON, Bool) and</FAILURE>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_NAVCOM_Simple_Radio_Template">
+			<ID>2</ID>
+			<BUTTON_EMISSIVE_FACTOR>0.2</BUTTON_EMISSIVE_FACTOR>
+			<DONT_APPEND_ID>True</DONT_APPEND_ID>
+			<FAILURE>(A:COM VOLUME:2,Percent) 0 &gt; (A:CIRCUIT GENERAL PANEL ON, Bool) and</FAILURE>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_NAVCOM_Screens_Template">
+			<ID>1</ID>
+			<NODE_ID>NavCom1_Screen</NODE_ID>
+			<NAVCOM_CONTROLS_PANEL_LIGHT_STATE/>
+			<USE_DIMMING_POTENTIOMETER/>
+			<DIMMING_FACTOR>1</DIMMING_FACTOR>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_NAVCOM_Screens_Template">
+			<ID>2</ID>
+			<NODE_ID>NavCom2_Screen</NODE_ID>
+			<NAVCOM_CONTROLS_PANEL_LIGHT_STATE/>
+			<USE_DIMMING_POTENTIOMETER/>
+			<DIMMING_FACTOR>1</DIMMING_FACTOR>
+		</UseTemplate>
+		<Component Id="NAVCOM_Sound_Push_Buttons">
+			<DefaultTemplateParameters>
+				<SWITCH_TYPE>Push</SWITCH_TYPE>
+				<SUFFIX_ID></SUFFIX_ID>
+			</DefaultTemplateParameters>
+			<UseTemplate Name="ASOBO_NAVCOM_Switch_MARKER_Sound_Template">
+				<NODE_ID>AUDIO_Push_MKR</NODE_ID>
+				<ANIM_NAME>AUDIO_Push_MKR</ANIM_NAME>
+			</UseTemplate>
+			<UseTemplate Name="ASOBO_NAVCOM_Switch_DME_Sound_Template">
+				<NODE_ID>AUDIO_Push_DME</NODE_ID>
+				<ANIM_NAME>AUDIO_Push_DME</ANIM_NAME>
+			</UseTemplate>
+			<UseTemplate Name="ASOBO_AUDIO_Switch_Speaker_Template">
+				<NODE_ID>AUDIO_Push_SPKR</NODE_ID>
+				<ANIM_NAME>AUDIO_Push_SPKR</ANIM_NAME>
+			</UseTemplate>
+			<UseTemplate Name="ASOBO_NAVCOM_Switch_NAV_Sound_Template">
+				<ID>1</ID>
+				<USE_EXCLUSIVE_ID/>
+				<OTHER_ID>2</OTHER_ID>
+				<NODE_ID>AUDIO_Push_NAV_1</NODE_ID>
+				<ANIM_NAME>AUDIO_Push_NAV_1</ANIM_NAME>
+			</UseTemplate>
+			<UseTemplate Name="ASOBO_NAVCOM_Switch_NAV_Sound_Template">
+				<ID>2</ID>
+				<USE_EXCLUSIVE_ID/>
+				<OTHER_ID>1</OTHER_ID>
+				<NODE_ID>AUDIO_Push_NAV_2</NODE_ID>
+				<ANIM_NAME>AUDIO_Push_NAV_2</ANIM_NAME>
+			</UseTemplate>
+			<UseTemplate Name="ASOBO_NAVCOM_Switch_NAV_Sound_Template">
+				<LEFT_SINGLE_CODE>
+					(A:NAV SOUND:1, Bool) sp0
+					(A:NAV SOUND:2, Bool) sp1
+					l0 l1 and if{
+						(&gt;K:RADIO_VOR1_IDENT_TOGGLE)
+						(&gt;K:RADIO_VOR2_IDENT_TOGGLE)
+					} els{
+						l0 ! if{ (&gt;K:RADIO_VOR1_IDENT_TOGGLE) }
+						l1 ! if{ (&gt;K:RADIO_VOR2_IDENT_TOGGLE) }
+					}
+				</LEFT_SINGLE_CODE>
+				<ANIM_CODE>(A:NAV SOUND:1, Percent) (A:NAV SOUND:2, Bool) and 100 *</ANIM_CODE>
+				<NODE_ID>AUDIO_Push_NAV_Both</NODE_ID>
+				<ANIM_NAME>AUDIO_Push_NAV_Both</ANIM_NAME>
+			</UseTemplate>
+			<UseTemplate Name="ASOBO_GT_COM_Push_Transmit_Template">
+				<ID>1</ID>
+				<NODE_ID>AUDIO_Push_MIC_1</NODE_ID>
+				<ANIM_NAME>AUDIO_Push_MIC_1</ANIM_NAME>
+			</UseTemplate>
+			<UseTemplate Name="ASOBO_GT_COM_Push_Transmit_Template">
+				<ID>2</ID>
+				<NODE_ID>AUDIO_Push_MIC_2</NODE_ID>
+				<ANIM_NAME>AUDIO_Push_MIC_2</ANIM_NAME>
+			</UseTemplate>
+		</Component>
+	</Component>
+	<Component ID="ADF">
+		<DefaultTemplateParameters>
+			<DONT_APPEND_ID>True</DONT_APPEND_ID>
+			<POTENTIOMETER>4</POTENTIOMETER>
+		</DefaultTemplateParameters>
+		<UseTemplate Name="ASOBO_ADF_3Knobs_Frequency_Template">
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_ADF_Knob_Volume_Template">
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_ADF_Knob_Mode_Template">
+			<ANIM_LAG>300</ANIM_LAG>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Component_Emissive_Gauge">
+			<NODE_ID>ADF_Screen</NODE_ID>
+			<EMISSIVE_CODE>1</EMISSIVE_CODE>
+			<FAILURE>(A:ADF VOLUME:1, Percent) 0 &gt; (A:CIRCUIT GENERAL PANEL ON, Bool) and</FAILURE>
+		</UseTemplate>
+	</Component>
+	<Component ID="TRANSPONDER">
+		<UseTemplate Name="ASOBO_5Knobs_Transponder_Template">			
+			<DONT_APPEND_ID>True</DONT_APPEND_ID>
+			<ANIM_LAG>500</ANIM_LAG>
+		</UseTemplate>
+	</Component>
+	<Component ID="AUDIO_TOP_PANEL">
+		<DefaultTemplateParameters>
+			<DONT_APPEND_ID>True</DONT_APPEND_ID>
+		</DefaultTemplateParameters>
+		<UseTemplate Name="ASOBO_AUDIO_Knob_Volume_Template">
+			<USE_DIMMING_KNOB/>
+		</UseTemplate>
+		<Component ID="OMI_Indicators">
+			<DefaultTemplateParameters>
+				<FAILURE>(A:CIRCUIT GENERAL PANEL ON, Bool)</FAILURE>
+			</DefaultTemplateParameters>
+			<UseTemplate Name="ASOBO_AUDIO_Indicator_O_Component">
+			</UseTemplate>
+			<UseTemplate Name="ASOBO_AUDIO_Indicator_M_Component">
+			</UseTemplate>
+			<UseTemplate Name="ASOBO_AUDIO_Indicator_I_Component">
+			</UseTemplate>
+		</Component>
+		<UseTemplate Name="ASOBO_AUDIO_Switch_Marker_Sens_Template">
+		</UseTemplate>
+	</Component>
+	
+	<Component ID="TT_INOP">
+		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+			<NODE_ID>AUDIO_Switch_Intercom</NODE_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+			<NODE_ID>AUDIO_Switch_Test</NODE_ID>
+		</UseTemplate>
+		
+	</Component>
+	
+	
+</ModelBehaviors>

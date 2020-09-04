@@ -1,0 +1,11 @@
+{
+  "LocalisationPackage": {
+    "Language": "de-DE",
+    "Strings": {
+      "AIRCRAFT.DESCRIPTION": "1977 setze Cessna es sich zum Ziel, das über alle Maßen beliebte Kleinflugzeug Model 150 zu modernisieren – was letztendlich zur Entwicklung der 152 führte: eines Eindeckers mit zwei Sitzen, der sich nach kurzer Zeit nicht nur zu einem wahren Klassiker der allgemeinen Luftfahrt, sondern auch zu einem der beliebtesten Schulflugzeuge der Ära nach dem Zweiten Weltkrieg mauserte.<br><br>Wenn man die Produktion der primären Cessna-Fabrik in Kansas, Wichita, und die Produktion von Reims Aviation (Frankreich) zusammenaddiert, wurden während des gesamten Produktionsprozesses der 152 (1977–85) mehr als 7500 Flugzeuge gefertigt.<br><br>Weithin als Zugpferd betrachtet, wartete die 152 mit einem leistungsfähigeren Kolbenmotor als ihre Vorgängerin auf. Darüber hinaus verfügt sie über einen Knickflügelpropeller und profitiert von Veränderungen bezüglich ihres Motors und ihrer Motorhaube, wodurch Motorenlärm und -vibrationen geringer ausfallen.<br><br>Während die 152 Fehler schnell vergibt und leicht zu fliegen ist – wobei sie über eine Hochdecker-Konfiguration verfügt, die eine exzellente Cockpitsicht gewährt –, ist diese Maschine die Inkarnation des Kleinflugzeugs schlechthin, wobei das geringe Gewicht die Herausforderung des Fliegens bei starken Seitenwinden nur noch erhöht. Allerdings überzeugt sie gleichzeitig durch ein sanftes Handling und verspricht eine angenehme Reise, egal, ob Sie ein erfahrener Pilot sind oder gerade erst das Fliegen lernen.",
+      "AIRCRAFT.UI_MANUFACTURER": "Textron Aviation",
+      "AIRCRAFT.UI_MODEL": "Cessna 152",
+      "GAME.CHECKLIST_ADJUST_1000_RPM_OR_LESS": "1000 RPM oder weniger EINSTELLEN"
+    }
+  }
+}

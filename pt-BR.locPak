@@ -1,0 +1,11 @@
+{
+  "LocalisationPackage": {
+    "Language": "pt-BR",
+    "Strings": {
+      "AIRCRAFT.DESCRIPTION": "Em 1977, a Cessna decidiu modernizar sua pequena e extremamente popular aeronave Modelo 150, e o resultado foi o 152 – um novo monoplano de dois assentos que rapidamente se tornou um clássico da aviação geral e uma das aeronaves de treinamento mais populares da era pós-Segunda Guerra Mundial.<br><br>Durante a produção total do 152 (1977-1985), a Cessna fabricou mais de 7.500 aeronaves, entre sua principal fábrica em Wichita, no Kansas, e sua afiliada, Reims Aviation da França.<br><br>Bastante reconhecido como uma aeronave muito confiável, o 152 entrou em cena com um motor de pistão mais poderoso que o seu antecessor, uma hélice de \"asa de gaivota\" aprimorada e alterações no motor e na carenagem para redução de ruído e vibração.<br><br>Embora o 152 ignore alguns erros e seja fácil de pilotar – com uma configuração de asas altas que resulta em excelente visibilidade no cockpit – ele adiciona ainda mais leveza ao seu modelo já pequeno, uma característica que pode aumentar o desafio do voo em vento de través, mas que também contribui para manobras geralmente dóceis e uma viagem agradável no geral, não importa se você é um piloto experiente ou se está apenas aprendendo a voar.",
+      "AIRCRAFT.UI_MANUFACTURER": "Textron Aviation",
+      "AIRCRAFT.UI_MODEL": "Cessna 152",
+      "GAME.CHECKLIST_ADJUST_1000_RPM_OR_LESS": "AJUSTE para 1.000 RPM ou menos"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "LocalisationPackage": {
+    "Language": "fr-FR",
+    "Strings": {
+      "AIRCRAFT.DESCRIPTION": "En 1977, Cessna se met en tête de moderniser son avion léger extrêmement populaire, le Modèle 150. Le résultat fut le 152, un nouveau monoplan biplace qui est rapidement devenu un classique de l'aviation générale et l'un des avions d'entraînement les plus populaires de l'après-guerre.<br><br>Pendant la phase de production du 152 (1977-1985), Cessna a fabriqué plus de 7 500 avions, répartis entre son usine principale de Wichita, au Kansas, et sa filiale Reims Aviation en France.<br><br>Réputé pour être un avion utilitaire, le 152 était équipé d'un moteur à piston plus puissant que celui de son prédécesseur et d'une hélice de type « aile en mouette » améliorée. Des modifications ont été apportées au groupe motopropulseur et au capot afin de réduire le bruit et les vibrations.<br><br>Bien que le 152 pardonne les erreurs et soit facile à piloter, avec une configuration d'ailes hautes qui se traduit par une excellente visibilité depuis le cockpit, sa légèreté peut mettre le pilote au défi lors de vol par vent latéral violent. Toutefois, le Cessna 152 est aussi connu pour sa souple maniabilité et ses trajets particulièrement agréables, que vous soyez un pilote chevronné ou débutant.",
+      "AIRCRAFT.UI_MANUFACTURER": "Textron Aviation",
+      "AIRCRAFT.UI_MODEL": "Cessna 152",
+      "GAME.CHECKLIST_ADJUST_1000_RPM_OR_LESS": "AJUSTER à 1 000 tr\/min ou moins"
+    }
+  }
+}
