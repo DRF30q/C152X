@@ -36,5 +36,6 @@ Some of the current improvements (not exhaustive):
 ## Changelog
 [0.11] - 2020-09-04
 Initial release.
+
 [0.12] - 2020-09-05
 Corrected situation with no avionics power in certain startup situations.
