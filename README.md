@@ -43,5 +43,5 @@ Corrected situation with no avionics power in certain startup situations.
 ## Donation
 
 If you enjoy the mod and would like to show your appreciation, a donation would great :).
-(https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8LZTVQP6K58KY)
 
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8LZTVQP6K58KY)
