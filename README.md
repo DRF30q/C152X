@@ -39,3 +39,9 @@ Initial release.
 
 [0.12] - 2020-09-05
 Corrected situation with no avionics power in certain startup situations.
+
+## Donation
+
+If you enjoy the mod and would like to show your appreciation, a donation would great :).
+https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8LZTVQP6K58KY
+
