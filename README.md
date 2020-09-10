@@ -35,7 +35,7 @@ Some of the current improvements (not exhaustive):
 		- CDI gauge will power off when the applicable NAV/COM Radio is turned off using the Volume/Off knob.
 		 -CDI gauge will power off if the battery discharges and the voltage level supplied to the applicable	
 			NAV/COM radio drops below the minimum required for operation.
-			
+		Additional changes:	
 		- Glideslope/Localiser Needle behaviour adjusted.
 		- Glideslope/Localiser Flag behaviour adjusted.
 		- NAV Flag behaviour adjusted.
