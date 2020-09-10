@@ -28,11 +28,11 @@ Some of the current improvements (not exhaustive):
 - OAT thermometer now operates regardless of the position of the master switch.
 - The overhead (Dome) light can now be dimmed by the dimmer knob below the pilot control yoke.
 - The NAV CDI gauges completely revised:
-- CDI gauges now responds correctly to: User selected On/Off state of corresponding NAV/COM Radio.
-- CDI gauges now responds correctly to:	Power state of corresponding NAV/COM Radio.	
+- CDI gauges now respond correctly to: User selected On/Off state of corresponding NAV/COM Radio.
+- CDI gauges now respond correctly to:	Power state of corresponding NAV/COM Radio.	
 - CDI gauges now power off when Avionics Power (Battery Master Switch) switched off.
 - CDI gauges now power off when the applicable NAV/COM Radio is turned off using the Volume/Off knob.
- -CDI gauges now power off if the battery discharges and the voltage level supplied to the applicable	
+- CDI gauges now power off if the battery discharges and the voltage level supplied to the applicable	
 	NAV/COM radio drops below the minimum required for operation.
 - CDI gauges, Glideslope/Localiser Needle behaviour adjusted.
 - CDI gauges, Glideslope/Localiser Flag behaviour adjusted.
