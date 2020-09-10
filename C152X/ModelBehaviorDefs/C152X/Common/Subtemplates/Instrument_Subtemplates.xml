@@ -1,0 +1,359 @@
+<Template Name="C152X_INSTRUMENT_CDI_SubTemplate">
+	<DefaultTemplateParameters>
+		<ANIM_NAME_COMPASS>INSTRUMENT_CDI_Compass#SUFFIX_ID#</ANIM_NAME_COMPASS>
+		<ANIM_NAME_NEEDLE_LOCALIZER>INSTRUMENT_CDI_Needle_Localizer#SUFFIX_ID#</ANIM_NAME_NEEDLE_LOCALIZER>
+		<ANIM_NAME_NEEDLE_GLIDE>INSTRUMENT_CDI_Needle_Glide#SUFFIX_ID#</ANIM_NAME_NEEDLE_GLIDE>
+		<ANIM_NAME_FLAG_GLIDE>INSTRUMENT_CDI_Flag_Glide#SUFFIX_ID#</ANIM_NAME_FLAG_GLIDE>
+		<ANIM_NAME_FLAG_LOCALIZER>INSTRUMENT_CDI_Flag_Localizer#SUFFIX_ID#</ANIM_NAME_FLAG_LOCALIZER>
+		<ANIM_NAME_FLAG_OFF>INSTRUMENT_CDI_Flag_Off#SUFFIX_ID#</ANIM_NAME_FLAG_OFF>
+		<ANIM_NAME_FLAG_TO>INSTRUMENT_CDI_Flag_To#SUFFIX_ID#</ANIM_NAME_FLAG_TO>
+		<ANIM_NAME_FLAG_FROM>INSTRUMENT_CDI_Flag_From#SUFFIX_ID#</ANIM_NAME_FLAG_FROM>
+		<NODE_ID>INSTRUMENT_CDI#SUFFIX_ID#</NODE_ID>
+		<COURSE_KNOB_NODE_ID>INSTRUMENT_CDI_Knob_Course#SUFFIX_ID#</COURSE_KNOB_NODE_ID>
+		<COURSE_KNOB_ANIM_NAME>INSTRUMENT_CDI_Knob_Course#SUFFIX_ID#</COURSE_KNOB_ANIM_NAME>
+		<NODE_ID_EMISSIVE_NAV>INSTRUMENT_CDI_Emissive_NAV#SUFFIX_ID#</NODE_ID_EMISSIVE_NAV>
+		<NODE_ID_EMISSIVE_VLOC>INSTRUMENT_CDI_Emissive_VLOC#SUFFIX_ID#</NODE_ID_EMISSIVE_VLOC>
+		<NODE_ID_EMISSIVE_GPS>INSTRUMENT_CDI_Emissive_GPS#SUFFIX_ID#</NODE_ID_EMISSIVE_GPS> 
+		
+		<ANIMREF_ID>-1</ANIMREF_ID>
+		<ANIMTIP_0_ON_CURSOR>TurnLeft</ANIMTIP_0_ON_CURSOR>
+		<ANIMTIP_1_ON_CURSOR>TurnRight</ANIMTIP_1_ON_CURSOR>
+		<ANIMTIP_0>TT:COCKPIT.TOOLTIPS.OBS_BEARING_SELECT_COUNTERCLOCKWISE</ANIMTIP_0>
+		<ANIMTIP_1>TT:COCKPIT.TOOLTIPS.OBS_BEARING_SELECT_CLOCKWISE</ANIMTIP_1>
+	</DefaultTemplateParameters>
+	<OverrideTemplateParameters>
+		<Condition Check="HIGHLIGHT_NODE_ID">
+			<Condition Check="PART_ID">
+				<True>
+					<HIGHLIGHT_PART_ID>#PART_ID#</HIGHLIGHT_PART_ID>
+				</True>
+				<False>
+					<HIGHLIGHT_PART_ID>INSTRUMENT_CDI</HIGHLIGHT_PART_ID>
+				</False>
+			</Condition>
+		</Condition>
+		<Condition Check="NO_NEEDLE_GLIDE">
+			<NO_GLIDE_LOCALIZER_INIT_ANIMATION/>
+		</Condition>
+		<PART_ID/>
+		<Condition Check="NO_GPS_DEPENDENCY"><!-- If set, GPS cannot drive instrument values -->
+			<True>
+				<LOCALIZER_ANIM_CODE>
+					(A:COM VOLUME:#ID#,Percent) 0 &gt; (A:CIRCUIT NAVCOM#ID# ON, Bool) and if{
+						(A:NAV CDI:#ID#, Number) 127 +
+					 } els{							
+							127
+					 }
+				</LOCALIZER_ANIM_CODE>
+				<GLIDEPATH_ANIM_CODE>
+					(A:COM VOLUME:#ID#,Percent) 0 &gt; (A:CIRCUIT NAVCOM#ID# ON, Bool) and if{
+						(A:NAV GSI:#ID#, Number) 127 + 
+					 } els{							
+							127
+					 }				
+				</GLIDEPATH_ANIM_CODE>
+			</True>
+			<False>
+				<LOCALIZER_ANIM_CODE>
+					(A:COM VOLUME:#ID#,Percent) 0 &gt; (A:CIRCUIT NAVCOM#ID# ON, Bool) and if{
+						(A:GPS DRIVES NAV1, Bool) if{
+							(A:GPS WP CROSS TRK, nautical mile) 127 * 127 +
+						} els{
+							(A:NAV CDI:#ID#, Number) 127 +
+						}													
+					} els{						
+						127
+					}				
+				</LOCALIZER_ANIM_CODE>	
+				<GLIDEPATH_ANIM_CODE>
+					(A:COM VOLUME:#ID#,Percent) 0 &gt; (A:CIRCUIT NAVCOM#ID# ON, Bool) and if{
+						(A:GPS DRIVES NAV1, Bool) if{
+							127
+						} els{
+							(A:NAV GSI:#ID#, Number) 127 +
+						}													
+					} els{						
+						127
+					}						
+				</GLIDEPATH_ANIM_CODE>				
+			</False>
+		</Condition>
+		<!-- Disable PartId if no Highlight node set. -->
+	</OverrideTemplateParameters>
+	<EditableTemplateParameters>
+		<AddParams>
+			<ANIM_NAME_COMPASS>TT:MODELBEHAVIOR.CDI.PARAMS.ANIM_NAME.COMPASS</ANIM_NAME_COMPASS>
+			<ANIM_NAME_NEEDLE_LOCALIZER>TT:MODELBEHAVIOR.CDI.PARAMS.ANIM_NAME.NEEDLE_LOCALIZER</ANIM_NAME_NEEDLE_LOCALIZER>
+			<ANIM_NAME_NEEDLE_GLIDE>TT:MODELBEHAVIOR.CDI.PARAMS.ANIM_NAME.NEEDLE_GLIDE</ANIM_NAME_NEEDLE_GLIDE>
+			<ANIM_NAME_FLAG_GLIDE>TT:MODELBEHAVIOR.CDI.PARAMS.ANIM_NAME.FLAG_GLIDE</ANIM_NAME_FLAG_GLIDE>
+			<ANIM_NAME_FLAG_LOCALIZER>TT:MODELBEHAVIOR.CDI.PARAMS.ANIM_NAME.FLAG_LOCALIZER</ANIM_NAME_FLAG_LOCALIZER>
+			<ANIM_NAME_FLAG_OFF>TT:MODELBEHAVIOR.CDI.PARAMS.ANIM_NAME.FLAG_OFF</ANIM_NAME_FLAG_OFF>
+			<ANIM_NAME_FLAG_TO>TT:MODELBEHAVIOR.CDI.PARAMS.ANIM_NAME.FLAG_TO</ANIM_NAME_FLAG_TO>
+			<ANIM_NAME_FLAG_FROM>TT:MODELBEHAVIOR.CDI.PARAMS.ANIM_NAME.FLAG_FROM</ANIM_NAME_FLAG_FROM>
+			<COURSE_KNOB_NODE_ID>TT:MODELBEHAVIOR.CDI.PARAMS.NODE_ID.COURSE_KNOB</COURSE_KNOB_NODE_ID>
+			<COURSE_KNOB_ANIM_NAME>TT:MODELBEHAVIOR.CDI.PARAMS.ANIM_NAME.COURSE_KNOB</COURSE_KNOB_ANIM_NAME>
+			<NODE_ID_EMISSIVE_NAV>TT:MODELBEHAVIOR.CDI.PARAMS.NODE_ID.EMISSIVE_NAV</NODE_ID_EMISSIVE_NAV>
+			<NODE_ID_EMISSIVE_VLOC>TT:MODELBEHAVIOR.CDI.PARAMS.NODE_ID.EMISSIVE_VLOC</NODE_ID_EMISSIVE_VLOC>
+			<NODE_ID_EMISSIVE_GPS>TT:MODELBEHAVIOR.CDI.PARAMS.NODE_ID.EMISSIVE_GPS</NODE_ID_EMISSIVE_GPS>
+			<HIGHLIGHT_NODE_ID>TT:MODELBEHAVIOR.CDI.PARAMS.NODE_ID.HIGHLIGHT</HIGHLIGHT_NODE_ID>
+		</AddParams>
+		<AddOptions>
+			<NO_GLIDE_LOCALIZER_INIT_ANIMATION>TT:MODELBEHAVIOR.CDI.OPTIONS.NO_GLIDE_LOCALIZER_INIT_ANIMATION</NO_GLIDE_LOCALIZER_INIT_ANIMATION>
+			<NO_NEEDLE_GLIDE>TT:MODELBEHAVIOR.CDI.OPTIONS.NO_NEEDLE_GLIDE</NO_NEEDLE_GLIDE>
+			<NO_FLAG_GLIDE>TT:MODELBEHAVIOR.CDI.OPTIONS.NO_FLAG_GLIDE</NO_FLAG_GLIDE>
+			<NO_FLAG_LOCALIZER>TT:MODELBEHAVIOR.CDI.OPTIONS.NO_FLAG_LOCALIZER</NO_FLAG_LOCALIZER>
+			<NO_EMISSIVE_NAV>TT:MODELBEHAVIOR.CDI.OPTIONS.NO_EMISSIVE_NAV</NO_EMISSIVE_NAV>
+			<NO_EMISSIVE_GPS>TT:MODELBEHAVIOR.CDI.OPTIONS.NO_EMISSIVE_GPS</NO_EMISSIVE_GPS>
+			<NO_EMISSIVE_VLOC>TT:MODELBEHAVIOR.CDI.OPTIONS.NO_EMISSIVE_VLOC</NO_EMISSIVE_VLOC>
+		</AddOptions>
+		<RemoveParams>
+			<ANIM_NAME/>
+			<NODE_ID/>
+		</RemoveParams>
+	</EditableTemplateParameters>
+
+	<Component ID="#NODE_ID#_#ID#">
+		<UseTemplate Name="ASOBO_GT_Anim_Sim">
+			<ANIM_NAME>#ANIM_NAME_COMPASS#</ANIM_NAME>
+			<ANIM_LENGTH>360</ANIM_LENGTH>
+			<ANIM_SIMVAR>NAV OBS:#ID#</ANIM_SIMVAR>
+			<ANIM_SIMVAR_UNITS>degrees</ANIM_SIMVAR_UNITS>
+			<!-- [0, 360] -->
+			<ANIM_LAG>400</ANIM_LAG>
+			<PART_ID/>
+			<ANIM_WRAP>1</ANIM_WRAP>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Anim_Code">
+			<ANIM_NAME>#ANIM_NAME_FLAG_TO#</ANIM_NAME>
+			<Condition Check="CIRCUIT_ID">
+				<True>
+					<ANIM_CODE>(A:CIRCUIT NAVCOM#ID# ON, Bool) (A:COM VOLUME:#ID#,Percent) 0 &gt; and  if{
+												(A:NAV TOFROM:#ID#, Enum) 1 == 100 * 
+											} els{
+												0
+											}
+					</ANIM_CODE>
+				</True>
+				<False>
+					<ANIM_CODE>(A:CIRCUIT NAVCOM#ID# ON, Bool) (A:COM VOLUME:#ID#,Percent) 0 &gt; and  if{
+											(A:NAV TOFROM:#ID#, Enum) 1 == 100 * 
+											} els{
+												0
+											}
+					</ANIM_CODE>
+				</False>
+			</Condition>
+			<ANIM_LAG>400</ANIM_LAG>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Anim_Code">
+			<ANIM_NAME>#ANIM_NAME_FLAG_FROM#</ANIM_NAME>
+			<Condition Check="CIRCUIT_ID">
+				<True>
+					<ANIM_CODE>(A:CIRCUIT NAVCOM#ID# ON, Bool) (A:COM VOLUME:#ID#,Percent) 0 &gt; and  if{
+												(A:NAV TOFROM:#ID#, Enum) 2 == 100 * 
+											} els{
+												0
+											}
+					</ANIM_CODE>
+				</True>
+				<False>
+					<ANIM_CODE>(A:CIRCUIT NAVCOM#ID# ON, Bool) (A:COM VOLUME:#ID#,Percent) 0 &gt; and  if{
+											(A:NAV TOFROM:#ID#, Enum) 2 == 100 * 
+											} els{
+												0
+											}
+					</ANIM_CODE>
+				</False>
+			</Condition>
+			<ANIM_LAG>400</ANIM_LAG>
+		</UseTemplate>
+		<Component ID="#COURSE_KNOB_NODE_ID#" Node="#COURSE_KNOB_NODE_ID#">
+			<UseTemplate Name="ASOBO_GT_Knob_Infinite">
+				<ANIM_NAME>#COURSE_KNOB_ANIM_NAME#</ANIM_NAME>
+				<CLOCKWISE_CODE>(&gt;K:VOR#ID#_OBI_DEC)</CLOCKWISE_CODE>
+				<ANTICLOCKWISE_CODE>(&gt;K:VOR#ID#_OBI_INC)</ANTICLOCKWISE_CODE>
+			</UseTemplate>
+		</Component>
+		
+		<Component ID="CDI_LOC_GLIDE_Needles_#ID#">
+			<DefaultTemplateParameters>
+				<Condition Check="NO_GLIDE_LOCALIZER_INIT_ANIMATION">
+					<False>
+						<WATCHER_FREQ>12</WATCHER_FREQ>
+						<UPDATE_SKIPPED_COUNT>(O:XMLVAR_UpdateSkippedCount)</UPDATE_SKIPPED_COUNT>
+						<FIRST_STEP>
+							0 (&gt;O:XMLVAR_GlideTargetPosition)
+							0 (&gt;O:XMLVAR_LocalizerTargetPosition)
+							6 (&gt;O:XMLVAR_UpdateSkippedCount)
+						</FIRST_STEP>
+						<ANIM_STEP_1>
+							127 (&gt;O:XMLVAR_GlideTargetPosition)
+							-127 (&gt;O:XMLVAR_LocalizerTargetPosition)
+							18 (&gt;O:XMLVAR_UpdateSkippedCount)
+						</ANIM_STEP_1>
+						<ANIM_STEP_2>
+							127 (&gt;O:XMLVAR_GlideTargetPosition)
+							127 (&gt;O:XMLVAR_LocalizerTargetPosition)
+							6 (&gt;O:XMLVAR_UpdateSkippedCount)
+						</ANIM_STEP_2>
+						<ANIM_STEP_3>
+							0 (&gt;O:XMLVAR_GlideTargetPosition)
+							0 (&gt;O:XMLVAR_LocalizerTargetPosition)
+							100 (&gt;O:XMLVAR_UpdateSkippedCount)
+						</ANIM_STEP_3>
+						<FINAL_STEP>
+							0 (&gt;O:XMLVAR_Needles_Init_Animation_Playing)
+							0 (&gt;O:XMLVAR_UpdateCount)
+						</FINAL_STEP>
+					</False>
+				</Condition>
+			</DefaultTemplateParameters>
+			<Condition Check="NO_GLIDE_LOCALIZER_INIT_ANIMATION">
+				<False>
+					<Update Frequency="#WATCHER_FREQ#">
+						(* Avionics switch watcher *)
+						(A:CIRCUIT AVIONICS ON, Bool) sp0
+						l0 (O:XMLVAR_Avionics_ON) != if{
+							l0 if{
+								1 (&gt;O:XMLVAR_Needles_Init_Animation_Playing)
+								0 (&gt;O:XMLVAR_AnimationStep)
+							} els{
+								#FINAL_STEP#
+							}
+						}
+						l0 (&gt;O:XMLVAR_Avionics_ON)
+						(* Animation steps handling *)
+						(O:XMLVAR_Needles_Init_Animation_Playing) if{
+							(O:XMLVAR_UpdateCount) #UPDATE_SKIPPED_COUNT# % 0 == if{
+								(O:XMLVAR_AnimationStep) 0 == if{
+									#FIRST_STEP#
+								} els{
+									(O:XMLVAR_AnimationStep) 1 == if{
+										#ANIM_STEP_1#
+									} els{
+										(O:XMLVAR_AnimationStep) 2 == if{
+											#ANIM_STEP_2#
+										} els{
+											(O:XMLVAR_AnimationStep) 3 == if{
+												#ANIM_STEP_3#
+											} els{
+												(O:XMLVAR_AnimationStep) 4 == if{
+													#FINAL_STEP#
+												} 
+											}
+										}
+									}
+								}
+								(O:XMLVAR_AnimationStep) 1 + (&gt;O:XMLVAR_AnimationStep)
+							}
+							(O:XMLVAR_UpdateCount) 1 + (&gt;O:XMLVAR_UpdateCount)
+						}
+					</Update>
+				</False>
+			</Condition>
+			<Condition Check="NO_NEEDLE_GLIDE">
+				<False>
+					<UseTemplate Name="ASOBO_GT_Anim_Code">
+						<ANIM_NAME>#ANIM_NAME_NEEDLE_GLIDE#</ANIM_NAME>
+						<!-- Glidslope deviation (horizontal bar) -->
+						<ANIM_LENGTH>254</ANIM_LENGTH>
+						<ANIM_CODE>
+							(O:XMLVAR_Needles_Init_Animation_Playing) if{
+								(O:XMLVAR_GlideTargetPosition) 127 +
+							} els{ 
+								#GLIDEPATH_ANIM_CODE#
+							}
+						</ANIM_CODE>
+						<!-- -127 to + 127 => 0 to 254 -->
+						<ANIM_LAG>600</ANIM_LAG>
+					</UseTemplate>
+				</False>
+			</Condition>
+			<UseTemplate Name="ASOBO_GT_Anim_Code">
+				<ANIM_NAME>#ANIM_NAME_NEEDLE_LOCALIZER#</ANIM_NAME>
+				<!-- Course deviation (vertical bar) -->
+				<ANIM_LENGTH>254</ANIM_LENGTH>
+				<ANIM_CODE>
+					(O:XMLVAR_Needles_Init_Animation_Playing) if{
+						(O:XMLVAR_LocalizerTargetPosition) 127 +
+					} els{
+						#LOCALIZER_ANIM_CODE#
+					}
+				</ANIM_CODE>
+				<ANIM_LAG>600</ANIM_LAG>
+				<!-- -127 to + 127 => 0 to 254 -->
+			</UseTemplate>
+		</Component>
+		<Condition Check="NO_FLAG_GLIDE">
+			<False>
+				<UseTemplate Name="ASOBO_GT_Anim_Code">
+					<ANIM_NAME>#ANIM_NAME_FLAG_GLIDE#</ANIM_NAME>
+					<ANIM_CODE>(A:CIRCUIT NAVCOM#ID# ON, Bool) (A:COM VOLUME:#ID#,Percent) 0 &gt; and if{
+							(A:NAV HAS GLIDE SLOPE:#ID#, Bool) 0 != 100 *
+						} els{
+							0
+						}
+						</ANIM_CODE>
+					<ANIM_LAG>400</ANIM_LAG>
+				</UseTemplate>
+			</False>
+		</Condition>
+		<Condition Check="NO_FLAG_LOCALIZER">
+			<False>
+				<UseTemplate Name="ASOBO_GT_Anim_Code">
+					<ANIM_NAME>#ANIM_NAME_FLAG_LOCALIZER#</ANIM_NAME>
+					<ANIM_CODE>(A:CIRCUIT NAVCOM#ID# ON, Bool) (A:COM VOLUME:#ID#,Percent) 0 &gt; and  if{
+						(A:NAV HAS NAV:#ID#, Bool) 0 != (A:GPS IS ACTIVE FLIGHT PLAN:#ID#, Bool) 0 != or 100 * 
+						} els{
+							0
+						}
+						</ANIM_CODE>
+					<ANIM_LAG>400</ANIM_LAG>
+				</UseTemplate>
+			</False>
+		</Condition>
+		<Condition Check="NO_EMISSIVE_NAV">
+			<False>
+				<Component ID="#NODE_ID_EMISSIVE_NAV#" Node="#NODE_ID_EMISSIVE_NAV#">
+					<UseTemplate Name="ASOBO_GT_Emissive_Gauge">
+						<EMISSIVE_CODE>(A:CIRCUIT NAVCOM#ID# ON, Bool) (A:COM VOLUME:#ID#,Percent) 0 &gt; and  if{
+							(A:NAV HAS NAV:#ID#, Bool)
+							} els{
+								0
+							}
+							</EMISSIVE_CODE>
+					</UseTemplate>
+				</Component>
+			</False>
+		</Condition>
+		<Condition Check="NO_EMISSIVE_VLOC">
+			<False>
+				<Component ID="#NODE_ID_EMISSIVE_VLOC#" Node="#NODE_ID_EMISSIVE_VLOC#">
+					<UseTemplate Name="ASOBO_GT_Emissive_Gauge">
+						<EMISSIVE_CODE>0</EMISSIVE_CODE>
+					</UseTemplate>
+				</Component>
+			</False>
+		</Condition>
+		<Condition Check="NO_EMISSIVE_GPS">
+			<False>
+				<Component ID="#NODE_ID_EMISSIVE_GPS#" Node="#NODE_ID_EMISSIVE_GPS#">
+					<UseTemplate Name="ASOBO_GT_Emissive_Gauge">
+						<EMISSIVE_CODE>(A:CIRCUIT NAVCOM#ID# ON, Bool) (A:COM VOLUME:#ID#,Percent) 0 &gt; and  if{
+							(A:GPS DRIVES NAV1:#ID#, Bool)
+							} els{
+								0
+							}
+						</EMISSIVE_CODE>
+					</UseTemplate>
+				</Component>
+			</False>
+		</Condition>
+
+		<Condition Check="HIGHLIGHT_NODE_ID">
+			<UseTemplate Name="ASOBO_GT_Highlight_Template">
+				<PART_ID>#HIGHLIGHT_PART_ID#</PART_ID>
+			</UseTemplate>
+		</Condition>
+	</Component>
+</Template>

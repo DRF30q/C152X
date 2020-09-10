@@ -19,7 +19,18 @@
 	<Include Path="Asobo\Transponder\\Transponder.xml"/>
 	<Include Path="Asobo\NAVCOM\NavComSystem.xml"/>
 	<Include Path="Asobo\NAVCOM\ADF.xml"/>  
-
+  <Include Path="C152X\Common.xml"/>
+	
+	
+	<!-- The calculations generate a fuel tank level indication variation based on current yaw acceleration and the current tank level.  It will generate a greater variation for an empty tank vs a full tank and the 20 in the formula is a scaling factor for the amount of yaw induced variation in the tank indication. The first value is the current tank quantity in liters. 	The fuel tank sensors are on the inboard side of each tank so the effect will be opposite on the left and right tanks-->
+	<Macro Name="FuelTankSensorAdjustmentLeftTank">
+			1 (A:FUEL LEFT QUANTITY, gallon) (A:FUEL TANK LEFT MAIN CAPACITY, gallon) / - 20 * (A:TURN COORDINATOR BALL, scaler) * -
+	</Macro>	
+	
+	<Macro Name="FuelTankSensorAdjustmentRightTank">
+			1 (A:FUEL RIGHT QUANTITY, gallon) (A:FUEL TANK RIGHT MAIN CAPACITY, gallon) / - 20 * (A:TURN COORDINATOR BALL, scaler) * +
+	</Macro>
+	
 	<!-- DEICE ########################### -->
 	<Component ID="DEICE">
 		<UseTemplate Name="ASOBO_DEICE_Lever_Engine_Template">
@@ -205,39 +216,79 @@
 			<MIN_VALUE>0</MIN_VALUE>
 			<MAX_VALUE>3500</MAX_VALUE>
 			<CREATE_HIGHLIGHT_NODE/>
-		</UseTemplate>
+		</UseTemplate>		
+				
+		<!-- INSTRUMENT CDI 1	
 		
-		<UseTemplate Name="ASOBO_INSTRUMENT_CDI_Template">
-		</UseTemplate>
+		Rebuilt gauge. DRF30q
 		
-		<UseTemplate Name="ASOBO_INSTRUMENT_CDI_Template">
-			<ID>2</ID>
+		CDI now responds correctly to:
+		- User selected On/Off state of corresponding NAV/COM Radio.
+		- Power state of corresponding NAV/COM Radio.
+		
+		CDI gauge will power off when Avionics Power switched off.
+		CDI gauge will power off when the applicable NAV/COM Radio is turned off using the Volume/Off knob.
+		CDI gauge will power off if the battery discharges and the voltage level supplied to the applicable	
+		NAV/COM radio drops below the minimum required for operation.
+		
+		Glideslope/Localiser Needle behaviour adjusted.
+		Glideslope/Localiser Flag behaviour adjusted.
+		NAV Flag behaviour adjusted.
+		-->
+		
+		<UseTemplate Name="C152X_INSTRUMENT_CDI_Template">						
+		</UseTemplate>		
+		
+		<!-- INSTRUMENT CDI 2 		
+		
+		Rebuilt gauge. DRF30q
+		
+		CDI now responds correctly to:
+		- User selected On/Off state of corresponding NAV/COM Radio.
+		- Power state of corresponding NAV/COM Radio.
+		
+		CDI gauge will power off when Avionics Power switched off.
+		CDI gauge will power off when the applicable NAV/COM Radio is turned off using the Volume/Off knob.
+		CDI gauge will power off if the battery discharges and the voltage level supplied to the applicable	
+		NAV/COM radio drops below the minimum required for operation.
+		
+		Glideslope/Localiser Needle behaviour adjusted.
+		Glideslope/Localiser Flag behaviour adjusted.
+		NAV Flag behaviour adjusted.
+		-->
+		<UseTemplate Name="C152X_INSTRUMENT_CDI_Template">
+			<ID>2</ID>				
 		</UseTemplate>
 		
 		<UseTemplate Name="ASOBO_INSTRUMENT_Dial_Compass_Template">
-		</UseTemplate>
-	
+		</UseTemplate>		
 		<Component ID="INSTRUMENTS_Electrical">
 			<DefaultTemplateParameters>
 				<FAILURE>(A:ELECTRICAL MAIN BUS VOLTAGE, Volts) 14 &gt;</FAILURE>
 				<ANIM_LAG>100</ANIM_LAG>
 			</DefaultTemplateParameters>
-			<UseTemplate Name="ASOBO_INSTRUMENT_Needle_Fuel_Quantity_Template">
+			
+			<UseTemplate Name="ASOBO_INSTRUMENT_Needle_Fuel_Quantity_Template">				
 				<TANK_ID>LEFT MAIN</TANK_ID>
 				<FAILURE_CODE>0</FAILURE_CODE>
-				<USE_CUSTOM_POINTS>True</USE_CUSTOM_POINTS><!-- Using custom points since the animation non linear -->
-				<SIMVAR_UNIT>liter</SIMVAR_UNIT>				
-				<!-- The calculations generate a fuel tank level indication variation based on current yaw acceleration and the current tank level.  It will generate a greater variation for an empty tank vs a full tank and the 20 in the formula is a scaling factor for the amount of yaw induced variation in the tank indication. The first value is the current tank quantity in liters. 	The fuel tank sensors are on the inboard side of each tank so the effect will be opposite on the left and right tanks-->
+				<USE_CUSTOM_POINTS>True</USE_CUSTOM_POINTS>
+				
+				<!-- Using custom points since the animation non linear. For realism, Left/Right gauges have slightly different calibration. Data for Left gauge was aligned with graphic...-->
+				
+				<SIMVAR_UNIT>liter</SIMVAR_UNIT>	
+				
+				<!-- The calculations generate a fuel tank level indication variation based on current yaw acceleration and the current tank level.  It will generate a greater variation for an empty tank vs a full tank.  The fuel tank sensors are on the inboard side of each tank so the effect will be opposite on the left and right tanks-->	
+				
 				<REF_VALUE_0>0</REF_VALUE_0>	<!--0USG EMPTY-->
-				<REF_VALUE_1>11.5 1 (A:FUEL LEFT QUANTITY, gallon) (A:FUEL TANK LEFT MAIN CAPACITY, gallon) / - 20 * (A:TURN COORDINATOR BALL, scaler) * -</REF_VALUE_11> <!--3USG 22.7L-->
-				<REF_VALUE_2>22.7 1 (A:FUEL LEFT QUANTITY, gallon) (A:FUEL TANK LEFT MAIN CAPACITY, gallon) / - 20 * (A:TURN COORDINATOR BALL, scaler) * -</REF_VALUE_21>  <!--6USG 22.7L-->
-				<REF_VALUE_3>30.3 1 (A:FUEL LEFT QUANTITY, gallon) (A:FUEL TANK LEFT MAIN CAPACITY, gallon) / - 20 * (A:TURN COORDINATOR BALL, scaler) * -</REF_VALUE_31> <!--8USG 22.7L-->
-				<REF_VALUE_4>37.9 1 (A:FUEL LEFT QUANTITY, gallon) (A:FUEL TANK LEFT MAIN CAPACITY, gallon) / - 20 * (A:TURN COORDINATOR BALL, scaler) * -</REF_VALUE_41> <!--10USG 22.7L-->
-				<REF_VALUE_5>45.4 1 (A:FUEL LEFT QUANTITY, gallon) (A:FUEL TANK LEFT MAIN CAPACITY, gallon) / - 20 * (A:TURN COORDINATOR BALL, scaler) * -</REF_VALUE_51> <!--12USG 22.7L-->
-				<REF_VALUE_6>52.9 1 (A:FUEL LEFT QUANTITY, gallon) (A:FUEL TANK LEFT MAIN CAPACITY, gallon) / - 20 * (A:TURN COORDINATOR BALL, scaler) * -</REF_VALUE_61> <!--14USG 22.7L-->
-				<REF_VALUE_7>60.6 1 (A:FUEL LEFT QUANTITY, gallon) (A:FUEL TANK LEFT MAIN CAPACITY, gallon) / - 20 * (A:TURN COORDINATOR BALL, scaler) * -</REF_VALUE_71> <!--16USG 22.7L-->
-				<REF_VALUE_8>68.1 1 (A:FUEL LEFT QUANTITY, gallon) (A:FUEL TANK LEFT MAIN CAPACITY, gallon) / - 20 * (A:TURN COORDINATOR BALL, scaler) * -</REF_VALUE_81> <!--18USG 68.1L-->
-				<REF_VALUE_9>73.8 1 (A:FUEL LEFT QUANTITY, gallon) (A:FUEL TANK LEFT MAIN CAPACITY, gallon) / - 20 * (A:TURN COORDINATOR BALL, scaler) * -</REF_VALUE_91> <!--19.5USG FULL-->
+				<REF_VALUE_1>11.5 @FuelTankSensorAdjustmentLeftTank</REF_VALUE_11> <!--3USG 22.7L-->
+				<REF_VALUE_2>22.7 @FuelTankSensorAdjustmentLeftTank</REF_VALUE_21>  <!--6USG 22.7L-->
+				<REF_VALUE_3>30.3 @FuelTankSensorAdjustmentLeftTank</REF_VALUE_31> <!--8USG 22.7L-->
+				<REF_VALUE_4>37.9 @FuelTankSensorAdjustmentLeftTank</REF_VALUE_41> <!--10USG 22.7L-->
+				<REF_VALUE_5>45.4 @FuelTankSensorAdjustmentLeftTank</REF_VALUE_51> <!--12USG 22.7L-->
+				<REF_VALUE_6>52.9 @FuelTankSensorAdjustmentLeftTank</REF_VALUE_61> <!--14USG 22.7L-->
+				<REF_VALUE_7>60.6 @FuelTankSensorAdjustmentLeftTank</REF_VALUE_71> <!--16USG 22.7L-->
+				<REF_VALUE_8>68.1 @FuelTankSensorAdjustmentLeftTank</REF_VALUE_81> <!--18USG 68.1L-->
+				<REF_VALUE_9>73.8 @FuelTankSensorAdjustmentLeftTank</REF_VALUE_91> <!--19.5USG FULL-->
 				<ANIM_VALUE_0>0</ANIM_VALUE_0>
 				<ANIM_VALUE_1>15</ANIM_VALUE_1>
 				<ANIM_VALUE_2>35</ANIM_VALUE_2>
@@ -258,19 +309,23 @@
 				<FAILURE_CODE>0</FAILURE_CODE>
 				<ID>2</ID>
 				<USE_CUSTOM_POINTS>True</USE_CUSTOM_POINTS>
+				
 				<!-- Using custom points since the animation non linear. For realism, Left/Right gauges have slightly different calibration. Data for Left gauge was aligned with graphic...-->
+				
 				<SIMVAR_UNIT>liter</SIMVAR_UNIT>
-				<!-- The calculations generate a fuel tank level indication variation based on current yaw acceleration and the current tank level.  It will generate a greater variation for an empty tank vs a full tank and the 20 in the formula is a scaling factor for the amount of yaw induced variation in the tank indication. The first value is the current tank quantity in liters. 	The fuel tank sensors are on the inboard side of each tank so the effect will be opposite on the left and right tanks-->
+				
+				<!-- The calculations generate a fuel tank level indication variation based on current yaw acceleration and the current tank level.  It will generate a greater variation for an empty tank vs a full tank.  The fuel tank sensors are on the inboard side of each tank so the effect will be opposite on the left and right tanks-->
+				
 				<REF_VALUE_0>0</REF_VALUE_0>	<!--0USG EMPTY-->
-				<REF_VALUE_1>11.5 1 (A:FUEL RIGHT QUANTITY, gallon) (A:FUEL TANK RIGHT MAIN CAPACITY, gallon) / - 20 * (A:TURN COORDINATOR BALL, scaler) * +</REF_VALUE_11> <!--3USG 22.7L-->
-				<REF_VALUE_2>22.7 1 (A:FUEL RIGHT QUANTITY, gallon) (A:FUEL TANK RIGHT MAIN CAPACITY, gallon) / - 20 * (A:TURN COORDINATOR BALL, scaler) * +</REF_VALUE_21>  <!--6USG 22.7L-->
-				<REF_VALUE_3>30.3 1 (A:FUEL RIGHT QUANTITY, gallon) (A:FUEL TANK RIGHT MAIN CAPACITY, gallon) / - 20 * (A:TURN COORDINATOR BALL, scaler) * +</REF_VALUE_31> <!--8USG 22.7L-->
-				<REF_VALUE_4>37.9 1 (A:FUEL RIGHT QUANTITY, gallon) (A:FUEL TANK RIGHT MAIN CAPACITY, gallon) / - 20 * (A:TURN COORDINATOR BALL, scaler) * +</REF_VALUE_41> <!--10USG 22.7L-->
-				<REF_VALUE_5>45.4 1 (A:FUEL RIGHT QUANTITY, gallon) (A:FUEL TANK RIGHT MAIN CAPACITY, gallon) / - 20 * (A:TURN COORDINATOR BALL, scaler) * +</REF_VALUE_51> <!--12USG 22.7L-->
-				<REF_VALUE_6>52.9 1 (A:FUEL RIGHT QUANTITY, gallon) (A:FUEL TANK RIGHT MAIN CAPACITY, gallon) / - 20 * (A:TURN COORDINATOR BALL, scaler) * +</REF_VALUE_61> <!--14USG 22.7L-->
-				<REF_VALUE_7>60.6 1 (A:FUEL RIGHT QUANTITY, gallon) (A:FUEL TANK RIGHT MAIN CAPACITY, gallon) / - 20 * (A:TURN COORDINATOR BALL, scaler) * +</REF_VALUE_71> <!--16USG 22.7L-->
-				<REF_VALUE_8>68.1 1 (A:FUEL RIGHT QUANTITY, gallon) (A:FUEL TANK RIGHT MAIN CAPACITY, gallon) / - 20 * (A:TURN COORDINATOR BALL, scaler) * +</REF_VALUE_81> <!--18USG 68.1L-->
-				<REF_VALUE_9>73.8 1 (A:FUEL RIGHT QUANTITY, gallon) (A:FUEL TANK RIGHT MAIN CAPACITY, gallon) / - 20 * (A:TURN COORDINATOR BALL, scaler) * +</REF_VALUE_91> <!--19.5USG FULL-->
+				<REF_VALUE_1>11.5 @FuelTankSensorAdjustmentRightTank</REF_VALUE_11> <!--3USG 22.7L-->
+				<REF_VALUE_2>22.7 @FuelTankSensorAdjustmentRightTank</REF_VALUE_21>  <!--6USG 22.7L-->
+				<REF_VALUE_3>30.3 @FuelTankSensorAdjustmentRightTank</REF_VALUE_31> <!--8USG 22.7L-->
+				<REF_VALUE_4>37.9 @FuelTankSensorAdjustmentRightTank</REF_VALUE_41> <!--10USG 22.7L-->
+				<REF_VALUE_5>45.4 @FuelTankSensorAdjustmentRightTank</REF_VALUE_51> <!--12USG 22.7L-->
+				<REF_VALUE_6>52.9 @FuelTankSensorAdjustmentRightTank</REF_VALUE_61> <!--14USG 22.7L-->
+				<REF_VALUE_7>60.6 @FuelTankSensorAdjustmentRightTank</REF_VALUE_71> <!--16USG 22.7L-->
+				<REF_VALUE_8>68.1 @FuelTankSensorAdjustmentRightTank</REF_VALUE_81> <!--18USG 68.1L-->
+				<REF_VALUE_9>73.8 @FuelTankSensorAdjustmentRightTank</REF_VALUE_91> <!--19.5USG FULL-->
 				<ANIM_VALUE_0>0</ANIM_VALUE_0>
 				<ANIM_VALUE_1>13</ANIM_VALUE_1>
 				<ANIM_VALUE_2>37</ANIM_VALUE_2>
@@ -382,7 +437,7 @@
 			<ID>1</ID>
 			<BUTTON_EMISSIVE_FACTOR>0.2</BUTTON_EMISSIVE_FACTOR>
 			<DONT_APPEND_ID>True</DONT_APPEND_ID>
-			<FAILURE>(A:COM VOLUME:1,Percent) 0 &gt; (A:CIRCUIT GENERAL PANEL ON, Bool) and</FAILURE>
+			<FAILURE>(A:COM VOLUME:1,Percent) 0 &gt; (A:CIRCUIT GENERAL PANEL ON, Bool) and</FAILURE>			
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_NAVCOM_Simple_Radio_Template">
 			<ID>2</ID>

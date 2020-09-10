@@ -41,8 +41,28 @@
             "date": "132402817714110148"
         },
         {
+            "path": "ModelBehaviorDefs/C152X/Common.xml",
+            "size": 36,
+            "date": "132402817714110148"
+        },
+        {
+            "path": "ModelBehaviorDefs/C152X/Common/Index.xml",
+            "size": 65,
+            "date": "132402817714110148"
+        },
+        {
+            "path": "ModelBehaviorDefs/C152X/Common/Instrument.xml",
+            "size": 1114,
+            "date": "132402817714110148"
+        },
+        {
+            "path": "ModelBehaviorDefs/C152X/Common/Subtemplates/Instrument_Subtemplates.xml",
+            "size": 13384,
+            "date": "132402817714110148"
+        },
+        {
             "path": "SimObjects/Airplanes/Asobo_C152/aircraft.cfg",
-            "size": 3068,
+            "size": 3060,
             "date": "132402817714110148"
         },
         {
@@ -52,7 +72,7 @@
         },
         {
             "path": "SimObjects/Airplanes/Asobo_C152/apron.flt",
-            "size": 2711,
+            "size": 2710,
             "date": "132402817714110148"
         },
         {
@@ -97,7 +117,7 @@
         },
         {
             "path": "SimObjects/Airplanes/Asobo_C152/systems.cfg",
-            "size": 9286,
+            "size": 9141,
             "date": "132402817714110148"
         },
         {
@@ -112,7 +132,7 @@
         },
         {
             "path": "SimObjects/Airplanes/Asobo_C152/model/Cessna152_interior.XML",
-            "size": 22641,
+            "size": 23228,
             "date": "132402817714110148"
         },
         {

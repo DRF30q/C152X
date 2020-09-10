@@ -4,6 +4,10 @@
       "name": "asobo-aircraft-c152",
       "package_version": "0.1.46"
     }
+		{
+			"name": "fs-base-aircraft-common",
+			"package_version": "0.1.61"
+    }
   ],
   "content_type": "AIRCRAFT",
   "title": "Cessna 152X",

@@ -1,5 +1,5 @@
 # MSFS C152X Realism Mod
-V0.12
+V0.14
   
 
 ## Installation
@@ -9,7 +9,7 @@ The installation does not create a new aircraft selection in the simulator.  The
 
 Note that none of the base files for the default aircraft are directly modified in any way.  Removing the "C152X" folder from the community package folder should remove and deactivate the C152X Realism Mod.
 
-### 0.12
+### 0.14
 Some of the current improvements (not exhaustive):
 - Modified stall speeds flap up/flap down in accordance with published information.  Aircraft will now stall at a significantly higher speed.
 - Numerous changes to engine performance, now in accordance with Lycoming O-235L2C (115HP, 2700RPM) See note below.
@@ -27,6 +27,19 @@ Some of the current improvements (not exhaustive):
 - Low voltage light now comes on below ~ 1000 RPM as in real life.
 - OAT thermometer now operates regardless of the position of the master switch.
 - The overhead (Dome) light can now be dimmed by the dimmer knob below the pilot control yoke.
+- The NAV CDI gauges completely revised:
+		CDI gauges now responds correctly to:
+		- User selected On/Off state of corresponding NAV/COM Radio.
+		- Power state of corresponding NAV/COM Radio.
+		
+		- CDI gauge will power off when Avionics Power switched off.
+		- CDI gauge will power off when the applicable NAV/COM Radio is turned off using the Volume/Off knob.
+		 -CDI gauge will power off if the battery discharges and the voltage level supplied to the applicable	
+			NAV/COM radio drops below the minimum required for operation.
+			
+		- Glideslope/Localiser Needle behaviour adjusted.
+		- Glideslope/Localiser Flag behaviour adjusted.
+		- NAV Flag behaviour adjusted.
 
 ### Notes:  
  - The default aircraft panel has a Tachometer with a 2700RPM redline.  As a result I have taken the decision to model the C152 with the corresponding and slightly uprated 115HP engine.  (It is essentially the same engine as the 'standard' C152 Lycoming engine with 110HP/2550RPM redline, with a few extra horsepower gained from the additional RPM.  The standard performance charts eg cruise power settings etc will still be valid. The extra horsepower means slightly better takeoff and go-around performance and a slightly higher service ceiling.  The current version tested in the sim has a service ceiling around 15,500ft.)
@@ -39,6 +52,9 @@ Initial release.
 
 [0.12] - 2020-09-05
 Corrected situation with no avionics power in certain startup situations.
+
+[0.14] - 2020-09-10
+Navigation CDI gauges completely revised.
 
 ## Donation
 
