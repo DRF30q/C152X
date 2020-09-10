@@ -30,8 +30,7 @@ Some of the current improvements (not exhaustive):
 - The NAV CDI gauges completely revised:
 		CDI gauges now responds correctly to:
 		- User selected On/Off state of corresponding NAV/COM Radio.
-		- Power state of corresponding NAV/COM Radio.
-		
+		- Power state of corresponding NAV/COM Radio.		
 		- CDI gauge will power off when Avionics Power switched off.
 		- CDI gauge will power off when the applicable NAV/COM Radio is turned off using the Volume/Off knob.
 		 -CDI gauge will power off if the battery discharges and the voltage level supplied to the applicable	
