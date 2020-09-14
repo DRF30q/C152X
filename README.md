@@ -42,7 +42,7 @@ Some of the current improvements (not exhaustive):
 - ADF Needle is driven to point to the selected NDB station only in ADF Mode. (Note that currently the ADF Mode Knob defaults to BFO Mode and must be manually rotated to ADF Mode.)
 - ADF Needle remains in current position in ADF Mode when no signal received from an NDB on the currently selected frequency.
 - ADF Needle remains in current position in BFO and REC Modes.
-- ADF Needle is slewed in a clockwise direction while ADF Mode Knob held in TEST position.  When releasd the ADF Mode Knob spring returns to ADF Mode.
+- ADF Needle is slewed in a clockwise direction while ADF Mode Knob held in TEST position.  When released, the ADF Mode Knob spring returns to ADF Mode.
 - ADF Needle remains in current position when ADF Radio is turned off using the Volume/Off knob.
 - ADF Needle remains in current position if battery discharges and voltage level to the radio drops below the minimum required for operation.
 
