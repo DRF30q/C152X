@@ -1,0 +1,22 @@
+<Include File="Subtemplates\\Instrument_Subtemplates.xml"/>
+<!-- Instruments #################################################### -->
+<Template Name="C152X_INSTRUMENT_Needle_ADF_Template">
+	<DefaultTemplateParameters>
+		<ID>1</ID>
+	</DefaultTemplateParameters>
+	
+	<UseTemplate Name="ASOBO_GT_Helper_Suffix_ID_Appender">
+		<TEMPLATE_TO_CALL>C152X_INSTRUMENT_Needle_ADF_SubTemplate</TEMPLATE_TO_CALL>
+	</UseTemplate>
+</Template>
+
+<Template Name="C152X_INSTRUMENT_CDI_Template">
+	<DefaultTemplateParameters>
+		<ID>1</ID>
+		<PART_ID>INSTRUMENT_CDI</PART_ID>
+	</DefaultTemplateParameters>
+	
+	<UseTemplate Name="ASOBO_GT_Helper_Suffix_ID_Appender">
+		<TEMPLATE_TO_CALL>C152X_INSTRUMENT_CDI_SubTemplate</TEMPLATE_TO_CALL>
+	</UseTemplate>
+</Template>

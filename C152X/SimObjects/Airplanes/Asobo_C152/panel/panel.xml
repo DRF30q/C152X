@@ -1,0 +1,17 @@
+<PlaneHTMLConfig>
+
+	<Instrument>
+		<Name>C300ADF</Name>
+		<Electric>
+			<And>
+				<Greater>
+					<Simvar name="ADF VOLUME:1" unit="Percent"/>
+					<Constant>0</Constant>
+				</Greater>
+				<Simvar name="CIRCUIT AVIONICS ON" unit="Boolean"/>
+			</And>
+		</Electric>
+	</Instrument>
+
+</PlaneHTMLConfig>
+  

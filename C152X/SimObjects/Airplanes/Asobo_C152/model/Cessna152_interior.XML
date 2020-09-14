@@ -19,7 +19,9 @@
 	<Include Path="Asobo\Transponder\\Transponder.xml"/>
 	<Include Path="Asobo\NAVCOM\NavComSystem.xml"/>
 	<Include Path="Asobo\NAVCOM\ADF.xml"/>  
-  <Include Path="C152X\Common.xml"/>
+  
+	<Include Path="C152X\Asobo\Common.xml"/>
+	<Include Path="C152X\Asobo\NAVCOM\ADF.xml"/>
 	
 	
 	<!-- The calculations generate a fuel tank level indication variation based on current yaw acceleration and the current tank level.  It will generate a greater variation for an empty tank vs a full tank and the 20 in the formula is a scaling factor for the amount of yaw induced variation in the tank indication. The first value is the current tank quantity in liters. 	The fuel tank sensors are on the inboard side of each tank so the effect will be opposite on the left and right tanks-->
@@ -55,6 +57,8 @@
 			<INDEX_BOTH>3</INDEX_BOTH>
 			<ARROW_TYPE>Curved</ARROW_TYPE>
 			<USE_STARTER/>
+			<!-- Max time in START pos (any input except mouse), when using mouse will stay for this time0 -->
+			<STATE_MAX_TIMER>3</STATE_MAX_TIMER>
 			<ANIMREF_ID>0</ANIMREF_ID>
 			<ANIMCURSOR_DIR>1</ANIMCURSOR_DIR>
 			<ANIMTIP_0>TT:COCKPIT.TOOLTIPS.MAGNETO_START_SWITCH_OFF</ANIMTIP_0>
@@ -167,8 +171,9 @@
 
 	<!-- INSTRUMENTS ########################### -->
 	<Component ID="INSTRUMENTS">
-		<UseTemplate Name="ASOBO_INSTRUMENT_Needle_ADF_Template">
+		<UseTemplate Name="C152X_INSTRUMENT_Needle_ADF_Template">
 			<ADF_KNOB/>
+			<ANIM_LAG>100</ANIM_LAG>
 		</UseTemplate>
 		
 		<UseTemplate Name="ASOBO_PRESSURIZATION_Needle_Suction_Template">
@@ -518,6 +523,7 @@
 			</UseTemplate>
 		</Component>
 	</Component>
+	
 	<Component ID="ADF">
 		<DefaultTemplateParameters>
 			<DONT_APPEND_ID>True</DONT_APPEND_ID>
@@ -525,10 +531,13 @@
 		</DefaultTemplateParameters>
 		<UseTemplate Name="ASOBO_ADF_3Knobs_Frequency_Template">
 		</UseTemplate>
+		<!-- existing ASOBO template for knob volume fine for now.... --->
 		<UseTemplate Name="ASOBO_ADF_Knob_Volume_Template">
 		</UseTemplate>
-		<UseTemplate Name="ASOBO_ADF_Knob_Mode_Template">
-			<ANIM_LAG>300</ANIM_LAG>
+		<!-- New knob for ADF mode, uses 4 position switch.... --->
+		<UseTemplate Name="C152X_ADF_Knob_Mode_Template">			
+			
+			<ANIM_LAG>600</ANIM_LAG>
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_GT_Component_Emissive_Gauge">
 			<NODE_ID>ADF_Screen</NODE_ID>
@@ -536,6 +545,7 @@
 			<FAILURE>(A:ADF VOLUME:1, Percent) 0 &gt; (A:CIRCUIT GENERAL PANEL ON, Bool) and</FAILURE>
 		</UseTemplate>
 	</Component>
+	
 	<Component ID="TRANSPONDER">
 		<UseTemplate Name="ASOBO_5Knobs_Transponder_Template">			
 			<DONT_APPEND_ID>True</DONT_APPEND_ID>

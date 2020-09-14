@@ -27,7 +27,7 @@
         },
         {
             "path": "pl-PL.locPak",
-            "size": 1479,
+            "size": 1480,
             "date": "132402817714110148"
         },
         {
@@ -41,28 +41,33 @@
             "date": "132402817714110148"
         },
         {
-            "path": "ModelBehaviorDefs/C152X/Common.xml",
+            "path": "ModelBehaviorDefs/C152X/Asobo/Common.xml",
             "size": 36,
             "date": "132402817714110148"
         },
         {
-            "path": "ModelBehaviorDefs/C152X/Common/Index.xml",
-            "size": 65,
+            "path": "ModelBehaviorDefs/C152X/Asobo/Common/Index.xml",
+            "size": 63,
             "date": "132402817714110148"
         },
         {
-            "path": "ModelBehaviorDefs/C152X/Common/Instrument.xml",
-            "size": 1114,
+            "path": "ModelBehaviorDefs/C152X/Asobo/Common/Instrument.xml",
+            "size": 763,
             "date": "132402817714110148"
         },
         {
-            "path": "ModelBehaviorDefs/C152X/Common/Subtemplates/Instrument_Subtemplates.xml",
-            "size": 13384,
+            "path": "ModelBehaviorDefs/C152X/Asobo/Common/Subtemplates/Instrument_Subtemplates.xml",
+            "size": 17747,
+            "date": "132402817714110148"
+        },
+        {
+            "path": "ModelBehaviorDefs/C152X/Asobo/NAVCOM/ADF.xml",
+            "size": 1993,
             "date": "132402817714110148"
         },
         {
             "path": "SimObjects/Airplanes/Asobo_C152/aircraft.cfg",
-            "size": 3060,
+            "size": 3065,
             "date": "132402817714110148"
         },
         {
@@ -132,12 +137,17 @@
         },
         {
             "path": "SimObjects/Airplanes/Asobo_C152/model/Cessna152_interior.XML",
-            "size": 23228,
+            "size": 23604,
             "date": "132402817714110148"
         },
         {
             "path": "SimObjects/Airplanes/Asobo_C152/panel/PANEL.CFG",
             "size": 979,
+            "date": "132402817714110148"
+        },
+        {
+            "path": "SimObjects/Airplanes/Asobo_C152/panel/panel.xml",
+            "size": 318,
             "date": "132402817714110148"
         }
     ]

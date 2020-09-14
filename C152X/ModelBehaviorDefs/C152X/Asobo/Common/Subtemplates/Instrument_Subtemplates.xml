@@ -357,3 +357,129 @@
 		</Condition>
 	</Component>
 </Template>
+
+
+<Template Name="C152X_INSTRUMENT_Needle_ADF_SubTemplate">
+	<DefaultTemplateParameters>
+		<KNOB_ANIM_NAME>INSTRUMENT_ADF_Knob#SUFFIX_ID#</KNOB_ANIM_NAME>
+		<KNOB_NODE_ID>INSTRUMENT_ADF_Knob#SUFFIX_ID#</KNOB_NODE_ID>
+		<NEEDLE_ANIM_NAME>INSTRUMENT_ADF_Needle#SUFFIX_ID#</KNOB_ANIM_NAME>
+		<NEEDLE_NODE_ID>INSTRUMENT_ADF_Needle#SUFFIX_ID#</KNOB_NODE_ID>
+		<CYLINDER_ANIM_NAME>INSTRUMENT_ADF_Dial#SUFFIX_ID#</CYLINDER_ANIM_NAME>
+		<CYLINDER_NODE_ID>INSTRUMENT_ADF_Dial#SUFFIX_ID#</CYLINDER_NODE_ID>
+		<PART_ID>INSTRUMENT_ADF</PART_ID>
+	</DefaultTemplateParameters>
+	<EditableTemplateParameters>
+		<AddParams>
+			<KNOB_ANIM_NAME></KNOB_ANIM_NAME>
+			<KNOB_NODE_ID></KNOB_NODE_ID>
+			<CYLINDER_ANIM_NAME></CYLINDER_ANIM_NAME>
+			<CYLINDER_NODE_ID></CYLINDER_NODE_ID>
+			<HIGHLIGHT_NODE_ID></HIGHLIGHT_NODE_ID>
+		</AddParams>
+		<AddOptions>
+			<ADF_KNOB></ADF_KNOB>
+		</AddOptions>
+		<RemoveParams>
+			<ANIM_NAME></ANIM_NAME>
+			<NODE_ID></NODE_ID>
+		</RemoveParams>
+	</EditableTemplateParameters>
+
+	<Component ID="INSTRUMENT_Needle_ADF">
+		<Component ID="#CYLINDER_ANIM_NAME#" Node="#CYLINDER_NODE_ID#">			
+			<UseTemplate Name="ASOBO_GT_Anim_Sim">
+				<ANIM_NAME>#CYLINDER_ANIM_NAME#</ANIM_NAME>
+				<ANIM_LENGTH>360</ANIM_LENGTH>
+				<ANIM_WRAP>TRUE</ANIM_WRAP>
+				<ANIM_SIMVAR>ADF CARD</ANIM_SIMVAR>
+				<ANIM_SIMVAR_UNITS>degrees</ANIM_SIMVAR_UNITS>
+				<!-- [0, 360] -->
+				<Condition Check="HIGHLIGHT_NODE_ID">
+					<PART_ID/>
+				</Condition>
+				<ANIM_WRAP>True</ANIM_WRAP>
+			</UseTemplate>
+			
+		</Component>
+		<Component ID="#NEEDLE_ANIM_NAME#" Node="#NEEDLE_NODE_ID#">			
+			<UseTemplate Name="ASOBO_GT_Anim_Code">						
+				<ANIM_NAME>#NEEDLE_ANIM_NAME#</ANIM_NAME>				
+				<ANIM_LENGTH>360</ANIM_LENGTH>
+				<ANIM_CODE>		
+					(* Default is current needle position *)
+					(L:XMLVAR_ADF_NEEDLE_POSITION, degrees)		
+					
+					(A:ADF VOLUME:1, Percent) 0 != (A:CIRCUIT NAVCOM2 ON, Bool) and if{							
+						(* ADF receiving power and not switched off *)
+						(* No sep ADF circuit var avail, so using NAVCOM2 *)
+						
+						(L:XMLVAR_ADF_MODE_SEL, enum) 0 == if{																	
+							(* BFO *)
+							(* Sense Antenna only *)
+							(* Needle remains in current position *)
+							
+						} 
+						els{						
+							(L:XMLVAR_ADF_MODE_SEL, enum) 1 == if{														
+								(* REC *)
+								(* Sense Antenna only *)
+								(* Needle remains in current position *)
+								
+							}							
+							els{							
+								(L:XMLVAR_ADF_MODE_SEL, enum) 2 == (A:ADF SIGNAL:1, number) 0 &gt; and if{														
+									(*ADF and NDB signal received *)
+									(* Sense and Loop Antenna active *)
+									(* Needle position updated to point towards NDB *)
+									
+									(A:ADF RADIAL:#ID#, degrees) 180 - (&gt;L:XMLVAR_ADF_NEEDLE_POSITION, degrees)
+									(L:XMLVAR_ADF_NEEDLE_POSITION, degrees)
+								}								
+								els{							
+									(L:XMLVAR_ADF_MODE_SEL, enum) 3 == if{
+										(* TEST *)
+										(* Needle position slewed in clockwise direction *)
+										
+										(L:XMLVAR_ADF_NEEDLE_POSITION, degrees) 1 + (&gt;L:XMLVAR_ADF_NEEDLE_POSITION, degrees)						
+										(L:XMLVAR_ADF_NEEDLE_POSITION, degrees)
+									}
+								}
+							}
+						}											
+					}
+				</ANIM_CODE>			
+					
+				<Condition Check="FAILURE_NEEDLE">
+					<FAILURE>#FAILURE_NEEDLE#</FAILURE>
+				</Condition>
+				<!-- [0, 360] -->
+				<Condition Check="HIGHLIGHT_NODE_ID">
+					<PART_ID/>
+				</Condition>
+				<ANIM_WRAP>True</ANIM_WRAP>
+						
+			</UseTemplate>
+			
+		</Component>
+		<Condition Check="ADF_KNOB">
+			<Component ID="#KNOB_NODE_ID#" Node="#KNOB_NODE_ID#">
+				<UseTemplate Name="ASOBO_GT_Knob_Infinite">
+					<ANIM_NAME>#KNOB_ANIM_NAME#</ANIM_NAME>
+					<HELPID>HELPID_GAUGE_VOR1_OBS </HELPID>
+					<TOOLTIPID>TT:COCKPIT.TOOLTIPS.COURSE_SELECT (%((A:ADF CARD, Degrees))%!d!°) </TOOLTIPID> 
+					<CLOCKWISE_CODE>(&gt;K:ADF_CARD_INC)</CLOCKWISE_CODE>
+					<ANTICLOCKWISE_CODE>(&gt;K:ADF_CARD_DEC)</ANTICLOCKWISE_CODE>
+					<Condition Check="HIGHLIGHT_NODE_ID">
+						<PART_ID/>
+					</Condition>
+				</UseTemplate>
+			</Component>
+		</Condition>
+		
+		<Condition Check="HIGHLIGHT_NODE_ID">
+			<UseTemplate Name="ASOBO_GT_Highlight_Template">
+			</UseTemplate>
+		</Condition>
+	</Component>
+</Template>

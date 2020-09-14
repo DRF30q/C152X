@@ -4,7 +4,7 @@
     "Strings": {
       "AIRCRAFT.DESCRIPTION": "W 1977 r. firma Cessna zaczęła modernizować swój niezwykle popularny samolot lekki Model 150, w wyniku czego powstała Cessna 152 – nowy dwuosobowy górnopłat, który szybko stał się klasykiem lotnictwa ogólnego i jednym z najpopularniejszych samolotów szkolnych okresu po II wojnie światowej.<br><br>W całym okresie produkcji modelu 152 (1977–1985 r.) w fabryce Cessny w Wichita w stanie Kansas oraz stowarzyszonej firmie Reims Aviation we Francji wyprodukowano ponad 7500 egzemplarzy.<br><br>Model 152, służący wiernie jak niezawodny wół roboczy, ma silnik o większej mocy niż poprzedni model oraz udoskonalone śmigło. Zmiany wprowadzone w jednostce napędowej i omaskowaniu silnika pozwoliły też zmniejszyć hałas i drgania.<br><br>Cessna 152 wybacza wiele błędów i łatwo nią latać, a dzięki konfiguracja górnopłata przekłada się na doskonałą widoczność z kabiny. Niewielka masa może stanowić dodatkowe wyzwanie podczas lotu z bocznym wiatrem, jednak sprawia też, że sterowanie jest łatwe i daje dużo przyjemności z lotu, niezależnie od tego, czy za sterami siedzi doświadczony pilot, czy ktoś, kto dopiero uczy się latać.",
       "AIRCRAFT.UI_MANUFACTURER": "Textron Aviation",
-      "AIRCRAFT.UI_MODEL": "Cessna 152",
+      "AIRCRAFT.UI_MODELX": "Cessna 152",
       "GAME.CHECKLIST_ADJUST_1000_RPM_OR_LESS": "WYREGULUJ na 1000 obr.\/min lub mniej"
     }
   }

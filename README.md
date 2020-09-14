@@ -1,5 +1,5 @@
 # MSFS C152X Realism Mod
-V0.14
+V0.15
   
 
 ## Installation
@@ -9,7 +9,7 @@ The installation does not create a new aircraft selection in the simulator.  The
 
 Note that none of the base files for the default aircraft are directly modified in any way.  Removing the "C152X" folder from the community package folder should remove and deactivate the C152X Realism Mod.
 
-### 0.14
+### 0.15
 Some of the current improvements (not exhaustive):
 - Modified stall speeds flap up/flap down in accordance with published information.  Aircraft will now stall at a significantly higher speed.
 - Numerous changes to engine performance, now in accordance with Lycoming O-235L2C (115HP, 2700RPM) See note below.
@@ -37,6 +37,14 @@ Some of the current improvements (not exhaustive):
 - CDI gauges, Glideslope/Localiser Needle behaviour adjusted.
 - CDI gauges, Glideslope/Localiser Flag behaviour adjusted.
 - CDI gauges, NAV Flag behaviour adjusted.
+- ADF Radio completely revised Knob behaviour. ADF Modes: BFO/REC/ADF and spring return TEST position.
+- ADF Rotatable Card gauge behaviour completely revised:
+- ADF Needle is driven to point to the selected NDB station only in ADF Mode. (Note that currently the ADF Mode Knob defaults to BFO Mode and must be manually rotated to ADF Mode.)
+- ADF Needle remains in current position in ADF Mode when no signal received from an NDB on the currently selected frequency.
+- ADF Needle remains in current position in BFO and REC Modes.
+- ADF Needle is slewed in a clockwise direction while ADF Mode Knob held in TEST position.  When releasd the ADF Mode Knob spring returns to ADF Mode.
+- ADF Needle remains in current position when ADF Radio is turned off using the Volume/Off knob.
+- ADF Needle remains in current position if battery discharges and voltage level to the radio drops below the minimum required for operation.
 
 ### Notes:  
  - The default aircraft panel has a Tachometer with a 2700RPM redline.  As a result I have taken the decision to model the C152 with the corresponding and slightly uprated 115HP engine.  (It is essentially the same engine as the 'standard' C152 Lycoming engine with 110HP/2550RPM redline, with a few extra horsepower gained from the additional RPM.  The standard performance charts eg cruise power settings etc will still be valid. The extra horsepower means slightly better takeoff and go-around performance and a slightly higher service ceiling.  The current version tested in the sim has a service ceiling around 15,500ft.)
@@ -53,6 +61,10 @@ Corrected situation with no avionics power in certain startup situations.
 [0.14] - 2020-09-10
 Navigation CDI gauges completely revised.
 
+[0.15] - 2020-09-14
+Aircraft name reverted to default.  Flight Training lessons now selectable. 
+Navigation ADF Radio and associated gauge completely revised.
+ 
 ## Donation
 
 If you enjoy the mod and would like to show your appreciation, a donation would great :).
