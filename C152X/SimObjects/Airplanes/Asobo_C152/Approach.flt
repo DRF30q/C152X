@@ -27,7 +27,7 @@ Com2Receive=False
 Com3Receive=False
 AudioNav1Listen=False
 AudioNav2Listen=False
-AudioMarkerListen=True
+AudioMarkerListen=False
 AudioDmeListen=False
 AudioAdfListen=False
 AudioAdf2Listen=False
@@ -71,6 +71,37 @@ TailhookHandle=False
 TailhookState=0
 FoldingWingsHandle=False
 FoldingWingsState=0, 0
+
+[LocalVars.0]
+;Note these settings may override standard config settings
+;-------------------------------------------- 
+;C152X Cessna 300 ADF
+XMLVAR_ADF_MODE_SEL=2	;2='ADF' Mode
+XMLVAR_ADF_VOLUME=100	;0=OFF, 100=FULL
+;--------------------------------------------
+;C152X KX155 DUAL NAVCOM
+XMLVAR_NAVCOM_COM_1_VOLUME=100	;0=OFF, 100=FULL
+XMLVAR_NAVCOM_COM_2_VOLUME=100	;0=OFF, 100=FULL
+XMLVAR_NAVCOM_COM_1_TEST=0			;0=SQ ENABLED, 1=TEST (PULLED)
+XMLVAR_NAVCOM_COM_2_TEST=0			;0=SQ ENABLED, 1=TEST (PULLED)
+
+XMLVAR_NAVCOM_NAV_1_VOLUME=100	;0=0,100=FULL
+XMLVAR_NAVCOM_NAV_2_VOLUME=100	;0=0,100=FULL
+XMLVAR_NAVCOM_NAV_1_IDENT=0			;0=OFF, 1=IDENT (PULLED)
+XMLVAR_NAVCOM_NAV_2_IDENT=0			;0=OFF, 1=IDENT (PULLED)
+;--------------------------------------------
+;C152X KA134 AUDIO SELECTOR
+XMLVAR_AUDIO_COM_1_MIC_SEL=1	;1=SEL, (COM 1 TX SEL), MIC 1 and 2 mutually exclusive
+XMLVAR_AUDIO_COM_2_MIC_SEL=0	;1=SEL, (COM 2 TX SEL), MIC 1 and 2 mutually exclusive
+
+XMLVAR_AUDIO_BOTH_SEL=0				;0=OFF, 1=SEL
+XMLVAR_AUDIO_NAV_1_SEL=0 			;
+XMLVAR_AUDIO_NAV_2_SEL=0			;
+XMLVAR_AUDIO_ADF_SEL=0				;
+XMLVAR_AUDIO_DME_SEL=0				;
+XMLVAR_AUDIO_MKR_SEL=1				;
+XMLVAR_AUDIO_SPKR_SEL=0				;		
+;--------------------------------------------
 
 [Gauges.0]
 KollsmanSetting=30.079952239990234375

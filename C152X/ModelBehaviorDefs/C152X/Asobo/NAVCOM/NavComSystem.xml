@@ -1,0 +1,506 @@
+<!-- RADIO templates -->
+<!-- SWAP FREQ VOL radio -->
+<Template Name="C152X_NAVCOM_Simple_Radio_Template">
+	<Component ID="NAVCOM_Radio_#ID#">
+		<Condition CHeck="NO_FREQ_KNOB">
+			<False>
+				<UseTemplate Name="ASOBO_NAVCOM_Knob_COM_Frequency_Template"></UseTemplate>
+				<UseTemplate Name="ASOBO_NAVCOM_Knob_NAV_Frequency_Template"></UseTemplate>
+			</False>
+		</Condition>
+		<Condition CHeck="NO_VOL_KNOB">
+			<False>
+				<UseTemplate Name="C152X_NAVCOM_Knob_COM_Volume_Template"></UseTemplate>
+				<UseTemplate Name="C152X_NAVCOM_Knob_NAV_Volume_Template"></UseTemplate>
+			</False>
+		</Condition>
+		<Condition CHeck="NO_SWAP_BUTTON">
+			<False>
+				<UseTemplate Name="ASOBO_NAVCOM_Push_COM_Swap_Template"></UseTemplate>
+				<UseTemplate Name="ASOBO_NAVCOM_Push_NAV_Swap_Template"></UseTemplate>
+			</False>
+		</Condition>
+	</Component>
+</Template>
+
+<!-- GT NAVCOM -->
+<!-- REQ: RADIO_TYPE (NAV/COM) & ID -->
+<Template Name="C152X_GT_NAVCOM_Knob_Volume_Template">
+	<DefaultTemplateParameters>
+		<ID>1</ID>
+	</DefaultTemplateParameters>
+
+	<UseTemplate Name="ASOBO_GT_Helper_Suffix_ID_Appender">
+		<TEMPLATE_TO_CALL>C152X_GT_NAVCOM_Knob_Volume_SubTemplate</TEMPLATE_TO_CALL>
+	</UseTemplate>
+</Template>
+
+<Template Name="C152X_GT_NAVCOM_Knob_Volume_SubTemplate">
+	<DefaultTemplateParameters>
+		<CENTER_RADIUS>0.002</CENTER_RADIUS>
+		<ANIM_LAG>100</ANIM_LAG>		
+		<Condition Valid="CIRCUIT_ID">
+			<True>
+				<CIRCUIT_CODE_ON>
+					(A:#RADIO_TYPE# VOLUME:#ID#, Percent) 0 &gt;
+					(A:CIRCUIT SWITCH ON:#CIRCUIT_ID#, Boolean) ! and if{
+						#CIRCUIT_ID# (&gt;K:ELECTRICAL_CIRCUIT_TOGGLE)
+					}
+				</CIRCUIT_CODE_ON>
+				<CIRCUIT_CODE_OFF>
+					(A:#RADIO_TYPE# VOLUME:#ID#, Percent) 0 ==
+					(A:CIRCUIT SWITCH ON:#CIRCUIT_ID#, Boolean) and if{
+						#CIRCUIT_ID# (&gt;K:ELECTRICAL_CIRCUIT_TOGGLE)
+					}
+				</CIRCUIT_CODE_OFF>
+			</True>
+			<False>
+				<CIRCUIT_CODE_ON/>
+				<CIRCUIT_CODE_OFF/>
+			</False>
+		</Condition>		
+		<NODE_ID>#RADIO_TYPE#_Knob_OnOff_#ID##SUFFIX_ID#</NODE_ID>
+		<ANIM_SIMVAR_UNITS_SWITCH>Bool</ANIM_SIMVAR_UNITS_SWITCH>
+		<ANIM_SIMVAR_SCALE_SWITCH>100</ANIM_SIMVAR_SCALE_SWITCH>
+		<Condition Check="USE_SEPARATE_ON_OFF_ANIM">
+			<ANIM_NAME_ON_OFF>#RADIO_TYPE#_Knob_OnOff_#ID#_Push</ANIM_NAME_ON_OFF>
+		</Condition>
+		<WWISE_EVENT_1>navcom_volume_knob_push_button_on</WWISE_EVENT_1>
+		<NORMALIZED_TIME_1>0.1</NORMALIZED_TIME_1>		
+		<WWISE_EVENT_2>navcom_volume_knob_push_button_off</WWISE_EVENT_2>	
+		<NORMALIZED_TIME_2>0.5</NORMALIZED_TIME_2>	
+		<WWISE_EVENT>navcom_volume_knob</WWISE_EVENT>
+		<Condition Check="NO_IDENT">
+			<True>
+				<TEMPLATE_NAME>ASOBO_GT_Knob_Finite_Simvar</TEMPLATE_NAME>
+				<ANIM_SIMVAR>#RADIO_TYPE# VOLUME:#ID#</ANIM_SIMVAR>
+				<ANIM_SIMVAR_UNITS>Percent</ANIM_SIMVAR_UNITS>
+				<ANIM_NAME>#RADIO_TYPE#_Knob_#ID##SUFFIX_ID#</ANIM_NAME>
+			</True>
+			<False>
+				<TEMPLATE_NAME>ASOBO_GT_Knob_Finite_Switch</TEMPLATE_NAME>
+				<USE_SIMVAR_FOR_KNOB_ANIM>True</USE_SIMVAR_FOR_KNOB_ANIM>
+				<ANIM_NAME_KNOB>#RADIO_TYPE#_Knob_OnOff_#ID##SUFFIX_ID#</ANIM_NAME_KNOB>
+				<ANIM_SIMVAR_KNOB>#RADIO_TYPE# VOLUME:#ID#</ANIM_SIMVAR_KNOB>
+				<ANIM_SIMVAR_UNITS_KNOB>Percent</ANIM_SIMVAR_UNITS_KNOB>
+				<USE_SIMVAR_FOR_BUTTON_ANIM>False</USE_SIMVAR_FOR_BUTTON_ANIM>				
+				<COUNT>16</COUNT>
+				<Switch Param="RADIO_TYPE">
+					<Case Value="NAV">						
+						<LEFT_SINGLE_CODE>
+							(* Lvar state *)
+							(L:XMLVAR_NAVCOM_#RADIO_TYPE#_#ID#_IDENT, Bool) ! (&gt;L:XMLVAR_NAVCOM_#RADIO_TYPE#_#ID#_IDENT, Bool)							
+						</LEFT_SINGLE_CODE>						
+						<ANIM_NAME_SWITCH>#RADIO_TYPE#_Push_Ident_#ID##SUFFIX_ID#</ANIM_NAME_SWITCH>
+						<ANIMTIP_2>TT:COCKPIT.TOOLTIPS.YOKE_BUTTON_IDENT</ANIMTIP_2>
+						<ANIMTIP_2_ON_CURSOR>Hand</ANIMTIP_2_ON_CURSOR>
+						<ANIM_CODE_SWITCH>(L:XMLVAR_NAVCOM_#RADIO_TYPE#_#ID#_IDENT, Bool) 100 *</ANIM_CODE_SWITCH>						
+					</Case>
+					<Case Value="COM">						
+						<LEFT_SINGLE_CODE>
+							(* Lvar state *)
+							(L:XMLVAR_NAVCOM_#RADIO_TYPE#_#ID#_TEST, Bool) ! (&gt;L:XMLVAR_NAVCOM_#RADIO_TYPE#_#ID#_TEST, Bool)							 
+						</LEFT_SINGLE_CODE>						
+						<ANIM_NAME_SWITCH>#RADIO_TYPE#_Push_Test_#ID##SUFFIX_ID#</ANIM_NAME_SWITCH>
+						<ANIMTIP_2>TT:COCKPIT.TOOLTIPS.NAVCOM_COM_VOLUME_TEST</ANIMTIP_2>
+						<ANIMTIP_2_ON_CURSOR>Hand</ANIMTIP_2_ON_CURSOR>	
+						<ANIM_CODE_SWITCH>(L:XMLVAR_NAVCOM_#RADIO_TYPE#_#ID#_TEST, Bool) 100 *</ANIM_CODE_SWITCH>			
+					</Case>
+				</Switch>
+			</False>
+		</Condition>
+		<INTERACTION_TYPE>KNOB</INTERACTION_TYPE>
+	</DefaultTemplateParameters>
+	<Component ID="#NODE_ID#" Node="#NODE_ID#">
+		<DefaultTemplateParameters>			
+			<Switch Param="INTERACTION_TYPE">				
+				<Case Value="KNOB">
+					<ANIMTIP_0>TT:COCKPIT.TOOLTIPS.NAVCOM_#RADIO_TYPE#_VOLUME_DECREASE</ANIMTIP_0>
+					<ANIMTIP_0_ON_CURSOR>TurnLeft</ANIMTIP_0_ON_CURSOR>
+					<ANIMTIP_1>TT:COCKPIT.TOOLTIPS.NAVCOM_#RADIO_TYPE#_VOLUME_INCREASE</ANIMTIP_1>
+					<ANIMTIP_1_ON_CURSOR>TurnRight</ANIMTIP_1_ON_CURSOR>
+					<ANIMREF_ID>1</ANIMREF_ID>
+				</Case>	
+			</Switch>
+		</DefaultTemplateParameters>		
+		<Switch Param="RADIO_TYPE">
+			<Case Value="COM">
+				<Condition Check="NO_IDENT">
+					<False>
+						<UseTemplate Name="ASOBO_GT_Update">
+							<FREQUENCY>1</FREQUENCY>	
+							<!-- Knob pull works but for now the function of COM TEST (SQ disabled) not modelled-->
+							<UPDATE_CODE></UPDATE_CODE-->						
+						</UseTemplate>
+					</False>
+				</Condition>
+			</Case>
+			<Case Value="NAV">
+			<UseTemplate Name="ASOBO_GT_Update">
+				<FREQUENCY>1</FREQUENCY>
+				<UPDATE_CODE>
+					(* Ident not activated here (see AUDIO panel), only if NAVCOM ident and AUDIO panel NAV selected *)							
+				</UPDATE_CODE>					
+			</UseTemplate>	
+			</Case>
+		</Switch>
+		<Switch Param="INTERACTION_TYPE">
+			<Case Value="KNOB">
+				<Update Once="True">
+					#CIRCUIT_CODE_ON#
+					#CIRCUIT_CODE_OFF#					
+				</Update>				
+				<UseTemplate Name="ASOBO_GT_Update">
+					<FREQUENCY>5</FREQUENCY>
+					<UPDATE_CODE>
+						(* Update sim volume variable using external volume variable *)
+						
+						(A:#RADIO_TYPE# VOLUME:#ID#, percent) (L:XMLVAR_NAVCOM_#RADIO_TYPE#_#ID#_VOLUME, Percent) &lt; if{
+							(&gt;K:#RADIO_TYPE##ID#_VOLUME_INC)
+							#CIRCUIT_CODE_ON#
+						}
+						(A:#RADIO_TYPE# VOLUME:#ID#, percent) (L:XMLVAR_NAVCOM_#RADIO_TYPE#_#ID#_VOLUME, Percent) &gt; if{
+							(&gt;K:#RADIO_TYPE##ID#_VOLUME_DEC)
+							#CIRCUIT_CODE_OFF#
+						}						
+					</UPDATE_CODE>
+				</UseTemplate>
+				
+				<UseTemplate Name="#TEMPLATE_NAME#">					
+					<CLOCKWISE_CODE>
+						(* Lvar state *)
+						(L:XMLVAR_NAVCOM_#RADIO_TYPE#_#ID#_VOLUME, Percent) 5 + (&gt;L:XMLVAR_NAVCOM_#RADIO_TYPE#_#ID#_VOLUME, Percent)
+						
+						(L:XMLVAR_NAVCOM_#RADIO_TYPE#_#ID#_VOLUME, Percent) 100 &gt;= if{						
+							100 (&gt;L:XMLVAR_NAVCOM_#RADIO_TYPE#_#ID#_VOLUME, Percent)
+						}										
+					</CLOCKWISE_CODE>					
+					<ANTICLOCKWISE_CODE>
+						(* Lvar state *)
+						(L:XMLVAR_NAVCOM_#RADIO_TYPE#_#ID#_VOLUME, Percent) 5 - (&gt;L:XMLVAR_NAVCOM_#RADIO_TYPE#_#ID#_VOLUME, Percent)
+						
+						(L:XMLVAR_NAVCOM_#RADIO_TYPE#_#ID#_VOLUME, Percent) 0 &lt;= if{
+							0 (&gt;L:XMLVAR_NAVCOM_#RADIO_TYPE#_#ID#_VOLUME, Percent)
+						}												
+					</ANTICLOCKWISE_CODE>					
+					<ANIM_WRAP>False</ANIM_WRAP>
+				</UseTemplate>
+			</Case>			
+		</Switch>
+	</Component>
+</Template>
+
+<Template Name="C152X_NAVCOM_Knob_COM_Volume_Template">
+	<DefaultTemplateParameters>
+		<ID>1</ID>
+	</DefaultTemplateParameters>
+	
+	<UseTemplate Name="ASOBO_GT_Helper_Suffix_ID_Appender">
+		<TEMPLATE_TO_CALL>C152X_GT_NAVCOM_Knob_Volume_Template</TEMPLATE_TO_CALL>
+		<RADIO_TYPE>COM</RADIO_TYPE>
+	</UseTemplate>
+</Template>
+
+<Template Name="C152X_NAVCOM_Knob_NAV_Volume_Template">
+	<DefaultTemplateParameters>
+		<ID>1</ID>
+	</DefaultTemplateParameters>
+	
+	<UseTemplate Name="ASOBO_GT_Helper_Suffix_ID_Appender">
+		<TEMPLATE_TO_CALL>C152X_GT_NAVCOM_Knob_Volume_Template</TEMPLATE_TO_CALL>
+		<RADIO_TYPE>NAV</RADIO_TYPE>
+	</UseTemplate>
+</Template>
+
+<Template Name="C152X_NAVCOM_Switch_MIC_Sound_Template">
+	<DefaultTemplateParameters>
+		<ID>1</ID>
+		<SWITCH_TYPE>Switch</SWITCH_TYPE>
+	</DefaultTemplateParameters>
+	
+	<UseTemplate Name="ASOBO_GT_Helper_Suffix_ID_Appender">
+		<TEMPLATE_TO_CALL>C152X_GT_NAVCOM_Switch_Sound_Template</TEMPLATE_TO_CALL>
+		<RADIO_TYPE>MIC</RADIO_TYPE>
+	</UseTemplate>
+</Template>
+
+<Template Name="C152X_NAVCOM_Switch_BOTH_Sound_Template">
+	<DefaultTemplateParameters>
+		<ID>1</ID>
+		<SWITCH_TYPE>Switch</SWITCH_TYPE>
+	</DefaultTemplateParameters>
+	
+	<UseTemplate Name="ASOBO_GT_Helper_Suffix_ID_Appender">
+		<TEMPLATE_TO_CALL>C152X_GT_NAVCOM_Switch_Sound_Template</TEMPLATE_TO_CALL>
+		<RADIO_TYPE>BOTH</RADIO_TYPE>
+	</UseTemplate>
+</Template>
+
+<Template Name="C152X_NAVCOM_Switch_NAV_Sound_Template">
+	<DefaultTemplateParameters>
+		<ID>1</ID>
+		<SWITCH_TYPE>Switch</SWITCH_TYPE>
+	</DefaultTemplateParameters>
+	
+	<UseTemplate Name="ASOBO_GT_Helper_Suffix_ID_Appender">
+		<TEMPLATE_TO_CALL>C152X_GT_NAVCOM_Switch_Sound_Template</TEMPLATE_TO_CALL>
+		<RADIO_TYPE>NAV</RADIO_TYPE>
+	</UseTemplate>
+</Template>
+
+<Template Name="C152X_NAVCOM_Switch_ADF_Sound_Template">
+	<DefaultTemplateParameters>
+		<ID>1</ID>
+		<SWITCH_TYPE>Switch</SWITCH_TYPE>
+	</DefaultTemplateParameters>
+	
+	<UseTemplate Name="ASOBO_GT_Helper_Suffix_ID_Appender">
+		<TEMPLATE_TO_CALL>C152X_GT_NAVCOM_Switch_Sound_Template</TEMPLATE_TO_CALL>
+		<RADIO_TYPE>ADF</RADIO_TYPE>
+	</UseTemplate>
+</Template>
+
+<Template Name="C152X_NAVCOM_Switch_DME_Sound_Template">
+	<DefaultTemplateParameters>
+		<ID>1</ID>
+		<SWITCH_TYPE>Switch</SWITCH_TYPE>
+	</DefaultTemplateParameters>
+	
+	<UseTemplate Name="ASOBO_GT_Helper_Suffix_ID_Appender">
+		<TEMPLATE_TO_CALL>C152X_GT_NAVCOM_Switch_Sound_Template</TEMPLATE_TO_CALL>
+		<RADIO_TYPE>DME</RADIO_TYPE>
+	</UseTemplate>
+</Template>
+
+<Template Name="C152X_NAVCOM_Switch_MARKER_Sound_Template">
+	<DefaultTemplateParameters>
+		<ID>1</ID>
+		<SWITCH_TYPE>Switch</SWITCH_TYPE>
+	</DefaultTemplateParameters>
+	
+	<UseTemplate Name="ASOBO_GT_Helper_Suffix_ID_Appender">
+		<TEMPLATE_TO_CALL>C152X_GT_NAVCOM_Switch_Sound_Template</TEMPLATE_TO_CALL>
+		<RADIO_TYPE>MARKER</RADIO_TYPE>
+	</UseTemplate>
+</Template>
+
+
+<Template Name="C152X_NAVCOM_Switch_SPKR_Sound_Template">
+	<DefaultTemplateParameters>
+		<ID>1</ID>
+		<SWITCH_TYPE>Switch</SWITCH_TYPE>
+	</DefaultTemplateParameters>
+	
+	<UseTemplate Name="ASOBO_GT_Helper_Suffix_ID_Appender">
+		<TEMPLATE_TO_CALL>C152X_GT_NAVCOM_Switch_Sound_Template</TEMPLATE_TO_CALL>
+		<RADIO_TYPE>SPKR</RADIO_TYPE>
+	</UseTemplate>
+</Template>
+
+<!-- REQ: RADIO_TYPE (DME/ADF/MARKER/NAV) & ID & SWITCH_TYPE-->
+<Template Name="C152X_GT_NAVCOM_Switch_Sound_Template">
+	<DefaultTemplateParameters>
+		<ID>1</ID>
+	</DefaultTemplateParameters>
+
+	<UseTemplate Name="ASOBO_GT_Helper_Suffix_ID_Appender">
+		<TEMPLATE_TO_CALL>C152X_GT_NAVCOM_Switch_Sound_SubTemplate</TEMPLATE_TO_CALL>
+	</UseTemplate>
+</Template>
+
+<Template Name="C152X_GT_NAVCOM_Switch_Sound_SubTemplate">
+	<DefaultTemplateParameters>
+		<NODE_ID>#RADIO_TYPE#_#SWITCH_TYPE#_#ID##SUFFIX_ID#</NODE_ID>
+		<ANIM_NAME>#RADIO_TYPE#_#SWITCH_TYPE#_#ID##SUFFIX_ID#</ANIM_NAME>
+		<Condition Check="USE_SEPARATE_ON_OFF_ANIM">
+			<ANIM_NAME_ON_OFF>#RADIO_TYPE#_#SWITCH_TYPE#_Push_#ID##SUFFIX_ID#</ANIM_NAME_ON_OFF>
+		</Condition>		
+		<Switch Param="RADIO_TYPE">
+			<Case Value="MIC">				
+				<Condition check="USE_EXCLUSIVE_ID">
+					<True>					
+						<LEFT_SINGLE_CODE>
+								(* Lvar states *)
+								1 (&gt;L:XMLVAR_AUDIO_COM_#ID#_MIC_SEL, Bool)
+								0	(&gt;L:XMLVAR_AUDIO_COM_#OTHER_ID#_MIC_SEL, Bool)									
+						</LEFT_SINGLE_CODE>
+						<ANIM_CODE>(L:XMLVAR_AUDIO_COM_#OTHER_ID#_MIC_SEL, Bool) ! 100 *</ANIM_CODE>						
+					</True>
+					<False>
+						<LEFT_SINGLE_CODE></LEFT_SINGLE_CODE>
+						<ANIM_CODE></ANIM_CODE>
+					</False>
+				</Condition>					
+				<WWISE_EVENT_1>navcom_audio_push_on</WWISE_EVENT_1>
+				<NORMALIZED_TIME_1>0.1</NORMALIZED_TIME_1>					
+				<WWISE_EVENT_2>navcom_audio_push_off</WWISE_EVENT_2>
+				<NORMALIZED_TIME_2>0.5</NORMALIZED_TIME_2>	
+			</Case>
+			<Case Value="BOTH">
+				<LEFT_SINGLE_CODE>
+					(* Lvar state *)
+					(L:XMLVAR_AUDIO_BOTH_SEL, Bool) ! (&gt;L:XMLVAR_AUDIO_BOTH_SEL, Bool)
+				</LEFT_SINGLE_CODE>
+				<ANIM_CODE>(L:XMLVAR_AUDIO_BOTH_SEL, Bool) 100 *</ANIM_CODE>
+				<WWISE_EVENT_1>navcom_audio_push_on</WWISE_EVENT_1>
+				<NORMALIZED_TIME_1>0.1</NORMALIZED_TIME_1>					
+				<WWISE_EVENT_2>navcom_audio_push_off</WWISE_EVENT_2>
+				<NORMALIZED_TIME_2>0.5</NORMALIZED_TIME_2>		
+			</Case>
+			<Case Value="NAV">					
+				<LEFT_SINGLE_CODE>
+					(* Lvar state *)
+					(L:XMLVAR_AUDIO_NAV_#ID#_SEL, Bool) ! (&gt;L:XMLVAR_AUDIO_NAV_#ID#_SEL, Bool)				
+				</LEFT_SINGLE_CODE>
+				<ANIM_CODE>(L:XMLVAR_AUDIO_NAV_#ID#_SEL, Bool) 100 *</ANIM_CODE>				
+				<WWISE_EVENT_1>navcom_audio_push_on</WWISE_EVENT_1>
+				<NORMALIZED_TIME_1>0.1</NORMALIZED_TIME_1>					
+				<WWISE_EVENT_2>navcom_audio_push_off</WWISE_EVENT_2>
+				<NORMALIZED_TIME_2>0.5</NORMALIZED_TIME_2>	
+			</Case>
+			<Case Value="ADF">
+				<LEFT_SINGLE_CODE>
+					(* Lvar state *)
+					(L:XMLVAR_AUDIO_ADF_SEL, Bool) ! (&gt;L:XMLVAR_AUDIO_ADF_SEL, Bool)				
+				</LEFT_SINGLE_CODE>				
+				<ANIM_CODE>(L:XMLVAR_AUDIO_ADF_SEL, Bool) 100 *</ANIM_CODE>				
+				<WWISE_EVENT_1>navcom_audio_push_on</WWISE_EVENT_1>
+				<NORMALIZED_TIME_1>0.1</NORMALIZED_TIME_1>					
+				<WWISE_EVENT_2>navcom_audio_push_off</WWISE_EVENT_2>
+				<NORMALIZED_TIME_2>0.5</NORMALIZED_TIME_2>	
+			</Case>
+			<Case Value="DME">
+				<LEFT_SINGLE_CODE>
+					(* Lvar state *)
+					(L:XMLVAR_AUDIO_DME_SEL, Bool) ! (&gt;L:XMLVAR_AUDIO_DME_SEL, Bool)
+				</LEFT_SINGLE_CODE>
+				<ANIM_CODE>(L:XMLVAR_AUDIO_DME_SEL, Bool) 100 *</ANIM_CODE>
+				<WWISE_EVENT_1>navcom_audio_push_on</WWISE_EVENT_1>
+				<NORMALIZED_TIME_1>0.1</NORMALIZED_TIME_1>					
+				<WWISE_EVENT_2>navcom_audio_push_off</WWISE_EVENT_2>
+				<NORMALIZED_TIME_2>0.5</NORMALIZED_TIME_2>		
+			</Case>			
+			<Case Value="MARKER">
+				<LEFT_SINGLE_CODE>
+					(* Lvar state *)
+					(L:XMLVAR_AUDIO_MKR_SEL, Bool) ! (&gt;L:XMLVAR_AUDIO_MKR_SEL, Bool)
+				</LEFT_SINGLE_CODE>
+				<ANIM_CODE>(L:XMLVAR_AUDIO_MKR_SEL, Bool) 100 *</ANIM_CODE>				
+				<WWISE_EVENT_1>navcom_audio_push_on</WWISE_EVENT_1>
+				<NORMALIZED_TIME_1>0.1</NORMALIZED_TIME_1>					
+				<WWISE_EVENT_2>navcom_audio_push_off</WWISE_EVENT_2>
+				<NORMALIZED_TIME_2>0.5</NORMALIZED_TIME_2>	
+			</Case>
+			<Case Value="SPKR">
+				<LEFT_SINGLE_CODE>
+					(* Lvar state *)
+					(L:XMLVAR_AUDIO_SPKR_SEL, Bool) ! (&gt;L:XMLVAR_AUDIO_SPKR_SEL, Bool)
+				</LEFT_SINGLE_CODE>
+				<ANIM_CODE>(L:XMLVAR_AUDIO_SPKR_SEL, Bool) 100 *</ANIM_CODE>
+				<WWISE_EVENT_1>navcom_audio_push_on</WWISE_EVENT_1>
+				<NORMALIZED_TIME_1>0.1</NORMALIZED_TIME_1>					
+				<WWISE_EVENT_2>navcom_audio_push_off</WWISE_EVENT_2>
+				<NORMALIZED_TIME_2>0.5</NORMALIZED_TIME_2>		
+			</Case>			
+		</Switch>
+	</DefaultTemplateParameters>
+	<Component ID="#NODE_ID#" Node="#NODE_ID#">
+		<Switch Param="SWITCH_TYPE">
+			<Case Value="Push">
+				<UseTemplate Name="ASOBO_GT_Push_Button">
+				</UseTemplate>
+			</Case>
+			<Default>				
+				<UseTemplate Name="ASOBO_GT_Switch_Code">
+				</UseTemplate>
+				<Switch Param="RADIO_TYPE">
+					<Case Value="MIC">	
+						<UseTemplate Name="ASOBO_GT_Update">
+							<FREQUENCY>5</FREQUENCY>
+							<UPDATE_CODE>
+								(* Set COM Transmitter *)
+								(A:COM TRANSMIT:#ID#, Bool) (L:XMLVAR_AUDIO_COM_#ID#_MIC_SEL, Bool) != if{
+									(L:XMLVAR_AUDIO_COM_#ID#_MIC_SEL, Bool) if{
+										(L:XMLVAR_AUDIO_COM_#ID#_MIC_SEL, Bool) (&gt;K:COM#ID#_TRANSMIT_SELECT, Bool)
+										}
+								}								
+							</UPDATE_CODE>
+						</UseTemplate>
+					</Case>
+					<Case Value="BOTH">
+						<UseTemplate Name="ASOBO_GT_Update">
+							<FREQUENCY>5</FREQUENCY>
+							<UPDATE_CODE>
+								(* Set BOTH receive *)
+								(A:COM RECEIVE ALL, Bool) (L:XMLVAR_AUDIO_BOTH_SEL, Bool) != if{									
+									(L:XMLVAR_AUDIO_BOTH_SEL, Bool) (&gt;K:COM_RECEIVE_ALL_SET, Bool)										
+								}								
+							</UPDATE_CODE>
+						</UseTemplate>
+					</Case>
+					<Case Value="NAV">
+						<UseTemplate Name="ASOBO_GT_Update">
+							<FREQUENCY>5</FREQUENCY>
+							<UPDATE_CODE>
+								(* Set NAVCOM ident. AUDIO panel NAV button and NAVCOM ident both selected *)
+								(L:XMLVAR_AUDIO_NAV_#ID#_SEL, Bool) (L:XMLVAR_NAVCOM_NAV_#ID#_IDENT, Bool) and if{									
+									1 (&gt;K:RADIO_VOR#ID#_IDENT_SET)
+								} els{
+									0 (&gt;K:RADIO_VOR#ID#_IDENT_SET)
+								}								
+							</UPDATE_CODE>
+						</UseTemplate>
+					</Case>
+					<Case Value="ADF">
+						<UseTemplate Name="ASOBO_GT_Update">
+							<FREQUENCY>5</FREQUENCY>
+							<UPDATE_CODE>		
+								(* Set ADF ident *)
+								(A:ADF VOLUME:1, Percent) 0 &gt; if{
+									(L:XMLVAR_AUDIO_ADF_SEL, Bool) (&gt;K:RADIO_ADF_IDENT_SET)
+								} els{
+									0 (&gt;K:RADIO_ADF_IDENT_SET)
+								}								
+							</UPDATE_CODE>
+						</UseTemplate>
+					</Case>
+					<Case Value="DME">
+						<UseTemplate Name="ASOBO_GT_Update">
+							<FREQUENCY>5</FREQUENCY>
+							<UPDATE_CODE>		
+								(* Set DME ident, currently no function *)															
+							</UPDATE_CODE>
+						</UseTemplate>
+					</Case>
+					<Case Value="MARKER">
+						<UseTemplate Name="ASOBO_GT_Update">
+							<FREQUENCY>5</FREQUENCY>
+							<UPDATE_CODE>		
+								(* Set MKR audio *)								
+								(L:XMLVAR_AUDIO_MKR_SEL, Bool) (A:MARKER SOUND, Bool) != if{ 
+									(&gt;K:MARKER_SOUND_TOGGLE)
+								}
+							</UPDATE_CODE>
+						</UseTemplate>
+					</Case>
+					<Case Value="SPKR">
+						<UseTemplate Name="ASOBO_GT_Update">
+							<FREQUENCY>5</FREQUENCY>
+							<UPDATE_CODE>		
+								(* Set SPKR output, currently no function *)															
+							</UPDATE_CODE>
+						</UseTemplate>
+					</Case>
+				</Switch>
+				<Condition Check="USE_SEPARATE_ON_OFF_ANIM">
+					<UseTemplate Name="ASOBO_GT_Anim_Code">
+						<ANIM_CODE>
+							#ANIM_CODE# 0 &gt; 100 *
+						</ANIM_CODE>
+						<ANIM_NAME>#ANIM_NAME_ON_OFF#</ANIM_NAME>
+					</UseTemplate>
+				</Condition>
+			</Default>
+		</Switch>
+	</Component>
+</Template>
