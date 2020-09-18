@@ -1,5 +1,5 @@
 # MSFS C152X Realism Mod
-V0.15
+V0.16
   
 
 ## Installation
@@ -45,6 +45,16 @@ Some of the current improvements (not exhaustive):
 - ADF Needle is slewed in a clockwise direction while ADF Mode Knob held in TEST position.  When released, the ADF Mode Knob spring returns to ADF Mode.
 - ADF Needle remains in current position when ADF Radio is turned off using the Volume/Off knob.
 - ADF Needle remains in current position if battery discharges and voltage level to the radio drops below the minimum required for operation.
+- ADF Volume and ADF Mode Knob position state now loaded from .flt files.  ADF Mode knob defaults to 'ADF' position.
+- NAVCOM (KX155) reworked.  Various states including volume/Off state etc now loaded from .flt files.
+- NAV Ident / COM Test remain out when pulled.  
+- Audio Selector (KA134) completely revised.  Various states now loaded from .flt files.
+- Buttons now remain depressed when selected.  
+- MIC1/MIC2 selects either COM1 or COM2 as active transmitter.
+- BOTH allows selection of reception on both COM1 and COM2.
+- NAV1, NAV2, ADF (AOE wtf?) etc select ident audio.
+- MKR selects Marker ident audio.  Note:  My testing so far indicates audio received (and light flashes) from Middle Marker, however Outer Marker light flashes but no audio heard.  Not sure if this is a sim issue.
+- DME, SPKR buttons now operate but are currently non functional.
 
 ### Notes:  
  - The default aircraft panel has a Tachometer with a 2700RPM redline.  As a result I have taken the decision to model the C152 with the corresponding and slightly uprated 115HP engine.  (It is essentially the same engine as the 'standard' C152 Lycoming engine with 110HP/2550RPM redline, with a few extra horsepower gained from the additional RPM.  The standard performance charts eg cruise power settings etc will still be valid. The extra horsepower means slightly better takeoff and go-around performance and a slightly higher service ceiling.  The current version tested in the sim has a service ceiling around 15,500ft.)
@@ -64,6 +74,10 @@ Navigation CDI gauges completely revised.
 [0.15] - 2020-09-14
 Aircraft name reverted to default.  Flight Training lessons now selectable. 
 Navigation ADF Radio and associated gauge completely revised.
+
+[0.16] - 2020-09-19
+ADF/NAVCOM/Audio Selection Panel completely revised.  Various states now loaded with .flt files. 
+
  
 ## Donation
 

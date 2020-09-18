@@ -21,6 +21,7 @@
 	<Include Path="Asobo\NAVCOM\ADF.xml"/>  
   
 	<Include Path="C152X\Asobo\Common.xml"/>
+	<Include Path="C152X\Asobo\NAVCOM\NavComSystem.xml"/>
 	<Include Path="C152X\Asobo\NAVCOM\ADF.xml"/>
 	
 	
@@ -181,7 +182,7 @@
 			<DONT_APPEND_ID>True</DONT_APPEND_ID>
 		</UseTemplate>
 		
-		<UseTemplate Name="ASOBO_INSTRUMENT_Needle_Airspeed_Template">
+		<UseTemplate Name="C152X_INSTRUMENT_Needle_Airspeed_Template">
 			<MIN_VALUE>0</MIN_VALUE>
 			<MAX_VALUE>170</MAX_VALUE>
 			<HIGHLIGHT_NODE_ID>INSTRUMENT_AirspeedIndicator_Highlight</HIGHLIGHT_NODE_ID>
@@ -431,96 +432,113 @@
 	</Component>
 	
 	<!-- RADIO STACK ################################## -->
+	
+	
 	<Component ID="NAVCOM_Radios">
-		<DefaultTemplateParameters>
-			<ANIM_LAG_SWITCH>500</ANIM_LAG_SWITCH>
-			<BUTTON_POTENTIOMETER/>
-			<POTENTIOMETER>4</POTENTIOMETER>
-			<ANIM_NEVER_FAILS>True</ANIM_NEVER_FAILS>
-		</DefaultTemplateParameters>
-		<UseTemplate Name="ASOBO_NAVCOM_Simple_Radio_Template">
-			<ID>1</ID>
-			<BUTTON_EMISSIVE_FACTOR>0.2</BUTTON_EMISSIVE_FACTOR>
-			<DONT_APPEND_ID>True</DONT_APPEND_ID>
-			<FAILURE>(A:COM VOLUME:1,Percent) 0 &gt; (A:CIRCUIT GENERAL PANEL ON, Bool) and</FAILURE>			
-		</UseTemplate>
-		<UseTemplate Name="ASOBO_NAVCOM_Simple_Radio_Template">
-			<ID>2</ID>
-			<BUTTON_EMISSIVE_FACTOR>0.2</BUTTON_EMISSIVE_FACTOR>
-			<DONT_APPEND_ID>True</DONT_APPEND_ID>
-			<FAILURE>(A:COM VOLUME:2,Percent) 0 &gt; (A:CIRCUIT GENERAL PANEL ON, Bool) and</FAILURE>
-		</UseTemplate>
-		<UseTemplate Name="ASOBO_NAVCOM_Screens_Template">
-			<ID>1</ID>
-			<NODE_ID>NavCom1_Screen</NODE_ID>
-			<NAVCOM_CONTROLS_PANEL_LIGHT_STATE/>
-			<USE_DIMMING_POTENTIOMETER/>
-			<DIMMING_FACTOR>1</DIMMING_FACTOR>
-		</UseTemplate>
-		<UseTemplate Name="ASOBO_NAVCOM_Screens_Template">
-			<ID>2</ID>
-			<NODE_ID>NavCom2_Screen</NODE_ID>
-			<NAVCOM_CONTROLS_PANEL_LIGHT_STATE/>
-			<USE_DIMMING_POTENTIOMETER/>
-			<DIMMING_FACTOR>1</DIMMING_FACTOR>
-		</UseTemplate>
-		<Component Id="NAVCOM_Sound_Push_Buttons">
+	
+		<!-- BENDIX/KING KX155															-->
+		<!--                  															-->
+		<Component ID="KX155_NAVCOM_Radio">
 			<DefaultTemplateParameters>
-				<SWITCH_TYPE>Push</SWITCH_TYPE>
-				<SUFFIX_ID></SUFFIX_ID>
+				<ANIM_LAG_SWITCH>500</ANIM_LAG_SWITCH>
+				<BUTTON_POTENTIOMETER/>
+				<POTENTIOMETER>4</POTENTIOMETER>
+				<ANIM_NEVER_FAILS>True</ANIM_NEVER_FAILS>
 			</DefaultTemplateParameters>
-			<UseTemplate Name="ASOBO_NAVCOM_Switch_MARKER_Sound_Template">
-				<NODE_ID>AUDIO_Push_MKR</NODE_ID>
-				<ANIM_NAME>AUDIO_Push_MKR</ANIM_NAME>
+			<UseTemplate Name="C152X_NAVCOM_Simple_Radio_Template">
+				<ID>1</ID>				
+				<BUTTON_EMISSIVE_FACTOR>0.2</BUTTON_EMISSIVE_FACTOR>
+				<DONT_APPEND_ID>True</DONT_APPEND_ID>
+				<FAILURE>(A:COM VOLUME:1,Percent) 0 &gt; (A:CIRCUIT GENERAL PANEL ON, Bool) and</FAILURE>		
+				<!--USE_SEPARATE_ON_OFF_ANIM>True</USE_SEPARATE_ON_OFF_ANIM-->				
 			</UseTemplate>
-			<UseTemplate Name="ASOBO_NAVCOM_Switch_DME_Sound_Template">
-				<NODE_ID>AUDIO_Push_DME</NODE_ID>
-				<ANIM_NAME>AUDIO_Push_DME</ANIM_NAME>
+			<UseTemplate Name="C152X_NAVCOM_Simple_Radio_Template">
+				<ID>2</ID>
+				<BUTTON_EMISSIVE_FACTOR>0.2</BUTTON_EMISSIVE_FACTOR>
+				<DONT_APPEND_ID>True</DONT_APPEND_ID>
+				<FAILURE>(A:COM VOLUME:2,Percent) 0 &gt; (A:CIRCUIT GENERAL PANEL ON, Bool) and</FAILURE>
+				<!--USE_SEPARATE_ON_OFF_ANIM>True</USE_SEPARATE_ON_OFF_ANIM-->
 			</UseTemplate>
-			<UseTemplate Name="ASOBO_AUDIO_Switch_Speaker_Template">
-				<NODE_ID>AUDIO_Push_SPKR</NODE_ID>
-				<ANIM_NAME>AUDIO_Push_SPKR</ANIM_NAME>
-			</UseTemplate>
-			<UseTemplate Name="ASOBO_NAVCOM_Switch_NAV_Sound_Template">
+			<UseTemplate Name="ASOBO_NAVCOM_Screens_Template">
 				<ID>1</ID>
-				<USE_EXCLUSIVE_ID/>
-				<OTHER_ID>2</OTHER_ID>
+				<NODE_ID>NavCom1_Screen</NODE_ID>
+				<NAVCOM_CONTROLS_PANEL_LIGHT_STATE/>
+				<USE_DIMMING_POTENTIOMETER/>
+				<DIMMING_FACTOR>1</DIMMING_FACTOR>
+			</UseTemplate>
+			<UseTemplate Name="ASOBO_NAVCOM_Screens_Template">
+				<ID>2</ID>
+				<NODE_ID>NavCom2_Screen</NODE_ID>
+				<NAVCOM_CONTROLS_PANEL_LIGHT_STATE/>
+				<USE_DIMMING_POTENTIOMETER/>
+				<DIMMING_FACTOR>1</DIMMING_FACTOR>
+			</UseTemplate>
+		</Component>
+		
+		<!-- BENDIX/KING KA134															-->
+		<!--                  															-->
+		<Component Id="KA134_Audio_Control">
+			<!-- MIC SELECT -->
+			<!-- (EXT Button not currently modelled, button is available in 3d model?) -->
+			
+			<!-- MIC COM1  Button -->
+			<UseTemplate Name="C152X_NAVCOM_Switch_MIC_Sound_Template">
+				<ID>1</ID>
+				<USE_EXCLUSIVE_ID>true</USE_EXCLUSIVE_ID>
+				<OTHER_ID>2</OTHER_ID>				
+				<NODE_ID>AUDIO_Push_MIC_1</NODE_ID>
+				<ANIM_NAME>AUDIO_Push_MIC_1</ANIM_NAME>
+			</UseTemplate>			
+			<!-- MIC COM2 Button-->
+			<UseTemplate Name="C152X_NAVCOM_Switch_MIC_Sound_Template">
+				<ID>2</ID>
+				<USE_EXCLUSIVE_ID>true</USE_EXCLUSIVE_ID>				
+				<OTHER_ID>1</OTHER_ID>				
+				<NODE_ID>AUDIO_Push_MIC_2</NODE_ID>
+				<ANIM_NAME>AUDIO_Push_MIC_2</ANIM_NAME>
+			</UseTemplate>			
+			<!-- BOTH Button -->
+			<UseTemplate Name="C152X_NAVCOM_Switch_BOTH_Sound_Template">				
+				<NODE_ID>AUDIO_Push_NAV_Both</NODE_ID>
+				<ANIM_NAME>AUDIO_Push_NAV_Both</ANIM_NAME>
+			</UseTemplate>			
+			<!-- NAV1 Button -->
+			<UseTemplate Name="C152X_NAVCOM_Switch_NAV_Sound_Template">
+				<ID>1</ID>					
 				<NODE_ID>AUDIO_Push_NAV_1</NODE_ID>
 				<ANIM_NAME>AUDIO_Push_NAV_1</ANIM_NAME>
-			</UseTemplate>
-			<UseTemplate Name="ASOBO_NAVCOM_Switch_NAV_Sound_Template">
-				<ID>2</ID>
-				<USE_EXCLUSIVE_ID/>
-				<OTHER_ID>1</OTHER_ID>
+			</UseTemplate>			
+			<!-- NAV2 Button -->
+			<UseTemplate Name="C152X_NAVCOM_Switch_NAV_Sound_Template">
+				<ID>2</ID>					
 				<NODE_ID>AUDIO_Push_NAV_2</NODE_ID>
 				<ANIM_NAME>AUDIO_Push_NAV_2</ANIM_NAME>
 			</UseTemplate>
-			<UseTemplate Name="ASOBO_NAVCOM_Switch_NAV_Sound_Template">
-				<LEFT_SINGLE_CODE>
-					(A:NAV SOUND:1, Bool) sp0
-					(A:NAV SOUND:2, Bool) sp1
-					l0 l1 and if{
-						(&gt;K:RADIO_VOR1_IDENT_TOGGLE)
-						(&gt;K:RADIO_VOR2_IDENT_TOGGLE)
-					} els{
-						l0 ! if{ (&gt;K:RADIO_VOR1_IDENT_TOGGLE) }
-						l1 ! if{ (&gt;K:RADIO_VOR2_IDENT_TOGGLE) }
-					}
-				</LEFT_SINGLE_CODE>
-				<ANIM_CODE>(A:NAV SOUND:1, Percent) (A:NAV SOUND:2, Bool) and 100 *</ANIM_CODE>
-				<NODE_ID>AUDIO_Push_NAV_Both</NODE_ID>
-				<ANIM_NAME>AUDIO_Push_NAV_Both</ANIM_NAME>
+			
+			<!-- ADF (AOE wtf?) Button -->
+			<UseTemplate Name="C152X_NAVCOM_Switch_ADF_Sound_Template">
+				<ID>1</ID>					
+				<NODE_ID>AUDIO_Push_AOE</NODE_ID>
+				<ANIM_NAME>AUDIO_Push_AOE</ANIM_NAME>
 			</UseTemplate>
-			<UseTemplate Name="ASOBO_GT_COM_Push_Transmit_Template">
-				<ID>1</ID>
-				<NODE_ID>AUDIO_Push_MIC_1</NODE_ID>
-				<ANIM_NAME>AUDIO_Push_MIC_1</ANIM_NAME>
+			
+			<!-- DME Button -->
+			<UseTemplate Name="C152X_NAVCOM_Switch_DME_Sound_Template">
+				<NODE_ID>AUDIO_Push_DME</NODE_ID>
+				<ANIM_NAME>AUDIO_Push_DME</ANIM_NAME>
 			</UseTemplate>
-			<UseTemplate Name="ASOBO_GT_COM_Push_Transmit_Template">
-				<ID>2</ID>
-				<NODE_ID>AUDIO_Push_MIC_2</NODE_ID>
-				<ANIM_NAME>AUDIO_Push_MIC_2</ANIM_NAME>
+			
+			<!-- MKR Button -->
+			<UseTemplate Name="C152X_NAVCOM_Switch_MARKER_Sound_Template">
+				<NODE_ID>AUDIO_Push_MKR</NODE_ID>
+				<ANIM_NAME>AUDIO_Push_MKR</ANIM_NAME>
 			</UseTemplate>
+			<!-- SPKR Button -->
+			
+			<UseTemplate Name="C152X_NAVCOM_Switch_SPKR_Sound_Template">
+				<NODE_ID>AUDIO_Push_SPKR</NODE_ID>
+				<ANIM_NAME>AUDIO_Push_SPKR</ANIM_NAME>
+			</UseTemplate>			
 		</Component>
 	</Component>
 	
@@ -532,11 +550,10 @@
 		<UseTemplate Name="ASOBO_ADF_3Knobs_Frequency_Template">
 		</UseTemplate>
 		<!-- existing ASOBO template for knob volume fine for now.... --->
-		<UseTemplate Name="ASOBO_ADF_Knob_Volume_Template">
+		<UseTemplate Name="C152X_ADF_Knob_Volume_Template">
 		</UseTemplate>
 		<!-- New knob for ADF mode, uses 4 position switch.... --->
-		<UseTemplate Name="C152X_ADF_Knob_Mode_Template">			
-			
+		<UseTemplate Name="C152X_ADF_Knob_Mode_Template">				
 			<ANIM_LAG>600</ANIM_LAG>
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_GT_Component_Emissive_Gauge">

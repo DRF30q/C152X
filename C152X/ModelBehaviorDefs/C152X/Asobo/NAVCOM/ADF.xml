@@ -1,5 +1,82 @@
 <Include Path="Asobo\Generic.xml"/>
 
+<Template Name="C152X_ADF_Knob_Volume_Template">
+	<DefaultTemplateParameters>
+		<ID>1</ID>
+	</DefaultTemplateParameters>
+	
+	<UseTemplate Name="ASOBO_GT_Helper_Suffix_ID_Appender">
+		<TEMPLATE_TO_CALL>C152X_ADF_Knob_Volume_SubTemplate</TEMPLATE_TO_CALL>
+	</UseTemplate>
+</Template>
+
+<Template Name="C152X_ADF_Knob_Volume_SubTemplate">
+	<DefaultTemplateParameters>
+		<ANIM_NAME>ADF_Knob_Volume#SUFFIX_ID#</ANIM_NAME>
+		<NODE_ID>ADF_Knob_Volume#SUFFIX_ID#</NODE_ID>
+		<ANIMREF_ID>0</ANIMREF_ID>
+		<ANIMTIP_0_ON_CURSOR>TurnLeft</ANIMTIP_0_ON_CURSOR>
+		<ANIMTIP_1_ON_CURSOR>TurnRight</ANIMTIP_1_ON_CURSOR>
+		<ANIMTIP_0>TT:COCKPIT.TOOLTIPS.ADF_VOLUME_DECREASE</ANIMTIP_0>
+		<ANIMTIP_1>TT:COCKPIT.TOOLTIPS.ADF_VOLUME_INCREASE</ANIMTIP_1>
+		<WWISE_EVENT>adf_volume_knob</WWISE_EVENT>			
+		<COUNT>20</COUNT>
+	</DefaultTemplateParameters>
+	<OverrideTemplateParameters>
+		<Condition Check="CIRCUIT_ADF">
+			<True>
+				<TURN_OFF_CIRCUIT_WHEN_VOLUME_OFF>(A:ADF VOLUME:1, Percent) 0 &gt; (A:CIRCUIT SWITCH ON:#CIRCUIT_ADF#, Bool) != if{ #CIRCUIT_ADF# (&gt;K:ELECTRICAL_CIRCUIT_TOGGLE) }</TURN_OFF_CIRCUIT_WHEN_VOLUME_OFF>
+			</True>
+			<False>
+				<TURN_OFF_CIRCUIT_WHEN_VOLUME_OFF/>
+			</False>
+		</Condition>
+	</OverrideTemplateParameters>
+	<Component ID="#NODE_ID#" Node="#NODE_ID#">
+		<Condition Check="CIRCUIT_ADF">
+			<Update Once="True">
+				(A:ADF VOLUME:1, Percent) 0 == (A:CIRCUIT SWITCH ON:#CIRCUIT_ADF#, Bool) and if{ #CIRCUIT_ADF# (&gt;K:ELECTRICAL_CIRCUIT_TOGGLE) }
+			</Update>			
+		</Condition>
+		<UseTemplate Name="ASOBO_GT_Update">
+			<FREQUENCY>5</FREQUENCY>
+			<UPDATE_CODE>
+				(* Update sim volume variable using external volume variable *)
+				
+				(A:ADF VOLUME:#ID#, percent) (L:XMLVAR_ADF_VOLUME, Percent) &lt; if{
+					(&gt;K:ADF_VOLUME_INC) #TURN_OFF_CIRCUIT_WHEN_VOLUME_OFF#
+				}
+				(A:ADF VOLUME:#ID#, percent) (L:XMLVAR_ADF_VOLUME, Percent) &gt; if{
+					(&gt;K:ADF_VOLUME_DEC) #TURN_OFF_CIRCUIT_WHEN_VOLUME_OFF#					
+				}
+			</UPDATE_CODE>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Knob_Finite_Simvar">
+			<ANIM_SIMVAR>ADF VOLUME:1</ANIM_SIMVAR>
+			<ANIM_SIMVAR_UNITS>Percent</ANIM_SIMVAR_UNITS>
+			<!--CLOCKWISE_CODE>(&gt;K:ADF_VOLUME_INC) #TURN_OFF_CIRCUIT_WHEN_VOLUME_OFF#</CLOCKWISE_CODE-->
+			<CLOCKWISE_CODE>
+				(* Increment volume variable *)
+				(L:XMLVAR_ADF_VOLUME, Percent) 5 + (&gt;L:XMLVAR_ADF_VOLUME, Percent)
+						
+				(L:XMLVAR_ADF_VOLUME, Percent) 100 &gt;= if{						
+					100 (&gt;L:XMLVAR_ADF_VOLUME, Percent)
+				}				
+			</CLOCKWISE_CODE>
+			<!--ANTICLOCKWISE_CODE>(&gt;K:ADF_VOLUME_DEC) #TURN_OFF_CIRCUIT_WHEN_VOLUME_OFF#</ANTICLOCKWISE_CODE-->
+			<ANTICLOCKWISE_CODE>
+				(* Decrement volume variable *)
+				(L:XMLVAR_ADF_VOLUME, Percent) 5 - (&gt;L:XMLVAR_ADF_VOLUME, Percent)
+						
+				(L:XMLVAR_ADF_VOLUME, Percent) 0 &lt;= if{						
+					0 (&gt;L:XMLVAR_ADF_VOLUME, Percent)
+				}
+			</ANTICLOCKWISE_CODE>
+		</UseTemplate>
+	</Component>
+</Template>
+
+
 <Template Name="C152X_ADF_Knob_Mode_Template">
 	<DefaultTemplateParameters>
 		<ID>1</ID>
@@ -17,7 +94,8 @@
 		
 		<NUMSTATES>4</NUMSTATES>
 		<INDEX_TEST>3</INDEX_TEST>
-		
+		<DEFAULT_POS>2</DEFAULT_POS>
+		<INIT_VALUE>2</INIT_VALUE>
 		<ANIMTIP_0>TT:COCKPIT.TOOLTIPS.ADF_SWITCH_BFO</ANIMTIP_0>		
 		<ANIMTIP_1>TT:COCKPIT.TOOLTIPS.ADF_SWITCH_REC</ANIMTIP_1>		
 		<ANIMTIP_2>TT:COCKPIT.TOOLTIPS.ADF_SWITCH_ADF</ANIMTIP_2>		
@@ -42,16 +120,17 @@
 	<Component ID="#NODE_ID#" Node="#NODE_ID#">
 		<Condition Check="CIRCUIT_ADF">
 			<Update Once="True">					
-				(A:ADF VOLUME:1, Percent) 0 == (A:CIRCUIT SWITCH ON:#CIRCUIT_ADF#, Bool) and if{ #CIRCUIT_ADF# (&gt;K:ELECTRICAL_CIRCUIT_TOGGLE) }			  
+				(A:ADF VOLUME:1, Percent) 0 == (A:CIRCUIT SWITCH ON:#CIRCUIT_ADF#, Bool) and if{ #CIRCUIT_ADF# (&gt;K:ELECTRICAL_CIRCUIT_TOGGLE) }				
 			</Update>
 		</Condition>
 		<UseTemplate Name="ASOBO_GT_Switch_4States">			
+			
 			<CODE_POS_0></CODE_POS_0>
 			<CODE_POS_1></CODE_POS_1>
 			<CODE_POS_2></CODE_POS_2>
 			<CODE_POS_#INDEX_TEST#>							
 			</CODE_POS_#INDEX_TEST#>
-			<MOMENTARY_SWITCH/>
+			<MOMENTARY_SWITCH/>					
 		</UseTemplate>
 	</Component>
 </Template>

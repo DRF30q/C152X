@@ -1,3 +1,115 @@
+<Template Name="C152X_INSTRUMENT_Needle_Airspeed_SubTemplate">
+	<DefaultTemplateParameters>
+		<UNITS>knots</UNITS>
+		<MIN_VALUE>0</MIN_VALUE>
+		<MAX_VALUE>200</MAX_VALUE>
+		<ANIM_NAME>INSTRUMENT_Needle_Airspeed#SUFFIX_ID#</ANIM_NAME>
+		<NODE_ID>INSTRUMENT_Needle_Airspeed#SUFFIX_ID#</NODE_ID>
+		<PART_ID>INSTRUMENT_Needle_Airspeed_Highlight</PART_ID>
+		<Condition Check="USE_TRUE_AIRSPEED_CALIBRATOR">
+			<KNOB_NODE_ID>INSTRUMENT_Knob_Airspeed#SUFFIX_ID#</KNOB_NODE_ID>
+			<KNOB_ANIM_NAME>INSTRUMENT_Knob_Airspeed#SUFFIX_ID#</KNOB_ANIM_NAME>
+			<STRIP_NODE_ID>INSTRUMENT_Strip_Airspeed#SUFFIX_ID#</STRIP_NODE_ID>
+			<STRIP_ANIM_NAME>INSTRUMENT_Strip_Airspeed#SUFFIX_ID#</STRIP_ANIM_NAME>
+			<ANIMREF_ID>-1</ANIMREF_ID>
+			<ANIMTIP_0>TT:COCKPIT.TOOLTIPS.TRUE_AIRSPEED_INDICATOR_CALIBRATION_KNOB_INCREASE</ANIMTIP_0>
+			<ANIMTIP_0_ON_CURSOR>TurnRight</ANIMTIP_0_ON_CURSOR>
+			<ANIMTIP_1>TT:COCKPIT.TOOLTIPS.TRUE_AIRSPEED_INDICATOR_CALIBRATION_KNOB_DECREASE</ANIMTIP_1>
+			<ANIMTIP_1_ON_CURSOR>TurnLeft</ANIMTIP_1_ON_CURSOR>
+			<MIN_AIRSPEED_CALIBRATOR_VALUE>0</MIN_AIRSPEED_CALIBRATOR_VALUE>
+			<MAX_AIRSPEED_CALIBRATOR_VALUE>30</MAX_AIRSPEED_CALIBRATOR_VALUE>
+			<INCREMENT>0.5</INCREMENT>
+		</Condition>
+	</DefaultTemplateParameters>
+	<OverrideTemplateParameters>
+		<Condition Check="USE_TRUE_AIRSPEED_CALIBRATOR">
+			<CLAMP_VALUE>#MIN_AIRSPEED_CALIBRATOR_VALUE# max #MAX_AIRSPEED_CALIBRATOR_VALUE# min</CLAMP_VALUE>
+		</Condition>
+	</OverrideTemplateParameters>
+	<EditableTemplateParameters>
+		<AddParams>
+			<KNOB_NODE_ID></KNOB_NODE_ID>
+			<KNOB_ANIM_NAME></KNOB_ANIM_NAME>
+			<STRIP_NODE_ID></STRIP_NODE_ID>
+			<STRIP_ANIM_NAME></STRIP_ANIM_NAME>
+		</AddParams>
+		<AddOptions>
+			<USE_TRUE_AIRSPEED_CALIBRATOR></USE_TRUE_AIRSPEED_CALIBRATOR>
+		</AddOptions>
+	</EditableTemplateParameters>
+	
+	<Component ID="INSTRUMENT_Airspeed_#ID#">
+		<UseTemplate Name="ASOBO_GT_Needle_Code">
+			<!--SIMVAR>AIRSPEED INDICATED</SIMVAR-->
+			<OVERRIDE_ANIM_CODE>
+				 (* Temporary testing.... *)
+				 (A:AIRSPEED INDICATED, knots) (&gt;L:XMLVAR_Indicated_Airspeed, knots)
+				 (A:AIRSPEED TRUE, knots) (&gt;L:XMLVAR_True_Airspeed, knots)
+				 (A:INCIDENCE ALPHA, degrees) (&gt;L:XMLVAR_Incidence_Alpha, knots)
+				 (A:AIRSPEED INDICATED, knots) #MAX_VALUE# / 100 *				
+			</OVERRIDE_ANIM_CODE>		
+		</UseTemplate>
+		
+		<!--UseTemplate Name="ASOBO_GT_Anim_Code"-->						
+				<!--ANIM_NAME>#NEEDLE_ANIM_NAME#</ANIM_NAME-->				
+				<!--ANIM_LENGTH>360</ANIM_LENGTH-->
+		<!--		
+			<ANIM_CODE>		
+					(* Default is current needle position *)
+					(A:AIRSPEED INDICATED, knots)						
+				</ANIM_CODE>				
+		
+		</UseTemplate-->		
+		<Condition Check="USE_TRUE_AIRSPEED_CALIBRATOR">
+			<Switch Param="USE_TRUE_AIRSPEED_CALIBRATOR">
+				<Case Value="SIMVAR_SET"><!-- let us bypass hardcoded limit of -27° and +27° -->
+					<UseTemplate Name="ASOBO_GT_Update">
+						<UPDATE_ONCE>True</UPDATE_ONCE>
+						<UPDATE_CODE>(A:AIRSPEED TRUE CALIBRATE, degrees) #CLAMP_VALUE# (&gt;A:AIRSPEED TRUE CALIBRATE, degrees)</UPDATE_CODE>
+					</UseTemplate>
+					<Component ID="#STRIP_NODE_ID#" Node="#STRIP_NODE_ID#">
+						<UseTemplate Name="ASOBO_GT_Anim_Code">
+							<ANIM_CODE>(A:AIRSPEED TRUE CALIBRATE, degrees) #MIN_AIRSPEED_CALIBRATOR_VALUE# - #MAX_AIRSPEED_CALIBRATOR_VALUE# #MIN_AIRSPEED_CALIBRATOR_VALUE# - / 100 *</ANIM_CODE>
+							<ANIM_NAME>#STRIP_ANIM_NAME#</ANIM_NAME>
+						</UseTemplate>
+					</Component>
+					<Component ID="#KNOB_NODE_ID#" Node="#KNOB_NODE_ID#">
+						<UseTemplate Name="ASOBO_GT_Anim_Code">
+							<ANIM_CODE>(A:AIRSPEED TRUE CALIBRATE, degrees) #MIN_AIRSPEED_CALIBRATOR_VALUE# - #MAX_AIRSPEED_CALIBRATOR_VALUE# #MIN_AIRSPEED_CALIBRATOR_VALUE# - / 100 *</ANIM_CODE>
+							<ANIM_NAME>#KNOB_ANIM_NAME#</ANIM_NAME>
+						</UseTemplate>
+						<UseTemplate Name="ASOBO_GT_Interaction_WheelAndContinuousLeft_Horizontal">
+							<CLOCKWISE_CODE>(A:AIRSPEED TRUE CALIBRATE, degrees) #INCREMENT# + #CLAMP_VALUE# (&gt;A:AIRSPEED TRUE CALIBRATE, degrees)</CLOCKWISE_CODE>
+							<ANTICLOCKWISE_CODE>(A:AIRSPEED TRUE CALIBRATE, degrees) #INCREMENT# - #CLAMP_VALUE# (&gt;A:AIRSPEED TRUE CALIBRATE, degrees)</ANTICLOCKWISE_CODE>
+						</UseTemplate>
+					</Component>
+				</Case>
+				<Default>
+					<Component ID="#STRIP_NODE_ID#" Node="#STRIP_NODE_ID#">
+						<UseTemplate Name="ASOBO_GT_Anim_Code">
+							<ANIM_CODE>(A:AIRSPEED TRUE CALIBRATE, degrees) 14 + 0 max 50 min</ANIM_CODE>
+							<ANIM_LENGTH>50</ANIM_LENGTH>
+							<ANIM_NAME>#STRIP_ANIM_NAME#</ANIM_NAME>
+						</UseTemplate>
+					</Component>
+					<Component ID="#KNOB_NODE_ID#" Node="#KNOB_NODE_ID#">
+						<UseTemplate Name="ASOBO_GT_Anim_Code">
+							<ANIM_CODE>(A:AIRSPEED TRUE CALIBRATE, degrees) 20 * dnor</ANIM_CODE>
+							<ANIM_LENGTH>360</ANIM_LENGTH>
+							<ANIM_NAME>#KNOB_ANIM_NAME#</ANIM_NAME>
+						</UseTemplate>
+						<UseTemplate Name="ASOBO_GT_Interaction_WheelAndContinuousLeft_Horizontal">
+							<CLOCKWISE_CODE>(&gt;K:TRUE_AIRSPEED_CAL_INC)</CLOCKWISE_CODE>
+							<ANTICLOCKWISE_CODE>(&gt;K:TRUE_AIRSPEED_CAL_DEC)</ANTICLOCKWISE_CODE>
+						</UseTemplate>
+					</Component>
+				</Default>
+			</Switch>
+		</Condition>
+	</Component>
+</Template>
+
+
 <Template Name="C152X_INSTRUMENT_CDI_SubTemplate">
 	<DefaultTemplateParameters>
 		<ANIM_NAME_COMPASS>INSTRUMENT_CDI_Compass#SUFFIX_ID#</ANIM_NAME_COMPASS>
