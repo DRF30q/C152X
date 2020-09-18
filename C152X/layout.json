@@ -97,7 +97,7 @@
         },
         {
             "path": "SimObjects/Airplanes/Asobo_C152/engines.cfg",
-            "size": 9433,
+            "size": 9434,
             "date": "132402817714110148"
         },
         {
@@ -107,7 +107,7 @@
         },
         {
             "path": "SimObjects/Airplanes/Asobo_C152/flight_model.cfg",
-            "size": 18763,
+            "size": 18754,
             "date": "132402817714110148"
         },
         {
@@ -137,7 +137,7 @@
         },
         {
             "path": "SimObjects/Airplanes/Asobo_C152/model/Cessna152_interior.XML",
-            "size": 23767,
+            "size": 23981,
             "date": "132402817714110148"
         },
         {
