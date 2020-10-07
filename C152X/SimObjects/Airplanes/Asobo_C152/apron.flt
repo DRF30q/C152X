@@ -8,9 +8,9 @@ ZVelBodyAxis=0
 SimOnGround=True
 
 [Avionics.0]
-Comm1Active=118.300
+Comm1Active=122.800
 Comm1Standby=124.850
-Comm2Active=124.850
+Comm2Active=118.575
 Comm2Standby=124.850
 Comm3Active=124.850
 Comm3Standby=124.850
@@ -20,7 +20,6 @@ OBS1=360
 Nav2Active=110.50
 Nav2Standby=113.90
 OBS2=360
-
 TransponderState=0
 ADFActive=890
 ADF2Active=890
@@ -99,7 +98,7 @@ XMLVAR_NAVCOM_NAV_2_IDENT=0			;0=OFF, 1=IDENT (PULLED)
 XMLVAR_AUDIO_COM_1_MIC_SEL=1	;1=SEL, (COM 1 TX SEL), MIC 1 and 2 mutually exclusive
 XMLVAR_AUDIO_COM_2_MIC_SEL=0	;1=SEL, (COM 2 TX SEL), MIC 1 and 2 mutually exclusive
 
-XMLVAR_AUDIO_BOTH_SEL=1				;0=OFF, 1=SEL
+XMLVAR_AUDIO_BOTH_SEL=0 			;0=OFF, 1=SEL
 XMLVAR_AUDIO_NAV_1_SEL=0 			;
 XMLVAR_AUDIO_NAV_2_SEL=0			;
 XMLVAR_AUDIO_ADF_SEL=0				;

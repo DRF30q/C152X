@@ -1,6 +1,6 @@
 # MSFS C152X Realism Mod
 V0.16
-  
+- Changed default COM1 to UNICOM 122.800 (Vatsim)
 
 ## Installation
 Place the "C152X" folder in your community package folder.
