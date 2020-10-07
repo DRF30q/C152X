@@ -4,9 +4,9 @@ IAS=113
 FlapsDegree=0000.00
 
 [Avionics.0]
-Comm1Active=127.850
+Comm1Active=122.800
 Comm1Standby=124.850
-Comm2Active=124.850
+Comm2Active=118.575
 Comm2Standby=124.850
 Comm3Active=124.850
 Comm3Standby=124.850
