@@ -168,6 +168,11 @@
 		<UseTemplate Name="ASOBO_LANDING_GEAR_Switch_ParkingBrake_Template">
 			<ANIM_DELAY>0.2</ANIM_DELAY>
 		</UseTemplate>
+		<!-- This can be used to tune ground roll performance by activating a dummy spoiler with negative drag during takeoff roll (make sure to enable the spoiler and set its angle to 90 deg in flight_model.cfg
+		<Update Frequency="2">
+			(A:SIM ON GROUND, Bool) (A:GENERAL ENG RPM:1, Rpm) 2000 &gt; and if{ (&gt;K:SPOILERS_ON) } els{ (&gt;K:SPOILERS_OFF) } 
+		</Update>
+		-->
 	</Component>
 
 	<!-- INSTRUMENTS ########################### -->
