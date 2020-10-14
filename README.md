@@ -1,5 +1,5 @@
 # MSFS C152X Realism Mod
-V0.16
+V0.17
   
 
 ## Installation
@@ -9,7 +9,7 @@ The installation does not create a new aircraft selection in the simulator.  The
 
 Note that none of the base files for the default aircraft are directly modified in any way.  Removing the "C152X" folder from the community package folder should remove and deactivate the C152X Realism Mod.
 
-### 0.15
+### 0.17
 Some of the current improvements (not exhaustive):
 - Modified stall speeds flap up/flap down in accordance with published information.  Aircraft will now stall at a significantly higher speed.
 - Numerous changes to engine performance, now in accordance with Lycoming O-235L2C (115HP, 2700RPM) See note below.
@@ -78,6 +78,8 @@ Navigation ADF Radio and associated gauge completely revised.
 [0.16] - 2020-09-19
 ADF/NAVCOM/Audio Selection Panel completely revised.  Various states now loaded with .flt files. 
 
+[0.17] - 2020-10-14
+Corrected manifest.json
  
 ## Donation
 
