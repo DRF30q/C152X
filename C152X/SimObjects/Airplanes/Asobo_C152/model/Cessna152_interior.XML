@@ -111,20 +111,22 @@
 	
 	<!-- HANDLING ########################### -->
 	<Component ID="YOKES">
-		<UseTemplate Name="ASOBO_HANDLING_Yoke_Hideable_Template">
+			<UseTemplate Name="ASOBO_HANDLING_Yoke_Hideable_Template">
 			<TOOLTIPID>TT:COCKPIT.TOOLTIPS.YOKE_VISIBILITY</TOOLTIPID>
-		</UseTemplate>
-		<UseTemplate Name="ASOBO_HANDLING_Yoke_Hider_Template">
+			<NODE_ID>HANDLING_Yoke_1</NODE_ID>
+			<YOKE_HIDER_NODE_ID>HANDLING_Yoke_Hider_1</YOKE_HIDER_NODE_ID>
+			<YOKE_NODE_ID>HANDLING_Yoke_1</YOKE_NODE_ID>
+			<ANIM_NAME_YOKE_X>HANDLING_Yoke_Lever_StickLR</ANIM_NAME_YOKE_X>
+			<ANIM_NAME_YOKE_Y>HANDLING_Yoke_Lever_StickForeAft</ANIM_NAME_YOKE_Y>
+			<AP_CAN_DRIVE_ANIMATION>True</AP_CAN_DRIVE_ANIMATION>
 			<ID>1</ID>
-			<NODE_ID>HANDLING_Yoke_Hider_1_Add</NODE_ID>
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_HANDLING_Yoke_Hideable_Template">
+			<NODE_ID>HANDLING_Yoke_2</NODE_ID>
+			<YOKE_HIDER_NODE_ID>HANDLING_Yoke_Hider_2</YOKE_HIDER_NODE_ID>
+			<YOKE_NODE_ID>HANDLING_Yoke_2</YOKE_NODE_ID>
 			<ID>2</ID>
 			<ONLY_HIDEABLE/>
-		</UseTemplate>
-		<UseTemplate Name="ASOBO_HANDLING_Yoke_Hider_Template">
-			<ID>2</ID>
-			<NODE_ID>HANDLING_Yoke_Hider_2_Add</NODE_ID>
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_HANDLING_Yoke_Hideable_Template">
 			<NODE_ID>HANDLING_Yoke_1_Cable</NODE_ID>
@@ -135,7 +137,7 @@
 			<NODE_ID>HANDLING_Yoke_2_Cable</NODE_ID>
 			<ID>2</ID>
 			<ONLY_DECORATIVE/>
-		</UseTemplate>
+		</UseTemplate>	
 	</Component>
 	
 	<Component ID="HANDLING">
