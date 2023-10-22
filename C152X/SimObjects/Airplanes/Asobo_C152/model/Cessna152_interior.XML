@@ -46,44 +46,42 @@
 	
 	<!-- ELECTRICAL ########################### -->
 	<Component ID="ELECTRICAL">
+		<DefaultTemplateParameters>
+			<SYNC_AVIONICS_TO_BATTERY_STATE>
+				(A:ELECTRICAL MASTER BATTERY:1, Bool) (&gt;O:_AvionicsShouldBeOn)
+				1 (&gt;A:BUS LOOKUP INDEX, Number)
+				(O:_AvionicsShouldBeOn) (A:BUS CONNECTION ON:2, Bool) != if{
+					2 1 (&gt;K:2:ELECTRICAL_BUS_TO_BUS_CONNECTION_TOGGLE)
+				}
+				(O:_AvionicsShouldBeOn) (A:CIRCUIT SWITCH ON:17, Bool) != if{
+					17 (&gt;K:ELECTRICAL_CIRCUIT_TOGGLE)
+				}
+			</SYNC_AVIONICS_TO_BATTERY_STATE>
+		</DefaultTemplateParameters>
 		<UseTemplate Name="ASOBO_ELECTRICAL_Switch_Magneto_Template">
 			<ANIM_NAME>ELECTRICAL_Switch_Magneto</ANIM_NAME>
 			<NODE_ID>ELECTRICAL_Switch_Magneto</NODE_ID>
 			<SWITCH_DIRECTION>Horizontal</SWITCH_DIRECTION>
-			<NORMALIZED_TIME>0.75</NORMALIZED_TIME>
-			<DIRECTION>Forward</DIRECTION>
 			<INDEX_OFF>0</INDEX_OFF>
 			<INDEX_RIGHT>1</INDEX_RIGHT>
 			<INDEX_LEFT>2</INDEX_LEFT>
 			<INDEX_BOTH>3</INDEX_BOTH>
 			<ARROW_TYPE>Curved</ARROW_TYPE>
+			<STATE_MAX_TIMER>1.5</STATE_MAX_TIMER>
 			<USE_STARTER/>
-			<!-- Max time in START pos (any input except mouse), when using mouse will stay for this time0 -->
-			<STATE_MAX_TIMER>3</STATE_MAX_TIMER>
-			<ANIMREF_ID>0</ANIMREF_ID>
-			<ANIMCURSOR_DIR>1</ANIMCURSOR_DIR>
-			<ANIMTIP_0>TT:COCKPIT.TOOLTIPS.MAGNETO_START_SWITCH_OFF</ANIMTIP_0>
-			<ANIMTIP_1>TT:COCKPIT.TOOLTIPS.MAGNETO_START_SWITCH_R</ANIMTIP_1>
-			<ANIMTIP_2>TT:COCKPIT.TOOLTIPS.MAGNETO_START_SWITCH_L</ANIMTIP_2>
-			<ANIMTIP_3>TT:COCKPIT.TOOLTIPS.MAGNETO_START_SWITCH_BOTH</ANIMTIP_3>
-			<ANIMTIP_4>TT:COCKPIT.TOOLTIPS.MAGNETO_START_SWITCH_START</ANIMTIP_4>			
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_ELECTRICAL_Switch_Alternator_Template">
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_ELECTRICAL_Switch_Battery_Master_Template">
 			<!-- This battery switch also controls avionics -->
 			<ON_TOGGLE_MASTER_BATTERY>
-				(A:ELECTRICAL MASTER BATTERY:1, Bool) (A:AVIONICS MASTER SWITCH, Bool) != if{
-					(&gt;K:TOGGLE_AVIONICS_MASTER)
-				}
+				#SYNC_AVIONICS_TO_BATTERY_STATE#
 			</ON_TOGGLE_MASTER_BATTERY>
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_GT_Update">
 			<FREQUENCY>5</FREQUENCY>
 			<UPDATE_CODE>
-				(A:ELECTRICAL MASTER BATTERY:1, Bool) (A:AVIONICS MASTER SWITCH, Bool) != if{
-					(&gt;K:TOGGLE_AVIONICS_MASTER)
-				}
+				#SYNC_AVIONICS_TO_BATTERY_STATE#
 			</UPDATE_CODE>
 		</UseTemplate>
 	</Component>
