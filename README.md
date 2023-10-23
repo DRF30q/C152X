@@ -1,5 +1,5 @@
 # MSFS C152X Realism Mod
-V0.17
+V0.17.5
   
 
 ## Installation
@@ -8,6 +8,14 @@ Place the "C152X" folder in your community package folder.
 The installation does not create a new aircraft selection in the simulator.  The modifications are applied to the Textron Aviation Cessna 152.  Once the package is installed in the community folder, selecting this aircraft in the sim should load the C152X Mod aircraft.   
 
 Note that none of the base files for the default aircraft are directly modified in any way.  Removing the "C152X" folder from the community package folder should remove and deactivate the C152X Realism Mod.
+
+### 0.17.5
+Some issues were fixed:
+- The yoke cannot be hidden
+- Can't start the engine with the Logiteck multipanel
+- RPM indicator no longer working
+- ATC, ADF displays frequency are shown
+- a target appears on the windshield
 
 ### 0.17
 Some of the current improvements (not exhaustive):
