@@ -106,7 +106,7 @@
 	<!-- HANDLING ########################### -->
 	<Component ID="YOKES">
 			<UseTemplate Name="ASOBO_HANDLING_Yoke_Hideable_Template">
-			<TOOLTIPID>TT:COCKPIT.TOOLTIPS.YOKE_VISIBILITY</TOOLTIPID>
+			<!--<TOOLTIPID>TT:COCKPIT.TOOLTIPS.YOKE_VISIBILITY</TOOLTIPID>-->
 			<NODE_ID>HANDLING_Yoke_1</NODE_ID>
 			<YOKE_HIDER_NODE_ID>HANDLING_Yoke_Hider_1</YOKE_HIDER_NODE_ID>
 			<YOKE_NODE_ID>HANDLING_Yoke_1</YOKE_NODE_ID>
@@ -187,12 +187,16 @@
 		
 		<UseTemplate Name="ASOBO_INSTRUMENT_AttitudeIndicator_Template">
 			<USE_FLAG/>
-			<HIGHLIGHT_NODE_ID>INSTRUMENT_AttitudeIndicator_Highlight_1</HIGHLIGHT_NODE_ID>			
+			<HIGHLIGHT_NODE_ID>INSTRUMENT_AttitudeIndicator_Highlight_1</HIGHLIGHT_NODE_ID>
+			<USE_SUCTION_PRESSURE_CHECK/>
 			<USE_LINEAR_VALUES>True</USE_LINEAR_VALUES>
 			<NO_CAGE/>
+			<KNOB_HIGHLIGHT_NODE_ID>INSTRUMENT_AttitudeIndicator_Knob_Visual_1</KNOB_HIGHLIGHT_NODE_ID>
+			<BARS_INVERT_ANIM>True</BARS_INVERT_ANIM>
 		</UseTemplate>
 		
 		<UseTemplate Name="ASOBO_INSTRUMENT_Needle_Current_Time_Clock_Template">
+			<DELTA_VARS_SCOPE>L</DELTA_VARS_SCOPE>
 		</UseTemplate>
 		
 		<UseTemplate Name="ASOBO_INSTRUMENT_Altimeter_Template">
@@ -201,6 +205,7 @@
 			<MIN_VALUE_KNOB>28.2</MIN_VALUE_KNOB>
 			<MAX_VALUE_KNOB>31.3</MAX_VALUE_KNOB>
 			<HIGHLIGHT_NODE_ID>INSTRUMENT_Altimeter_Highlight_1</HIGHLIGHT_NODE_ID>
+			<KNOB_HIGHLIGHT_NODE_ID>INSTRUMENT_Knob_Altimeter_Visual_1</KNOB_HIGHLIGHT_NODE_ID>
 		</UseTemplate>
 			
 		<UseTemplate Name="ASOBO_INSTRUMENT_Needle_Turn_Template">
@@ -209,6 +214,7 @@
 		<UseTemplate Name="ASOBO_INSTRUMENT_Needle_Heading_Template">
 			<USE_FLAG/>	
 			<HIGHLIGHT_NODE_ID>INSTRUMENT_Heading_Highlight_1</HIGHLIGHT_NODE_ID>
+			<KNOB_HIGHLIGHT_NODE_ID>INSTRUMENT_Knob_Heading_Compass_Visual_1</KNOB_HIGHLIGHT_NODE_ID>
 		</UseTemplate>
 		
 		<UseTemplate Name="ASOBO_INSTRUMENT_Needle_VerticalSpeed_Template">
@@ -598,7 +604,30 @@
 		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
 			<NODE_ID>AUDIO_Switch_Test</NODE_ID>
 		</UseTemplate>
-		
+	</Component>
+	<Component ID="TUTO_Level" Node="TUTO_Level">
+		<UseTemplate Name="ASOBO_GT_Visibility_Code">
+			<ONCE>True</ONCE>
+			<VISIBILITY_CODE>0</VISIBILITY_CODE>
+		</UseTemplate>
+	</Component>
+	<Component ID="TUTO_Descent" Node="TUTO_Descent">
+		<UseTemplate Name="ASOBO_GT_Visibility_Code">
+			<ONCE>True</ONCE>
+			<VISIBILITY_CODE>0</VISIBILITY_CODE>
+		</UseTemplate>
+	</Component>
+	<Component ID="TUTO_Climb" Node="TUTO_Climb">
+		<UseTemplate Name="ASOBO_GT_Visibility_Code">
+			<ONCE>True</ONCE>
+			<VISIBILITY_CODE>0</VISIBILITY_CODE>
+		</UseTemplate>
+	</Component>
+	<Component ID="TUTO_TurnLeft" Node="TUTO_TurnLeft">
+		<UseTemplate Name="ASOBO_GT_Visibility_Code">
+			<ONCE>True</ONCE>
+			<VISIBILITY_CODE>0</VISIBILITY_CODE>
+		</UseTemplate>
 	</Component>
 	</Behaviors>
 </ModelInfo>
