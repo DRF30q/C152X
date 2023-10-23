@@ -11,18 +11,16 @@
 		<LOD minSize="5" ModelFile="C152_cockpit_LOD03.gltf"/>
 		<LOD minSize="1" ModelFile="C152_cockpit_LOD04.gltf"/>
 	</LODS>
-</ModelInfo>
 
-<ModelBehaviors>
-
-	<Include Path="Asobo\Common.xml"/>
-	<Include Path="Asobo\Transponder\\Transponder.xml"/>
-	<Include Path="Asobo\NAVCOM\NavComSystem.xml"/>
-	<Include Path="Asobo\NAVCOM\ADF.xml"/>  
+	<Behaviors>
+		<Include ModelBehaviorFile="Asobo\Common.xml"/>
+		<Include ModelBehaviorFile="Asobo\Transponder\\Transponder.xml"/>
+		<Include ModelBehaviorFile="Asobo\NAVCOM\NavComSystem.xml"/>
+		<Include ModelBehaviorFile="Asobo\NAVCOM\ADF.xml"/>
   
-	<Include Path="C152X\Asobo\Common.xml"/>
-	<Include Path="C152X\Asobo\NAVCOM\NavComSystem.xml"/>
-	<Include Path="C152X\Asobo\NAVCOM\ADF.xml"/>
+		<Include ModelBehaviorFile="C152X\Asobo\Common.xml"/>
+		<Include ModelBehaviorFile="C152X\Asobo\NAVCOM\NavComSystem.xml"/>
+		<Include ModelBehaviorFile="C152X\Asobo\NAVCOM\ADF.xml"/>
 	
 	
 	<!-- The calculations generate a fuel tank level indication variation based on current yaw acceleration and the current tank level.  It will generate a greater variation for an empty tank vs a full tank and the 20 in the formula is a scaling factor for the amount of yaw induced variation in the tank indication. The first value is the current tank quantity in liters. 	The fuel tank sensors are on the inboard side of each tank so the effect will be opposite on the left and right tanks-->
@@ -48,12 +46,10 @@
 	<Component ID="ELECTRICAL">
 		<DefaultTemplateParameters>
 			<SYNC_AVIONICS_TO_BATTERY_STATE>
-				(A:ELECTRICAL MASTER BATTERY:1, Bool) (&gt;O:_AvionicsShouldBeOn)
-				1 (&gt;A:BUS LOOKUP INDEX, Number)
-				(O:_AvionicsShouldBeOn) (A:BUS CONNECTION ON:2, Bool) != if{
-					2 1 (&gt;K:2:ELECTRICAL_BUS_TO_BUS_CONNECTION_TOGGLE)
+				(A:ELECTRICAL MASTER BATTERY:1, Bool) (A:AVIONICS MASTER SWITCH, Bool) != if{
+				(&gt;K:TOGGLE_AVIONICS_MASTER)
 				}
-				(O:_AvionicsShouldBeOn) (A:CIRCUIT SWITCH ON:17, Bool) != if{
+				(A:AVIONICS MASTER SWITCH, Bool) (A:CIRCUIT SWITCH ON:17, Bool) != if{
 					17 (&gt;K:ELECTRICAL_CIRCUIT_TOGGLE)
 				}
 			</SYNC_AVIONICS_TO_BATTERY_STATE>
@@ -553,10 +549,10 @@
 		</DefaultTemplateParameters>
 		<UseTemplate Name="ASOBO_ADF_3Knobs_Frequency_Template">
 		</UseTemplate>
-		<!-- existing ASOBO template for knob volume fine for now.... --->
+		<!-- existing ASOBO template for knob volume fine for now.... -->
 		<UseTemplate Name="C152X_ADF_Knob_Volume_Template">
 		</UseTemplate>
-		<!-- New knob for ADF mode, uses 4 position switch.... --->
+		<!-- New knob for ADF mode, uses 4 position switch.... -->
 		<UseTemplate Name="C152X_ADF_Knob_Mode_Template">				
 			<ANIM_LAG>600</ANIM_LAG>
 		</UseTemplate>
@@ -604,6 +600,5 @@
 		</UseTemplate>
 		
 	</Component>
-	
-	
-</ModelBehaviors>
+	</Behaviors>
+</ModelInfo>
