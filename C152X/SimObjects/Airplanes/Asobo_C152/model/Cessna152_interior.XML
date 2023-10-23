@@ -11,18 +11,16 @@
 		<LOD minSize="5" ModelFile="C152_cockpit_LOD03.gltf"/>
 		<LOD minSize="1" ModelFile="C152_cockpit_LOD04.gltf"/>
 	</LODS>
-</ModelInfo>
 
-<ModelBehaviors>
-
-	<Include Path="Asobo\Common.xml"/>
-	<Include Path="Asobo\Transponder\\Transponder.xml"/>
-	<Include Path="Asobo\NAVCOM\NavComSystem.xml"/>
-	<Include Path="Asobo\NAVCOM\ADF.xml"/>  
+	<Behaviors>
+		<Include ModelBehaviorFile="Asobo\Common.xml"/>
+		<Include ModelBehaviorFile="Asobo\Transponder\\Transponder.xml"/>
+		<Include ModelBehaviorFile="Asobo\NAVCOM\NavComSystem.xml"/>
+		<Include ModelBehaviorFile="Asobo\NAVCOM\ADF.xml"/>
   
-	<Include Path="C152X\Asobo\Common.xml"/>
-	<Include Path="C152X\Asobo\NAVCOM\NavComSystem.xml"/>
-	<Include Path="C152X\Asobo\NAVCOM\ADF.xml"/>
+		<Include ModelBehaviorFile="C152X\Asobo\Common.xml"/>
+		<Include ModelBehaviorFile="C152X\Asobo\NAVCOM\NavComSystem.xml"/>
+		<Include ModelBehaviorFile="C152X\Asobo\NAVCOM\ADF.xml"/>
 	
 	
 	<!-- The calculations generate a fuel tank level indication variation based on current yaw acceleration and the current tank level.  It will generate a greater variation for an empty tank vs a full tank and the 20 in the formula is a scaling factor for the amount of yaw induced variation in the tank indication. The first value is the current tank quantity in liters. 	The fuel tank sensors are on the inboard side of each tank so the effect will be opposite on the left and right tanks-->
@@ -46,44 +44,40 @@
 	
 	<!-- ELECTRICAL ########################### -->
 	<Component ID="ELECTRICAL">
+		<DefaultTemplateParameters>
+			<SYNC_AVIONICS_TO_BATTERY_STATE>
+				(A:ELECTRICAL MASTER BATTERY:1, Bool) (A:AVIONICS MASTER SWITCH, Bool) != if{
+				(&gt;K:TOGGLE_AVIONICS_MASTER)
+				}
+				(A:AVIONICS MASTER SWITCH, Bool) (A:CIRCUIT SWITCH ON:17, Bool) != if{
+					17 (&gt;K:ELECTRICAL_CIRCUIT_TOGGLE)
+				}
+			</SYNC_AVIONICS_TO_BATTERY_STATE>
+		</DefaultTemplateParameters>
 		<UseTemplate Name="ASOBO_ELECTRICAL_Switch_Magneto_Template">
 			<ANIM_NAME>ELECTRICAL_Switch_Magneto</ANIM_NAME>
 			<NODE_ID>ELECTRICAL_Switch_Magneto</NODE_ID>
 			<SWITCH_DIRECTION>Horizontal</SWITCH_DIRECTION>
-			<NORMALIZED_TIME>0.75</NORMALIZED_TIME>
-			<DIRECTION>Forward</DIRECTION>
 			<INDEX_OFF>0</INDEX_OFF>
 			<INDEX_RIGHT>1</INDEX_RIGHT>
 			<INDEX_LEFT>2</INDEX_LEFT>
 			<INDEX_BOTH>3</INDEX_BOTH>
 			<ARROW_TYPE>Curved</ARROW_TYPE>
+			<STATE_MAX_TIMER>1.5</STATE_MAX_TIMER>
 			<USE_STARTER/>
-			<!-- Max time in START pos (any input except mouse), when using mouse will stay for this time0 -->
-			<STATE_MAX_TIMER>3</STATE_MAX_TIMER>
-			<ANIMREF_ID>0</ANIMREF_ID>
-			<ANIMCURSOR_DIR>1</ANIMCURSOR_DIR>
-			<ANIMTIP_0>TT:COCKPIT.TOOLTIPS.MAGNETO_START_SWITCH_OFF</ANIMTIP_0>
-			<ANIMTIP_1>TT:COCKPIT.TOOLTIPS.MAGNETO_START_SWITCH_R</ANIMTIP_1>
-			<ANIMTIP_2>TT:COCKPIT.TOOLTIPS.MAGNETO_START_SWITCH_L</ANIMTIP_2>
-			<ANIMTIP_3>TT:COCKPIT.TOOLTIPS.MAGNETO_START_SWITCH_BOTH</ANIMTIP_3>
-			<ANIMTIP_4>TT:COCKPIT.TOOLTIPS.MAGNETO_START_SWITCH_START</ANIMTIP_4>			
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_ELECTRICAL_Switch_Alternator_Template">
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_ELECTRICAL_Switch_Battery_Master_Template">
 			<!-- This battery switch also controls avionics -->
 			<ON_TOGGLE_MASTER_BATTERY>
-				(A:ELECTRICAL MASTER BATTERY:1, Bool) (A:AVIONICS MASTER SWITCH, Bool) != if{
-					(&gt;K:TOGGLE_AVIONICS_MASTER)
-				}
+				#SYNC_AVIONICS_TO_BATTERY_STATE#
 			</ON_TOGGLE_MASTER_BATTERY>
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_GT_Update">
 			<FREQUENCY>5</FREQUENCY>
 			<UPDATE_CODE>
-				(A:ELECTRICAL MASTER BATTERY:1, Bool) (A:AVIONICS MASTER SWITCH, Bool) != if{
-					(&gt;K:TOGGLE_AVIONICS_MASTER)
-				}
+				#SYNC_AVIONICS_TO_BATTERY_STATE#
 			</UPDATE_CODE>
 		</UseTemplate>
 	</Component>
@@ -111,20 +105,22 @@
 	
 	<!-- HANDLING ########################### -->
 	<Component ID="YOKES">
-		<UseTemplate Name="ASOBO_HANDLING_Yoke_Hideable_Template">
-			<TOOLTIPID>TT:COCKPIT.TOOLTIPS.YOKE_VISIBILITY</TOOLTIPID>
-		</UseTemplate>
-		<UseTemplate Name="ASOBO_HANDLING_Yoke_Hider_Template">
+			<UseTemplate Name="ASOBO_HANDLING_Yoke_Hideable_Template">
+			<!--<TOOLTIPID>TT:COCKPIT.TOOLTIPS.YOKE_VISIBILITY</TOOLTIPID>-->
+			<NODE_ID>HANDLING_Yoke_1</NODE_ID>
+			<YOKE_HIDER_NODE_ID>HANDLING_Yoke_Hider_1</YOKE_HIDER_NODE_ID>
+			<YOKE_NODE_ID>HANDLING_Yoke_1</YOKE_NODE_ID>
+			<ANIM_NAME_YOKE_X>HANDLING_Yoke_Lever_StickLR</ANIM_NAME_YOKE_X>
+			<ANIM_NAME_YOKE_Y>HANDLING_Yoke_Lever_StickForeAft</ANIM_NAME_YOKE_Y>
+			<AP_CAN_DRIVE_ANIMATION>True</AP_CAN_DRIVE_ANIMATION>
 			<ID>1</ID>
-			<NODE_ID>HANDLING_Yoke_Hider_1_Add</NODE_ID>
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_HANDLING_Yoke_Hideable_Template">
+			<NODE_ID>HANDLING_Yoke_2</NODE_ID>
+			<YOKE_HIDER_NODE_ID>HANDLING_Yoke_Hider_2</YOKE_HIDER_NODE_ID>
+			<YOKE_NODE_ID>HANDLING_Yoke_2</YOKE_NODE_ID>
 			<ID>2</ID>
 			<ONLY_HIDEABLE/>
-		</UseTemplate>
-		<UseTemplate Name="ASOBO_HANDLING_Yoke_Hider_Template">
-			<ID>2</ID>
-			<NODE_ID>HANDLING_Yoke_Hider_2_Add</NODE_ID>
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_HANDLING_Yoke_Hideable_Template">
 			<NODE_ID>HANDLING_Yoke_1_Cable</NODE_ID>
@@ -135,7 +131,7 @@
 			<NODE_ID>HANDLING_Yoke_2_Cable</NODE_ID>
 			<ID>2</ID>
 			<ONLY_DECORATIVE/>
-		</UseTemplate>
+		</UseTemplate>	
 	</Component>
 	
 	<Component ID="HANDLING">
@@ -191,12 +187,16 @@
 		
 		<UseTemplate Name="ASOBO_INSTRUMENT_AttitudeIndicator_Template">
 			<USE_FLAG/>
-			<HIGHLIGHT_NODE_ID>INSTRUMENT_AttitudeIndicator_Highlight_1</HIGHLIGHT_NODE_ID>			
+			<HIGHLIGHT_NODE_ID>INSTRUMENT_AttitudeIndicator_Highlight_1</HIGHLIGHT_NODE_ID>
+			<USE_SUCTION_PRESSURE_CHECK/>
 			<USE_LINEAR_VALUES>True</USE_LINEAR_VALUES>
 			<NO_CAGE/>
+			<KNOB_HIGHLIGHT_NODE_ID>INSTRUMENT_AttitudeIndicator_Knob_Visual_1</KNOB_HIGHLIGHT_NODE_ID>
+			<BARS_INVERT_ANIM>True</BARS_INVERT_ANIM>
 		</UseTemplate>
 		
 		<UseTemplate Name="ASOBO_INSTRUMENT_Needle_Current_Time_Clock_Template">
+			<DELTA_VARS_SCOPE>L</DELTA_VARS_SCOPE>
 		</UseTemplate>
 		
 		<UseTemplate Name="ASOBO_INSTRUMENT_Altimeter_Template">
@@ -205,6 +205,7 @@
 			<MIN_VALUE_KNOB>28.2</MIN_VALUE_KNOB>
 			<MAX_VALUE_KNOB>31.3</MAX_VALUE_KNOB>
 			<HIGHLIGHT_NODE_ID>INSTRUMENT_Altimeter_Highlight_1</HIGHLIGHT_NODE_ID>
+			<KNOB_HIGHLIGHT_NODE_ID>INSTRUMENT_Knob_Altimeter_Visual_1</KNOB_HIGHLIGHT_NODE_ID>
 		</UseTemplate>
 			
 		<UseTemplate Name="ASOBO_INSTRUMENT_Needle_Turn_Template">
@@ -213,15 +214,20 @@
 		<UseTemplate Name="ASOBO_INSTRUMENT_Needle_Heading_Template">
 			<USE_FLAG/>	
 			<HIGHLIGHT_NODE_ID>INSTRUMENT_Heading_Highlight_1</HIGHLIGHT_NODE_ID>
+			<KNOB_HIGHLIGHT_NODE_ID>INSTRUMENT_Knob_Heading_Compass_Visual_1</KNOB_HIGHLIGHT_NODE_ID>
 		</UseTemplate>
 		
 		<UseTemplate Name="ASOBO_INSTRUMENT_Needle_VerticalSpeed_Template">
 		</UseTemplate>
 		
 		<UseTemplate Name="ASOBO_INSTRUMENT_Needle_Engine_RPM_Template">
-			<MIN_VALUE>0</MIN_VALUE>
-			<MAX_VALUE>3500</MAX_VALUE>
-			<CREATE_HIGHLIGHT_NODE/>
+				<MIN_VALUE>0</MIN_VALUE>
+				<MAX_VALUE>3500</MAX_VALUE>
+				<NODE_ID>INSTRUMENT_Needle_Engine_RPM_1</NODE_ID>
+				<ANIM_NAME>INSTRUMENT_Needle_Engine_RPM</ANIM_NAME>
+				<CREATE_HIGHLIGHT_NODE>True</CREATE_HIGHLIGHT_NODE>
+				<HIGHLIGHT_NODE_ID>INSTRUMENT_Engine_RPM_Highlight</HIGHLIGHT_NODE_ID>
+				<HIGHLIGHT_PART_ID>INSTRUMENT_Engine_RPM_Highlight</HIGHLIGHT_PART_ID>
 		</UseTemplate>		
 				
 		<!-- INSTRUMENT CDI 1	
@@ -549,10 +555,10 @@
 		</DefaultTemplateParameters>
 		<UseTemplate Name="ASOBO_ADF_3Knobs_Frequency_Template">
 		</UseTemplate>
-		<!-- existing ASOBO template for knob volume fine for now.... --->
+		<!-- existing ASOBO template for knob volume fine for now.... -->
 		<UseTemplate Name="C152X_ADF_Knob_Volume_Template">
 		</UseTemplate>
-		<!-- New knob for ADF mode, uses 4 position switch.... --->
+		<!-- New knob for ADF mode, uses 4 position switch.... -->
 		<UseTemplate Name="C152X_ADF_Knob_Mode_Template">				
 			<ANIM_LAG>600</ANIM_LAG>
 		</UseTemplate>
@@ -598,8 +604,30 @@
 		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
 			<NODE_ID>AUDIO_Switch_Test</NODE_ID>
 		</UseTemplate>
-		
 	</Component>
-	
-	
-</ModelBehaviors>
+	<Component ID="TUTO_Level" Node="TUTO_Level">
+		<UseTemplate Name="ASOBO_GT_Visibility_Code">
+			<ONCE>True</ONCE>
+			<VISIBILITY_CODE>0</VISIBILITY_CODE>
+		</UseTemplate>
+	</Component>
+	<Component ID="TUTO_Descent" Node="TUTO_Descent">
+		<UseTemplate Name="ASOBO_GT_Visibility_Code">
+			<ONCE>True</ONCE>
+			<VISIBILITY_CODE>0</VISIBILITY_CODE>
+		</UseTemplate>
+	</Component>
+	<Component ID="TUTO_Climb" Node="TUTO_Climb">
+		<UseTemplate Name="ASOBO_GT_Visibility_Code">
+			<ONCE>True</ONCE>
+			<VISIBILITY_CODE>0</VISIBILITY_CODE>
+		</UseTemplate>
+	</Component>
+	<Component ID="TUTO_TurnLeft" Node="TUTO_TurnLeft">
+		<UseTemplate Name="ASOBO_GT_Visibility_Code">
+			<ONCE>True</ONCE>
+			<VISIBILITY_CODE>0</VISIBILITY_CODE>
+		</UseTemplate>
+	</Component>
+	</Behaviors>
+</ModelInfo>
